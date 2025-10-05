@@ -1,0 +1,58 @@
+<%- include('./includes/head.ejs') %>
+
+<body>
+    <div id="preloader" class="preloader"><button class="th-btn th-radius preloaderCls">Cancel Preloader</button>
+        <div id="loader" class="th-preloader">
+            <div class="animation-preloader">
+                <div class="txt-loading"><span preloader-text="W" class="characters">W</span> <span preloader-text="E"
+                        class="characters">E</span> <span preloader-text="B" class="characters">B</span> <span
+                        preloader-text="T" class="characters">T</span> <span preloader-text="E"
+                        class="characters">E</span> <span preloader-text="C" class="characters">C</span> <span
+                        preloader-text="K" class="characters">K</span></div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('./includes/navbar.ejs') %>
+    
+    <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg.jpg">
+        <div class="container">
+            <div class="breadcumb-content">
+                <h1 class="breadcumb-title" style="text-transform: capitalize;"><%= category %></h1>
+                <ul class="breadcumb-menu">
+                    <li><a href="/">Bosh sahifa</a></li>
+                    <li>O'quv materiallari</li>
+                    <li style="text-transform: capitalize;" ><%= category %></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <section class="space" id="service-sec">
+        <div class="container">
+            <div class="row gy-4">
+                <% for (let i = 0; i < materials.length; i++) { %>
+                    <div class="col-md-6 col-xl-4">
+                    <div class="service-card">
+                        <div class="service-card_number"><%= i + 1 %></div>
+                        <div class="shape-icon"><img src="/assets/img/icon/service_card_1.svg" alt="Icon"> <span
+                                class="dots"></span></div>
+                        <h3 class="box-title"><a href="#"><%= materials[i].title %></a></h3>
+                        <p class="service-card_text"><%= materials[i].description %> </p><a href="#"
+                            class="th-btn">Yuklab olish<i class="fa-regular fa-arrow-right ms-2"></i></a>
+                        <div class="bg-shape"><img src="/assets/img/bg/service_card_bg.png" alt="bg"></div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </section>
+    
+    
+    <%- include('./includes/footer.ejs') %>
+    
+    <%- include('./includes/end.ejs') %>
+</body>
+<!-- Mirrored from html.themeholy.com/webteck/demo/service.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 26 Sep 2025 22:06:16 GMT -->
+
+</html>

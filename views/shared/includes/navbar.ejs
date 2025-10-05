@@ -1,0 +1,48 @@
+<header class="th-header header-layout24">
+        <div class="sticky-wrapper">
+            <div class="menu-area">
+                <div class="container th-container">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-auto">
+                            <div class="header-logo"><a class="icon-masking" href="/"><span
+                                        data-mask-src="/assets/img/logo-small.svg" class="mask-icon"></span><img
+                                        src="/assets/img/logo-small.svg" alt="Webteck"></a></div>
+                        </div>
+                        <div class="col-auto">
+                            <nav class="main-menu style2 d-none d-lg-inline-block">
+                                <ul>
+                                    <li class=""><a href="/">Home</a>
+                                    </li>
+                                    <li class="menu-item-has-children"><a href="#">O'quv materiallari</a>
+                                        <ul class="sub-menu">
+                                            <% learning_material_categories.forEach(function(item){ %>
+                                                <li>
+                                                    <a href="/materials/<%= item.category_name %>"><%= item.category_name %></a>
+                                                </li>
+                                            <% }); %>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item-has-children"><a href="#">Media</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="/media/videos">Multimedialar</a></li>
+                                            <li><a href="/media/presentations">Taqdimotlar</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class=""><a href="/blog">Blog</a></li>
+                                    <li><a href="/test">Test</a></li>
+                                    <li><a href="/contact">Contact</a></li>
+                                </ul>
+                            </nav><button type="button" class="th-menu-toggle d-block d-lg-none"><i
+                                    class="far fa-bars"></i></button>
+                        </div>
+                        <!-- <div class="col-auto d-xl-block d-none">
+                            <div class="header-button"><a href="tel:+2586232325" class="th-btn2"><span>+258 6232
+                                        3258</span><span class="icon"><i class="fa-solid fa-phone"></i></span></a> <a
+                                    href="about.html" class="th-btn2 blue-btn style-radius text-capitalize">Sign Up</a>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>

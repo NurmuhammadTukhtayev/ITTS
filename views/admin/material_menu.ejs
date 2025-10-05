@@ -1,0 +1,224 @@
+<%- include('./includes/head.ejs') %>
+<script src="/admin/bower_components/jquery/dist/jquery.min.js"></script>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <%- include('./includes/header.ejs') %>
+
+  <%- include('./includes/sidebar.ejs') %>
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Menular
+        <small>Boshqaruv paneli</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/@admin/home"><i class="fa fa-dashboard"></i> Bosh sahifa</a></li>
+        <li><a href="/@admin/materials">Menular</a></li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tr>
+                  <th>№</th>
+                  <th>Menu Nomi</th>
+                  <th>Yaratilgan sana</th>
+                  <th>O'zgartirilgan sana</th>
+                  <th>Tahrirlash</th>
+                </tr>
+                <% for (let i = 0; i < menu.length; i++) { %>
+                <tr>
+                  <td><%= i + 1 %></td>
+                  <td><a href="/@admin/materials/<%= menu[i].id %>"><%= menu[i].category_name %></a></td>
+                  <td><%= menu[i].created_at %></td>
+                  <td><%= menu[i].updated_at %></td>
+                  <td>
+                      <button
+                        class="btn btn-warning btn-edit"
+                        data-toggle="modal"
+                        data-target="#modal-default"
+                        data-id="<%= menu[i].id %>"
+                        data-name="<%= menu[i].category_name %>"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button
+                        class="btn btn-danger btn-delete"
+                        data-toggle="modal"
+                        data-target="#modal-delete"
+                        data-id="<%= menu[i].id %>"
+                        data-name="<%= menu[i].category_name %>"
+                      >
+                        <i class="fa fa-remove"></i>
+                      </button>
+                  </td>
+                </tr>
+                <% } %>
+                
+              </table>
+              <div class="box-footer">
+                <!-- <button class="btn btn-default">Orqaga</button> -->
+                <button data-toggle="modal" data-target="#modal-default" class="btn btn-info pull-right" >Yangi yaratish</button>
+                
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <!--  Add/update modal -->
+  <div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalTitle">Yangi menu</h4>
+      </div>
+
+      <form role="form" id="menuForm" action="/@admin/materials" method="POST">
+        <!-- for PUT when updating -->
+        <input type="hidden" name="_method" id="methodField" value="">
+        <input type="hidden" name="id" id="menuId" value="">
+
+        <div class="modal-body">
+          <div class="box-body">
+            <div class="form-group">
+              <label for="menu">Menu nomi</label>
+              <input type="text" class="form-control" id="menu" name="category" placeholder="Menu nomi...">
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Yopish</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Qo'shish</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+  <!-- Delete modal -->
+   <div class="modal fade" id="modal-delete">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-red">
+        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        <h4 class="modal-title">O‘chirishni tasdiqlash</h4>
+      </div>
+
+      <form id="deleteForm" action="" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <div class="modal-body">
+          <p>
+            Quyidagi menuni o‘chirmoqchimisiz?
+            <br>
+            <strong id="deleteName"></strong>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Bekor qilish</button>
+          <button type="submit" class="btn btn-danger">O‘chirish</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+   <script>
+        // New button
+        $('[data-target="#modal-default"][data-toggle="modal"]').on('click', function (e) {
+          const isEditBtn = $(this).hasClass('btn-edit');
+          const form = $('#menuForm');
+          const title = $('#modalTitle');
+          const submitBtn = $('#submitBtn');
+          const methodField = $('#methodField');
+          const idInput = $('#menuId');
+          const nameInput = $('#menu');
+
+          if (isEditBtn) {
+            const id = $(this).data('id');
+            const name = $(this).data('name');
+
+            // Edit mode
+            title.text("Menuni tahrirlash");
+            submitBtn.text("Saqlash");
+
+            form.attr('action', '/@admin/materials/' + id);
+            methodField.val('PUT');    // method-override will catch this
+            idInput.val(id);
+            nameInput.val(name);
+          } else {
+            // Create mode
+            title.text("Yangi menu");
+            submitBtn.text("Qo'shish");
+
+            form.attr('action', '/@admin/materials');
+            methodField.val('');
+            idInput.val('');
+            nameInput.val('');
+          }
+        });
+
+        // Clear on modal hide
+        $('#modal-default').on('hidden.bs.modal', function () {
+          $('#menuForm')[0].reset();
+          $('#methodField').val('');
+          $('#menuId').val('');
+          $('#modalTitle').text('Yangi menu');
+          $('#submitBtn').text("Qo'shish");
+          $('#menuForm').attr('action', '/@admin/materials');
+        });
+      </script>
+<script>
+  $('.btn-delete').on('click', function () {
+    const id = $(this).data('id');
+    const name = $(this).data('name');
+
+    // Set confirm text
+    $('#deleteName').text(name);
+
+    // Point the form to the resource
+    $('#deleteForm').attr('action', '/@admin/materials/' + id);
+  });
+
+  // Optional safety: clear action when modal hides
+  $('#modal-delete').on('hidden.bs.modal', function () {
+    $('#deleteForm').attr('action', '');
+    $('#deleteName').text('');
+  });
+</script>
+
+  <%- include('./includes/footer.ejs') %>
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<%- include('./includes/end.ejs') %>
+</body>
+</html>
