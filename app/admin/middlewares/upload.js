@@ -2,111 +2,55 @@ const fs = require("fs");
 const path = require("path");
 let upload = (req, res, next) => {
     try {
-        // if there photos
-        if(req.files && req.files.photos){
-            if(!fs.existsSync(path.join(__dirname, `../../../public/upload/gallery/`))){
-                fs.mkdirSync(path.join(__dirname, `../../../public/upload/gallery/`),{ recursive: true });
+        // if there images
+        if(req.files && req.files.image){
+            if(!fs.existsSync(path.join(__dirname, `../../../public/uploads/img/`))){                
+                fs.mkdirSync(path.join(__dirname, `../../../public/uploads/img/`),{ recursive: true });
             }
-            let photos = []
+            
+            let imageName = req.files.image.md5;
+            let image = req.files.image;
+            let mimi = image.mimetype.split("/");
 
-            if(!Array.isArray(req.files.photos)){
-                let imageName = req.files.photos.md5;
-                let image = req.files.photos;
-                let mimi = image.mimetype.split("/");
-
-                if (image.size > 10000000) {
-                    console.log("File is big");
-                    req.photos = photos
-                }
-                // mv()  to save
-                image.mv(path.join(__dirname, `../../../public/upload/gallery/${imageName}.${mimi[1]}`), async(err) => {
-                })
-                photos.push(imageName + "." + mimi[1]);
-                req.photos = [imageName + "." + mimi[1]];
-                return next();
+            if (image.size > 10000000) {
+                console.log("File is big");
+                req.image = image
             }
-            for (let i = 0; i < req.files.photos.length; i++) {
-                let imageName = req.files.photos[i].md5;
-                let sampleFile = req.files.photos[i];
-                let mimi = sampleFile.mimetype.split("/");
+            // mv()  to save
+            image.mv(path.join(__dirname, `../../../public/uploads/img/${imageName}.${mimi[1]}`), async(err) => {
+            })
 
-                if (sampleFile.size > 10000000) {
-                    console.log("File is big");
-                    req.photos = photos
-                }
-                // mv()  to save
-                sampleFile.mv(path.join(__dirname, `../../../public/upload/gallery/${imageName}.${mimi[1]}`), async(err) => {
-                })
-                photos.push(imageName + "." + mimi[1])
-            }
-            req.photos = photos
-            return next()
-        }else if(req.files && req.files.resultsFile){
-            let filePath = 'parings'
-            let resultsFileName = req.files.resultsFile.md5;
-            if(req.params.rankingID) filePath = 'rankings'
+            req.image = image
+            // return next()
+        }
+        
+        if(req.files && req.files.doc){
+            let filePath = 'docs'
 
-            if (!fs.existsSync(path.join(__dirname, `../../../public/upload/${filePath}/`))){
-                fs.mkdirSync(path.join(__dirname, `../../../public/upload/${filePath}/`),{ recursive: true });
+            if (!fs.existsSync(path.join(__dirname, `../../../public/uploads/${filePath}/`))){
+                fs.mkdirSync(path.join(__dirname, `../../../public/uploads/${filePath}/`),{ recursive: true });
             }
 
-            let resultsFile = req.files.resultsFile
+            let doc = req.files.doc
+            let docName = req.files.doc.md5
 
-            if(resultsFile.size > 10000000 || resultsFile.size > 10000000){
+            if(doc.size > 10000000 || doc.size > 10000000){
                 console.log("File is big");
                 req.lfile = "/"
                 return next()
             }
 
-            resultsFile.mv(path.join(__dirname, `../../../public/upload/${filePath}/${resultsFileName}.xlsx`), async (err)=>{
+            doc.mv(path.join(__dirname, `../../../public/uploads/${filePath}/${docName}`), async (err)=>{
                 if(err) {
-                    req.resultsFile = '/'
-                    console.log('line 45\n\n',err)
+                    req.doc = '/'
+                    console.log('line 43\n\n',err)
                     return next()
                 }
-                req.resultsFile = resultsFileName + '.' + 'xlsx'
-                return next()
             })
+
+            req.doc = docName + '.' + 'pdf'
         }
-        else{// else ranking & parings
-            // check if folder exists
-            if (!fs.existsSync(path.join(__dirname, `../../../public/upload/rankings/`))){
-                fs.mkdirSync(path.join(__dirname, `../../../public/upload/rankings/`),{ recursive: true });
-                fs.mkdirSync(path.join(__dirname, `../../../public/upload/parings/`), { recursive: true });
-            }
-
-            let rankingFileName = req.files.rankingFile.md5;
-            let paringFileName = req.files.paringFile.md5;
-
-            let rankingFile = req.files.rankingFile
-            let paringFile = req.files.paringFile
-
-            if(rankingFile.size > 10000000 || paringFile.size > 10000000){
-                console.log("File is big");
-                req.lfile = "/"
-                return next()
-            }
-
-            rankingFile.mv(path.join(__dirname, `../../../public/upload/rankings/${rankingFileName}.xlsx`), async(err)=>{
-                if(err) {
-                    req.rankingFile = '/'
-                    req.paringFile = '/'
-                    console.log(err)
-                    return next()
-                }
-                paringFile.mv(path.join(__dirname, `../../../public/upload/parings/${paringFileName}.xlsx`), async (err)=>{
-                    if(err) {
-                        req.rankingFile = '/'
-                        req.paringFile = '/'
-                        console.log('line 45\n\n',err)
-                        return next()
-                    }
-                    req.paringFile = paringFileName + '.' + 'xlsx'
-                    req.rankingFile = rankingFileName + '.' + 'xlsx'
-                    return next()
-                })
-            })
-        }
+        return next()
     } catch (err) {
         // console.log("Upload error in line 24");
         console.log(err);

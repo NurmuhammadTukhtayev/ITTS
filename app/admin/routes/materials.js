@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express.Router()
 const controllers = require('../controllers/materials');
+const upload = require('../middlewares/upload');
 
 // get learning material menu
 app.get('/', controllers.material_menu);
@@ -15,6 +16,9 @@ app.put('/:id', controllers.material_menu_put);
 app.delete('/:id', controllers.material_menu_delete);
 
 // get learning materials by category
-app.get('/:category', controllers.materials_by_category);
+app.get('/:id', controllers.materials_by_category);
+
+// add new item
+app.post('/:id/items', [upload, controllers.material_post])
 
 module.exports = app;

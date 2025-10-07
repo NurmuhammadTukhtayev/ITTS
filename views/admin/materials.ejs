@@ -52,6 +52,11 @@
                 <% } %>
                 
               </table>
+              <div class="box-footer">
+                <!-- <button class="btn btn-default">Orqaga</button> -->
+                <button data-toggle="modal" data-target="#modal-default" class="btn btn-info pull-right" >Yangi yaratish</button>
+                
+              </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -62,6 +67,161 @@
     </section>
     <!-- /.content -->
   </div>
+
+  <!--  Add/update modal -->
+  <div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modalTitle">Yangi material</h4>
+        </div>
+
+        <form role="form" id="itemForm" action="" method="POST" enctype="multipart/form-data">
+          <!-- for PUT when updating -->
+          <input type="" name="_method" id="methodField" value="">
+          <input type="" name="id" id="itemId" value="">
+          <input type="" name="category_id" id="categoryId" value="">
+
+          <div class="modal-body">
+            <div class="box-body">
+              <div class="form-group">
+                
+                <label for="title">Fayl nomi</label>
+                <input type="text" class="form-control" id="title" name="category" placeholder="Fayl nomi...">
+                
+                <label for="title">Material haqida qisqacha</label>
+                <input type="text" class="form-control" id="title" name="description" placeholder="Info...">
+              
+                <label for="image">Rasm</label>
+                <input type="file" name="image" id="image">
+
+                <label for="material_file">Hujjat</label>
+                <input type="file" name="doc" id="material_file">
+
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Yopish</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Qo'shish</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete modal -->
+  <div class="modal fade" id="modal-delete">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-red">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title">O‘chirishni tasdiqlash</h4>
+        </div>
+
+        <form id="deleteForm" action="" method="POST">
+          <input type="hidden" name="_method" value="DELETE">
+          <div class="modal-body">
+            <p>
+              Quyidagi menuni o‘chirmoqchimisiz?
+              <br>
+              <strong id="deleteName"></strong>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Bekor qilish</button>
+            <button type="submit" class="btn btn-danger">O‘chirish</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // New button
+    $('[data-target="#modal-default"][data-toggle="modal"]').on('click', function (e) {
+      const isEditBtn = $(this).hasClass('btn-edit');
+      const form = $('#itemForm');
+      const title = $('#modalTitle');
+      const submitBtn = $('#submitBtn');
+      const methodField = $('#methodField');
+      const idInput = $('#itemId');
+      const nameInput = $('#item');
+      const categoryInput = $('#categoryId');
+      const pathname = window.location.pathname;
+      const category_id = pathname.split('/materials/')[1];
+
+      if (isEditBtn) {
+        const id = $(this).data('id');
+        const name = $(this).data('name');
+
+        // Edit mode
+        title.text("Menuni tahrirlash");
+        submitBtn.text("Saqlash");
+
+        form.attr('action', pathname + '/items/' + id);
+        methodField.val('PUT');    // method-override will catch this
+        idInput.val(id);
+        nameInput.val(name);
+      } else {
+        // Create mode
+        title.text("Yangi menu");
+        submitBtn.text("Qo'shish");
+
+        form.attr('action', pathname + '/items');
+        methodField.val('');
+        idInput.val('');
+        nameInput.val('');
+        categoryInput.val(category_id);
+      }
+
+      // const form = document.getElementById('itemForm');
+      console.log(document.getElementById("itemForm").action);
+
+    });
+    
+    // Clear on modal hide
+    $('#modal-default').on('hidden.bs.modal', function () {
+      $('#itemForm')[0].reset();
+      $('#methodField').val('');
+      $('#itemId').val('');
+      $('#modalTitle').text('Yangi menu');
+      $('#submitBtn').text("Qo'shish");
+      $('#itemForm').attr('action', pathname);
+    });
+  </script>
+  <script>
+    $('.btn-delete').on('click', function () {
+      const id = $(this).data('id');
+      const name = $(this).data('name');
+      const pathname = window.location.pathname;
+
+      // Set confirm text
+      $('#deleteName').text(name);
+
+      // Point the form to the resource
+      $('#deleteForm').attr('action', pathname + '/items/' + id);
+    });
+
+    // Optional safety: clear action when modal hides
+    $('#modal-delete').on('hidden.bs.modal', function () {
+      $('#deleteForm').attr('action', '');
+      $('#deleteName').text('');
+    });
+  </script>
+
+  <%- include('./includes/footer.ejs') %>
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
 
   <%- include('./includes/footer.ejs') %>
 

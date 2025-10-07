@@ -1,5 +1,6 @@
 const {query} = require("../../../database/connction/query");
 
+// get material categories
 const material_menu = async (req, res, next)=>{
     try{
         let menu = await query("SELECT * FROM `vw_material_categories`");
@@ -10,9 +11,12 @@ const material_menu = async (req, res, next)=>{
     }
 }
 
+// add new material category
 const material_menu_post = async (req, res, next)=>{
     try{
         const {category} = req.body;
+        console.log(req.body);
+        
         
         const result = await query("INSERT INTO `learning_material_categories`(`category_name`) VALUES (?)", [category]);
 
@@ -24,6 +28,7 @@ const material_menu_post = async (req, res, next)=>{
     }
 }
 
+// update material category
 const material_menu_put = async (req, res, next)=>{
     try{
         const {id, category} = req.body;
@@ -41,6 +46,7 @@ const material_menu_put = async (req, res, next)=>{
     }
 }
 
+// remove material category
 const material_menu_delete = async (req, res, next)=>{
     try{
         const {id} = req.params;
@@ -55,9 +61,10 @@ const material_menu_delete = async (req, res, next)=>{
     } 
 }
 
+// get items by category
 const materials_by_category = async (req, res, next)=>{
     try{
-        const category = req.params.category;
+        const category = req.params.id;
         let materials = await query("SELECT * FROM `vw_material_items` WHERE `category_id` = ?", [parseInt(category)]);
                 
         res.render('./admin/materials', {materials})
@@ -66,5 +73,19 @@ const materials_by_category = async (req, res, next)=>{
     }
 }
 
+// add new items
+const material_post = async (req, res, next) => {
+    try{
+        const body = req.body;
+        console.log(body);
 
-module.exports = {material_menu, materials_by_category, material_menu_post, material_menu_put, material_menu_delete}
+        res.redirect('/@admin/materials/1')
+    }catch{
+
+    }
+}
+
+module.exports = {
+    material_menu, materials_by_category, material_menu_post, material_menu_put, material_menu_delete,
+    material_post
+}
