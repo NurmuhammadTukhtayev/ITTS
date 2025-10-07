@@ -2,17 +2,7 @@
 
 <body class="theme3">
     
-    <div id="preloader" class="preloader"><button class="th-btn th-radius preloaderCls">Cancel Preloader</button>
-        <div id="loader" class="th-preloader">
-            <div class="animation-preloader">
-                <div class="txt-loading"><span preloader-text="W" class="characters">W</span> <span preloader-text="E"
-                        class="characters">E</span> <span preloader-text="B" class="characters">B</span> <span
-                        preloader-text="T" class="characters">T</span> <span preloader-text="E"
-                        class="characters">E</span> <span preloader-text="C" class="characters">C</span> <span
-                        preloader-text="K" class="characters">K</span></div>
-            </div>
-        </div>
-    </div>
+    <%- include('./includes/loader.ejs') %>
 
     <%- include('./includes/navbar.ejs') %>
 
@@ -28,16 +18,16 @@
                             <div class="row">
                                 <div class="col-xl-6">
                                     <div class="hero-style24">
-                                        <h1 class="hero-title" data-ani="slideinleft" data-ani-delay="0.4s">Web dashturlash uchun
-                                            <span>Python</span></h1>
-                                        <p class="hero-text" data-ani="slideinleft" data-ani-delay="0.6s">Python bilan kuchli va kengaytiriladigan veb-ilovalar yarating
-Django va Flask kabi freymlar. Python dasturlashni tezroq, soddalashtiradi va butun dunyo bo‘ylab yetakchi kompaniyalar ishonchini qozonadi.
+                                        <h1 class="hero-title" data-ani="slideinleft" data-ani-delay="0.4s">Python для
+                                            <span>веб-разработки</span></h1>
+                                        <p class="hero-text" data-ani="slideinleft" data-ani-delay="0.6s">Создавайте мощные и расширяемые веб-приложения с Python
+Фреймы, такие как Django и Flask. Python упрощает программирование быстрее и завоевывает доверие ведущих компаний по всему миру.
                                         </p>
                                         <div class="btn-group justify-content-center justify-content-xl-start"
                                             data-ani="slideinup" data-ani-delay="0.9s"><a href="/media/videos"
-                                                class="th-btn2 style2"><span>Videoqo'llanmalar</span><span class="icon"><i
+                                                class="th-btn2 style2"><span>Видеоинструкции</span><span class="icon"><i
                                                         class="fa-solid fa-caret-right"></i></span></a> <a
-                                                href="/media/presentations/" class="th-btn2 th-border">Materiallar</a></div>
+                                                href="/media/presentations/" class="th-btn2 th-border">Материалы</a></div>
                                         <!-- <div class="hero-client-box mb-sm-0 mb-5" data-ani="slideinup"
                                             data-ani-delay="0.8s">
                                             <div class="client-thumb-group">
@@ -71,14 +61,14 @@ Django va Flask kabi freymlar. Python dasturlashni tezroq, soddalashtiradi va bu
                             <div class="row">
                                 <div class="col-xl-6">
                                     <div class="hero-style24">
-                                        <h1 class="hero-title" data-ani="slideinleft" data-ani-delay="0.4s">AI va Machine Learning uchun 
-                                            <span>Python</span> </h1>
-                                        <p class="hero-text" data-ani="slideinleft" data-ani-delay="0.6s">AI loyihalaringizni TensorFlow va PyTorch kabi Python’ning boy kutubxonalari bilan quvvatlantiring. Ma’lumotlarni tahlil qilishdan tortib, aqlli tizimlargacha, Python bugungi kunda mashinali o‘rganish innovatsiyalarini boshqaradi.</p>
+                                        <h1 class="hero-title" data-ani="slideinleft" data-ani-delay="0.4s">Python для 
+                                            <span>ИИ и машинного обучения</span> </h1>
+                                        <p class="hero-text" data-ani="slideinleft" data-ani-delay="0.6s">Заряжайте свои AI-проекты богатыми библиотеками Python, такими как TensorFlow и PyTorch. От анализа данных до интеллектуальных систем, Python сегодня управляет инновациями в области машинного обучения.</p>
                                         <div class="btn-group justify-content-center justify-content-xl-start"
                                             data-ani="slideinup" data-ani-delay="0.9s"><a href="/media/videos"
-                                                class="th-btn2 style2"><span>Videoqo'llanmalar</span><span class="icon"><i
+                                                class="th-btn2 style2"><span>Видеоинструкции</span><span class="icon"><i
                                                         class="fa-solid fa-caret-right"></i></span></a> <a
-                                                href="/media/presentations/" class="th-btn2 th-border">Materiallar</a></div>
+                                                href="/media/presentations/" class="th-btn2 th-border">Материалы</a></div>
                                         <!-- <div class="hero-client-box mb-sm-0 mb-5" data-ani="slideinup"
                                             data-ani-delay="0.8s">
                                             <div class="client-thumb-group">
@@ -120,11 +110,11 @@ Django va Flask kabi freymlar. Python dasturlashni tezroq, soddalashtiradi va bu
         <div class="hero-counter_wrapp">
             <div class="hero-counter">
                 <h2 class="counter-title mb-0"><span class="counter-number">400000</span>+</h2><span
-                    class="hero-counter_text">PyPIdagi kutubxonalar </span>
+                    class="hero-counter_text">Библиотеки в PyPI </span>
             </div>
             <div class="hero-counter">
                 <h2 class="counter-title mb-0"><span class="counter-number">10000000</span>+</h2><span
-                    class="hero-counter_text">Python dasturchilari</span>
+                    class="hero-counter_text">Разработчики Python</span>
             </div>
         </div>
     </div>
@@ -133,7 +123,7 @@ Django va Flask kabi freymlar. Python dasturlashni tezroq, soddalashtiradi va bu
     <div class="brand-sec4 overflow-hidden space" data-bg-src="assets/img/bg/bg_pattern.png">
         <div class="container th-container4">
             <div class="title-area mb-60 text-center">
-                <h3 class="brand-title mt-n2">Ma’lumotlar ilmi va sun’iy intellekt sohasida birinchi raqamli til</h3>
+                <h3 class="brand-title mt-n2">Язык номер один в области науки о данных и искусственного интеллекта</h3>
             </div>
             <div class="slider-area text-center">
 
@@ -147,22 +137,22 @@ Django va Flask kabi freymlar. Python dasturlashni tezroq, soddalashtiradi va bu
         <div class="service-sec24 position-relative overflow-hidden space" id="service-sec">
             <div class="container th-container4">
                 <div class="title-area text-center mb-40">
-                    <h2 class="sec-title text-white">Python orqali nimalar qilish mumkin</h2><img
+                    <h2 class="sec-title text-white">Что можно сделать с Python</h2><img
                         src="assets/img/theme-img/title_shape_8.svg" alt="">
                 </div>
                 <div class="row gy-4 justify-content-between align-items-center">
                     <div class="col-12 col-lg-4">
                         <div class="service-block style1">
                             <div class="box-icon"><img src="assets/img/icon/service_12_1.svg" alt="Icon"></div>
-                            <h3 class="box-title"><a href="service-details.html">Xavfsiz, kengaytiriladigan veb-saytlar va APIlarni yaratish</a></h3>
+                            <h3 class="box-title"><a href="service-details.html">Создание безопасных, расширяемых веб-сайтов и API</a></h3>
                         </div>
                         <div class="service-block style1">
                             <div class="box-icon"><img src="assets/img/icon/service_12_2.svg" alt="Icon"></div>
-                            <h3 class="box-title"><a href="service-details.html">Modellarni o‘qitish, ma’lumotlarni tahlil qilish va aqlli ilovalarni yaratish</a></h3>
+                            <h3 class="box-title"><a href="service-details.html">Обучение моделей, анализ данных и создание умных приложений</a></h3>
                         </div>
                         <div class="service-block style1">
                             <div class="box-icon"><img src="assets/img/icon/service_12_3.svg" alt="Icon"></div>
-                            <h3 class="box-title"><a href="service-details.html">Murakkab ma’lumotlarni qayta ishlash, vizuallashtirish va tushunish</a></h3>
+                            <h3 class="box-title"><a href="service-details.html">Обработка, визуализация и понимание сложных данных</a></h3>
                         </div>
                     </div>
                     <div class="col-12 col-lg-4 text-center">
@@ -172,15 +162,15 @@ Django va Flask kabi freymlar. Python dasturlashni tezroq, soddalashtiradi va bu
                     <div class="col-12 col-lg-4">
                         <div class="service-block">
                             <div class="box-icon"><img src="assets/img/icon/service_12_4.svg" alt="Icon"></div>
-                            <h3 class="box-title"><a href="service-details.html">Dvigatellar yordamida 2D va 3D o‘yinlar yaratish</a></h3>
+                            <h3 class="box-title"><a href="service-details.html">Создание 2D и 3D игр с помощью двигателей</a></h3>
                         </div>
                         <div class="service-block">
                             <div class="box-icon"><img src="assets/img/icon/service_12_5.svg" alt="Icon"></div>
-                            <h3 class="box-title"><a href="service-details.html">Kundalik vazifalar, veb-qirqish va ish jarayonlarini osonlik bilan avtomatlashtirish</a></h3>
+                            <h3 class="box-title"><a href="service-details.html">Легкая автоматизация повседневных задач, веб-разрезания и рабочих процессов</a></h3>
                         </div>
                         <div class="service-block">
                             <div class="box-icon"><img src="assets/img/icon/service_12_6.svg" alt="Icon"></div>
-                            <h3 class="box-title"><a href="service-details.html">Serverlarni boshqarish, ilovalarni joylashtirish</a></h3>
+                            <h3 class="box-title"><a href="service-details.html">Управление серверами, размещение приложений</a></h3>
                         </div>
                     </div>
                 </div>
@@ -191,7 +181,7 @@ Django va Flask kabi freymlar. Python dasturlashni tezroq, soddalashtiradi va bu
     <section class="blog-area11 overflow-hidden space" id="blog-sec">
         <div class="container th-container4">
             <div class="title-area text-center">
-                <h2 class="sec-title">Eng yangi bloglar</h2><img src="assets/img/theme-img/title_shape_7.svg" alt="">
+                <h2 class="sec-title">Последние блоги</h2><img src="assets/img/theme-img/title_shape_7.svg" alt="">
             </div>
             <div class="slider-area">
                 <div class="swiper th-slider has-shadow" id="blogSlider12"
