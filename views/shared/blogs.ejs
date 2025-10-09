@@ -8,62 +8,85 @@
     <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg.jpg">
         <div class="container">
             <div class="breadcumb-content">
-                <h1 class="breadcumb-title">Blog</h1>
+                <h1 class="breadcumb-title">Блог</h1>
                 <ul class="breadcumb-menu">
-                    <li><a href="/">Bosh sahifa</a></li>
-                    <li>Blog</li>
+                    <li><a href="/">Главная страница</a></li>
+                    <li>Блог</li>
                 </ul>
             </div>
         </div>
     </div>
+    
     <section class="th-blog-wrapper space-top space-extra-bottom">
-        <div class="container">
-            <div class="row">
-                <div class="col-xxl-8 col-lg-7">
-                    <% for (let i = 0; i < blogs.length; i++) { %>
-                    <div class="th-blog blog-single has-post-thumbnail">
-                        <div class="blog-img"><a href="blog/<%= blogs[i].id %>"><img src="/assets/img/blog/<%= blogs[i].image_url %>"
-                                    alt="Blog Image"></a></div>
-                        <div class="blog-content">
-                            <div class="blog-meta"><a class="author" href="blog.html"><img
-                                        src="/assets/img/blog/author-1-1.png" alt="avater"> By <%= blogs[i].author %></a> <a
-                                    href="blog.html"><i class="fa-light fa-calendar-days"></i><%= blogs[i].published_on %></a>
-                            </div>
-                            <h2 class="blog-title"><a href="blog/<%= blogs[i].id %>"> <%= blogs[i].title %> </a></h2>
-                            <p class="blog-text"><%= blogs[i].content %>...</p><a href="blog/<%= blogs[i].id %>"
-                                class="line-btn">Koo'proq</a>
-                        </div>
-                    </div>
-                    <% } %>
-                    <div class="th-pagination text-center">
-                        <ul>
-                            <% if (pagination.hasPrev) { %>
-                            <li><a href="/blog?page=<%= pagination.prevPage %>"><i class="far fa-arrow-left"></i></a></li>
-                            <% } else { %>
-                            <li class="disabled"><span><i class="far fa-arrow-left"></i></span></li>
-                            <% } %>
+    <div class="container">
+      <div class="row">
+        <div class="col-xxl-8 col-lg-7">
 
-                            <% pagination.pages.forEach(function(p){ %>
-                            <% if (p === '…') { %>
-                                <li class="disabled"><span>…</span></li>
-                            <% } else if (p === pagination.currentPage) { %>
-                                <li class="active"><span><%= p %></span></li>
-                            <% } else { %>
-                                <li><a href="/blog?page=<%= p %>"><%= p %></a></li>
-                            <% } %>
-                            <% }); %>
-
-                            <% if (pagination.hasNext) { %>
-                            <li><a href="/blog?page=<%= pagination.nextPage %>"><i class="far fa-arrow-right"></i></a></li>
-                            <% } else { %>
-                            <li class="disabled"><span><i class="far fa-arrow-right"></i></span></li>
-                            <% } %>
-                        </ul>
-                    </div>
-                </div>
+          <% if (blogs.length === 0) { %>
+            <div class="text-center" style="margin: 60px 0;">
+              <p style="font-size: 1.2rem; color: #666;">
+                Пока нет опубликованных блогов.
+              </p>
             </div>
+          <% } else { %>
+            <% for (let i = 0; i < blogs.length; i++) { %>
+              <div class="th-blog blog-single has-post-thumbnail">
+                <div class="blog-img">
+                  <a href="blog/<%= blogs[i].id %>">
+                    <img src="/assets/img/blog/<%= blogs[i].image_url %>" alt="Blog Image">
+                  </a>
+                </div>
+                <div class="blog-content">
+                  <div class="blog-meta">
+                    <a class="author" href="#">
+                      <img src="/assets/img/blog/author-1-1.png" alt="avater">
+                      By <%= blogs[i].author %>
+                    </a>
+                    <a href="#">
+                      <i class="fa-light fa-calendar-days"></i>
+                      <%= blogs[i].published_on %>
+                    </a>
+                  </div>
+                  <h2 class="blog-title">
+                    <a href="blog/<%= blogs[i].id %>"><%= blogs[i].title %></a>
+                  </h2>
+                  <p class="blog-text"><%= blogs[i].content %>...</p>
+                  <a href="blog/<%= blogs[i].id %>" class="line-btn">Ko'proq</a>
+                </div>
+              </div>
+            <% } %>
+
+            <div class="th-pagination text-center">
+              <ul>
+                <% if (pagination.hasPrev) { %>
+                  <li><a href="/blog?page=<%= pagination.prevPage %>"><i class="far fa-arrow-left"></i></a></li>
+                <% } else { %>
+                  <li class="disabled"><span><i class="far fa-arrow-left"></i></span></li>
+                <% } %>
+
+                <% pagination.pages.forEach(function(p){ %>
+                  <% if (p === '…') { %>
+                    <li class="disabled"><span>…</span></li>
+                  <% } else if (p === pagination.currentPage) { %>
+                    <li class="active"><span><%= p %></span></li>
+                  <% } else { %>
+                    <li><a href="/blog?page=<%= p %>"><%= p %></a></li>
+                  <% } %>
+                <% }); %>
+
+                <% if (pagination.hasNext) { %>
+                  <li><a href="/blog?page=<%= pagination.nextPage %>"><i class="far fa-arrow-right"></i></a></li>
+                <% } else { %>
+                  <li class="disabled"><span><i class="far fa-arrow-right"></i></span></li>
+                <% } %>
+              </ul>
+            </div>
+          <% } %>
+
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
     
     <%- include('./includes/footer.ejs') %>
     

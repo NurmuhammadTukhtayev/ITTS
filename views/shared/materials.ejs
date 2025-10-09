@@ -10,41 +10,56 @@
             <div class="breadcumb-content">
                 <h1 class="breadcumb-title" style="text-transform: capitalize;"><%= category %></h1>
                 <ul class="breadcumb-menu">
-                    <li><a href="/">Bosh sahifa</a></li>
-                    <li><a href="/">O'quv materiallari</a></li>
+                    <li><a href="/">Главная страница</a></li>
+                    <li><a href="/">Учебные материалы</a></li>
                     <li style="text-transform: capitalize;" ><%= category %></li>
                 </ul>
             </div>
         </div>
     </div>
     
-    <section class="space" id="service-sec">
-        <div class="container">
-            <div class="row gy-4">
-                <% for (let i = 0; i < materials.length; i++) { %>
-                    <div class="col-md-6 col-xl-4">
-                    <div class="service-card">
-                        <div class="service-card_number"><%= i + 1 %></div>
-                        <div class="shape-icon"><img src="/assets/img/icon/service_card_1.svg" alt="Icon"> <span
-                                class="dots"></span></div>
-                        <h3 class="box-title"><a href="#"><%= materials[i].title %></a></h3>
-                        <p class="service-card_text"><%= materials[i].description %> </p>
-                            <a href="download/<%= materials[i].file_path %>" class="th-btn">
-                                Yuklab olish<i class="fa-regular fa-arrow-right ms-2"></i>
-                            </a>
-                        <div class="bg-shape"><img src="/assets/img/bg/service_card_bg.png" alt="bg"></div>
-                    </div>
+     <section class="space" id="service-sec">
+    <div class="container">
+      <div class="row gy-4">
+
+        <% if (materials.length === 0) { %>
+          <div class="col-12 text-center">
+            <p style="font-size: 1.2rem; color: #666;">
+              Пока нет доступных учебных материалов.
+            </p>
+          </div>
+        <% } else { %>
+          <% for (let i = 0; i < materials.length; i++) { %>
+            <div class="col-md-6 col-xl-4">
+              <div class="service-card">
+                <div class="service-card_number"><%= i + 1 %></div>
+                <div class="shape-icon">
+                  <img src="/assets/img/icon/service_card_1.svg" alt="Icon">
+                  <span class="dots"></span>
                 </div>
-                <% } %>
+                <h3 class="box-title">
+                  <a href="#"><%= materials[i].title %></a>
+                </h3>
+                <p class="service-card_text"><%= materials[i].description %></p>
+                <a href="download/<%= materials[i].file_path %>" class="th-btn">
+                  Скачать сейчас<i class="fa-regular fa-arrow-right ms-2"></i>
+                </a>
+                <div class="bg-shape">
+                  <img src="/assets/img/bg/service_card_bg.png" alt="bg">
+                </div>
+              </div>
             </div>
-        </div>
-    </section>
+          <% } %>
+        <% } %>
+
+      </div>
+    </div>
+  </section>
     
     
     <%- include('./includes/footer.ejs') %>
     
     <%- include('./includes/end.ejs') %>
 </body>
-<!-- Mirrored from html.themeholy.com/webteck/demo/service.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 26 Sep 2025 22:06:16 GMT -->
 
 </html>

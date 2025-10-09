@@ -8,59 +8,70 @@
     <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg.jpg">
         <div class="container">
             <div class="breadcumb-content">
-                <h1 class="breadcumb-title" style="text-transform: capitalize;"><%= category %></h1>
+                <h1 class="breadcumb-title" style="text-transform: capitalize;"><% if (category == 'videos') { %> видеоролики <%} else {%> презентации <% } %></h1>
                 <ul class="breadcumb-menu">
-                    <li><a href="/">Bosh sahifa</a></li>
-                    <li>Media</li>
-                    <li style="text-transform: capitalize;"><%= category %></li>
+                    <li><a href="/">Главная страница</a></li>
+                    <li>Медиа</li>
+                    <li style="text-transform: capitalize;"><% if (category == 'videos') { %> видеоролики <%} else {%> презентации <% } %></li>
                 </ul>
             </div>
         </div>
     </div>
     <section class="space">
-        <div class="container">
-            <div class="row gy-4">
-                <% if(category == 'videos') for (let i = 0; i < media.length; i++) { %>
-                <div class="col-lg-4 col-md-6">
-                    <div class="project-card">
-                        <div class="project-img"><img src="/assets/img/project/<%= media[i].image_url %>" alt="project image">
-                        </div>
-                        <div class="project-content-wrap">
-                            <div class="project-content">
-                                <div class="box-particle" id="project-p1"></div>
-                                <h3 class="box-title"><a target="_blank" href="<%= media[i].video_url %>"><%= media[i].title %></a></h3>
-                                <p class="project-subtitle"></p><a  href="/assets/img/project/<%= media[i].image_url %>"
-                                    class="icon-btn popup-image"><i class="far fa-plus"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <% } %>
+  <div class="container">
+    <div class="row gy-4">
 
-                <% if(category == 'presentations') for (let i = 0; i < media.length; i++) { %>
-                <div class="col-lg-4 col-md-6">
-                    <div class="project-card">
-                        <div class="project-img"><img src="/assets/img/project/<%= media[i].image_url %>" alt="project image">
-                        </div>
-                        <div class="project-content-wrap">
-                            <div class="project-content">
-                                <div class="box-particle" id="project-p1"></div>
-                                <!-- download link -->
-                                <h3 class="box-title"><a href="#"><%= media[i].title %></a></h3> 
-                                <p class="project-subtitle"></p><a  href="/assets/img/project/<%= media[i].image_url %>"
-                                    class="icon-btn popup-image"><i class="far fa-plus"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <% } %>
-            </div>
+      <% if (media.length === 0) { %>
+        <div class="col-12 text-center">
+          <p style="font-size: 1.2rem; color: #666;">Пока нет доступных материалов.</p>
         </div>
-        <div class="shape-mockup" data-top="0%" data-right="0%"><img src="/assets/img/shape/tech_shape_1.png"
-                alt="shape"></div>
-        <div class="shape-mockup" data-bottom="0%" data-left="0%"><img src="/assets/img/shape/tech_shape_2.png"
-                alt="shape"></div>
-    </section>
+      <% } else if (category === 'videos') { %>
+        <% for (let i = 0; i < media.length; i++) { %>
+          <div class="col-lg-4 col-md-6">
+            <div class="project-card">
+              <div class="project-img">
+                <img src="/assets/img/project/<%= media[i].image_url %>" alt="project image">
+              </div>
+              <div class="project-content-wrap">
+                <div class="project-content">
+                  <div class="box-particle" id="project-p1"></div>
+                  <h3 class="box-title">
+                    <a target="_blank" href="<%= media[i].video_url %>"><%= media[i].title %></a>
+                  </h3>
+                  <a href="/assets/img/project/<%= media[i].image_url %>" class="icon-btn popup-image">
+                    <i class="far fa-plus"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } %>
+
+      <% } else if (category === 'presentations') { %>
+        <% for (let i = 0; i < media.length; i++) { %>
+          <div class="col-lg-4 col-md-6">
+            <div class="project-card">
+              <div class="project-img">
+                <img src="/assets/img/project/<%= media[i].image_url %>" alt="project image">
+              </div>
+              <div class="project-content-wrap">
+                <div class="project-content">
+                  <div class="box-particle" id="project-p1"></div>
+                  <h3 class="box-title"><a href="#"><%= media[i].title %></a></h3>
+                  <a href="/assets/img/project/<%= media[i].image_url %>" class="icon-btn popup-image">
+                    <i class="far fa-plus"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } %>
+      <% } %>
+
+    </div>
+  </div>
+</section>
+
     
     <%- include('./includes/footer.ejs') %>
     

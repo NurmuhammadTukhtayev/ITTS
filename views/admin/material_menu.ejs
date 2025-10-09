@@ -12,12 +12,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Menular
-        <small>Boshqaruv paneli</small>
+        Меню
+        <small>Панель управления</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/@admin/home"><i class="fa fa-dashboard"></i> Bosh sahifa</a></li>
-        <li><a href="/@admin/materials">Menular</a></li>
+        <li><a href="/@admin/home"><i class="fa fa-dashboard"></i> Главная страница</a></li>
+        <li><a href="/@admin/materials">Меню</a></li>
       </ol>
     </section>
 
@@ -32,10 +32,10 @@
               <table class="table table-hover">
                 <tr>
                   <th>№</th>
-                  <th>Menu Nomi</th>
-                  <th>Yaratilgan sana</th>
-                  <th>O'zgartirilgan sana</th>
-                  <th>Tahrirlash</th>
+                  <th>Название</th>
+                  <th>Дата создания</th>
+                  <th>Изменённая дата</th>
+                  <th>Редактировать</th>
                 </tr>
                 <% for (let i = 0; i < menu.length; i++) { %>
                 <tr>
@@ -69,7 +69,7 @@
               </table>
               <div class="box-footer">
                 <!-- <button class="btn btn-default">Orqaga</button> -->
-                <button data-toggle="modal" data-target="#modal-default" class="btn btn-info pull-right" >Yangi yaratish</button>
+                <button data-toggle="modal" data-target="#modal-default" class="btn btn-info pull-right" >Создать новый</button>
                 
               </div>
             </div>
@@ -90,7 +90,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="modalTitle">Yangi menu</h4>
+          <h4 class="modal-title" id="modalTitle">Создать новое меню</h4>
         </div>
 
         <form role="form" id="menuForm" action="/@admin/materials" method="POST">
@@ -101,15 +101,15 @@
           <div class="modal-body">
             <div class="box-body">
               <div class="form-group">
-                <label for="menu">Menu nomi</label>
-                <input type="text" class="form-control" id="menu" name="category" placeholder="Menu nomi...">
+                <label for="menu">Название меню</label>
+                <input type="text" class="form-control" id="menu" name="category" placeholder="Название меню...">
               </div>
             </div>
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Yopish</button>
-            <button type="submit" class="btn btn-primary" id="submitBtn">Qo'shish</button>
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Закрыть</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Добавить</button>
           </div>
         </form>
 
@@ -123,21 +123,21 @@
       <div class="modal-content">
         <div class="modal-header bg-red">
           <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-          <h4 class="modal-title">O‘chirishni tasdiqlash</h4>
+          <h4 class="modal-title">Подтвердите удаление</h4>
         </div>
 
         <form id="deleteForm" action="" method="POST">
           <input type="hidden" name="_method" value="DELETE">
           <div class="modal-body">
             <p>
-              Quyidagi menuni o‘chirmoqchimisiz?
+              Вы хотите удалить меню ниже?
               <br>
               <strong id="deleteName"></strong>
             </p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Bekor qilish</button>
-            <button type="submit" class="btn btn-danger">O‘chirish</button>
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Отменить</button>
+            <button type="submit" class="btn btn-danger">Удалить</button>
           </div>
         </form>
 
@@ -163,8 +163,8 @@
         const name = $(this).data('name');
 
         // Edit mode
-        title.text("Menuni tahrirlash");
-        submitBtn.text("Saqlash");
+        title.text("Редактировать меню");
+        submitBtn.text("Сохранить изменения");
 
         form.attr('action', pathname + '/' + id);
         methodField.val('PUT');    // method-override will catch this
@@ -172,8 +172,8 @@
         nameInput.val(name);
       } else {
         // Create mode
-        title.text("Yangi menu");
-        submitBtn.text("Qo'shish");
+        title.text("Создать новое меню");
+        submitBtn.text("Добавить");
 
         form.attr('action', pathname);
         methodField.val('');
@@ -187,8 +187,8 @@
       $('#menuForm')[0].reset();
       $('#methodField').val('');
       $('#menuId').val('');
-      $('#modalTitle').text('Yangi menu');
-      $('#submitBtn').text("Qo'shish");
+      $('#modalTitle').text('Создать новый меню');
+      $('#submitBtn').text("Добавить");
       $('#menuForm').attr('action', pathname);
     });
   </script>

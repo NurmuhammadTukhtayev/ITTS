@@ -20,7 +20,7 @@ const material_menu_post = async (req, res, next)=>{
 
         if (result.insertId) return res.redirect('/@admin/materials');
 
-        res.redirect('/@admin/materials?error=true&message=Kategoriyani qo\'shishda xatolik yuz berdi. Iltimos, ma\'lumotlarni tekshirib qayta urinib ko\'ring.');
+        res.redirect('/@admin/materials?error=true&message=При добавлении категории произошла ошибка. Пожалуйста, проверьте данные и повторите попытку.');
     }catch(err){
         next(err)
     }
@@ -29,15 +29,13 @@ const material_menu_post = async (req, res, next)=>{
 // update material category
 const material_menu_put = async (req, res, next)=>{
     try{
-        const {id, category} = req.body;
-        console.log(req.method);        
-        console.log(req.body);        
+        const {id, category} = req.body;    
 
         const result = await query("UPDATE `learning_material_categories` SET `category_name` = ?, updated_at = CURDATE() WHERE `id` = ?", [category, id]);
 
         if (result.affectedRows) return res.redirect('/@admin/materials');
 
-        res.redirect('/@admin/materials?error=true&message=Kategoriyani o\'zgartirishda xatolik yuz berdi. Iltimos, ma\'lumotlarni tekshirib qayta urinib ko\'ring.');
+        res.redirect('/@admin/materials?error=true&message=При изменении категории произошла ошибка. Пожалуйста, проверьте данные и повторите попытку.');
 
     }catch(err){
         next(err)
@@ -53,7 +51,7 @@ const material_menu_delete = async (req, res, next)=>{
 
         if (result.affectedRows) return res.redirect('/@admin/materials');
 
-        res.redirect('/@admin/materials?error=true&message=Kategoriyani o\'chirishda xatolik yuz berdi. Iltimos, avval kategoriyaga tegishli materiallarni o\'chiring.');
+        res.redirect('/@admin/materials?error=true&message=Ошибка при удалении категории. Пожалуйста, сначала удалите материалы, относящиеся к категории.');
     }catch(err){
         next(err)
     } 
@@ -90,7 +88,7 @@ const material_post = async (req, res, next) => {
 
         if (result.affectedRows) return res.redirect(`/@admin/materials/${category_id}`);
 
-        res.redirect('/@admin/materials/${category_id}?error=true&message=There is an error during the database process.')
+        res.redirect('/@admin/materials/${category_id}?error=true&message=Возникла ошибка при добавлении нового документа. Пожалуйста, дважды проверьте поля')
     }catch{
 
     }
@@ -109,7 +107,7 @@ const material_put = async (req, res, next) => {
 
         if (result.affectedRows) return res.redirect(`/@admin/materials/${category_id}`);
 
-        res.redirect(`/@admin/materials/${category_id}?error=true&message=There is an error during the database process.`)
+        res.redirect(`/@admin/materials/${category_id}?error=true&message=Во время обновления нового документа произошла ошибка. Пожалуйста, дважды проверьте поля`)
 
     }
     catch(err){
@@ -124,8 +122,8 @@ const material_delete = async (req, res, next) => {
         const result = await query("DELETE FROM `learning_materials` WHERE `id` = ?", [item_id]);
 
         if (result.affectedRows) return res.redirect(`/@admin/materials/${id}`);
-        res.redirect('/@admin/materials?error=true&message=There is an error during the database process.')
-
+        
+        res.redirect('/@admin/materials?error=true&message=Ошибка при удалении, проверьте данные и попробуйте снова.')
     }catch(err){
         next(err)
     }

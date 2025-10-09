@@ -12,12 +12,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        O'quv Materiallari
-        <small>Boshqaruv paneli</small>
+        Учебные материалы
+        <small>Панель управления</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/@admin/home"><i class="fa fa-dashboard"></i> Bosh sahifa</a></li>
-        <li><a href="/@admin/materials">O'quv materiallari</a></li>
+        <li><a href="/@admin/home"><i class="fa fa-dashboard"></i> Главная страница</a></li>
+        <li><a href="/@admin/materials">Учебные материалы</a></li>
       </ol>
     </section>
 
@@ -31,14 +31,14 @@
             <div class="box-body table-responsive no-padding">
               <table class="table table-hover">
                 <tr>
-                  <th>ID</th>
-                  <th>Sarlavha</th>
-                  <th>Tavsif</th>
-                  <th>Material Turi</th>
-                  <th>Fayl holati</th>
-                  <th>Yaratilgan sana</th>
-                  <th>O'zgartirilgan sana</th>
-                  <th>Tahrirlash</th>
+                  <th>№</th>
+                  <th>Заголовок</th>
+                  <th>Описание</th>
+                  <th>Меню документа</th>
+                  <th>Загруженное имя файла</th>
+                  <th>Дата создания</th>
+                  <th>Дата изменения</th>
+                  <th>Редактировать</th>
                 </tr>
                 <% for (let i = 0; i < materials.length; i++) { %>
                 <tr>
@@ -46,7 +46,7 @@
                   <td><%= materials[i].title %></td>
                   <td><%= materials[i].description %></td>
                   <td><%= materials[i].category_id %></td>
-                  <td><span class="label <% if(materials[i].file_path) {%> label-success <% } else {%> label-danger <%}%>"><%= materials[i].file_path || 'File Not Found' %></span></td>
+                  <td><span class="label <% if(materials[i].file_path) {%> label-success <% } else {%> label-danger <%}%>"><%= materials[i].file_path || 'Файл не прикреплён' %></span></td>
                   <td><%= materials[i].created_at %></td>
                   <td><%= materials[i].updated_at %></td>
                   <td>
@@ -77,7 +77,7 @@
               </table>
               <div class="box-footer">
                 <!-- <button class="btn btn-default">Orqaga</button> -->
-                <button data-toggle="modal" data-target="#modal-default" class="btn btn-info pull-right" >Yangi yaratish</button>
+                <button data-toggle="modal" data-target="#modal-default" class="btn btn-info pull-right" >Добавить новый документ</button>
                 
               </div>
             </div>
@@ -98,7 +98,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="modalTitle">Yangi hujjat</h4>
+          <h4 class="modal-title" id="modalTitle">Добавить новый документ</h4>
         </div>
 
         <form role="form" id="itemForm" action="" method="POST" enctype="multipart/form-data">
@@ -111,16 +111,16 @@
             <div class="box-body">
               <div class="form-group">
                 
-                <label for="title">Fayl Sarlavhasi</label>
-                <input type="text" required class="form-control" id="title" name="title" placeholder="Fayl Sarlavhasi...">
+                <label for="title">Заголовок файла</label>
+                <input type="text" required class="form-control" id="title" name="title" placeholder="Заголовок файла...">
                 
-                <label for="description">Material haqida qisqacha</label>
-                <input type="text" required class="form-control" id="description" name="description" placeholder="Info...">
+                <label for="description">Описание материала</label>
+                <input type="text" required class="form-control" id="description" name="description" placeholder="Подробности...">
               
                 <!-- <label for="image">Rasm</label>
                 <input type="file" required name="image" id="image"> -->
 
-                <label for="material_file">Hujjat</label>
+                <label for="material_file">Документ</label>
                 <input type="file" name="doc" id="material_file">
 
               </div>
@@ -128,8 +128,8 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Yopish</button>
-            <button type="submit" class="btn btn-primary" id="submitBtn">Qo'shish</button>
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Закрыть</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Добавить документ</button>
           </div>
         </form>
 
@@ -143,21 +143,21 @@
       <div class="modal-content">
         <div class="modal-header bg-red">
           <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-          <h4 class="modal-title">O‘chirishni tasdiqlash</h4>
+          <h4 class="modal-title">Подтвердите удаление</h4>
         </div>
 
         <form id="deleteForm" action="" method="POST">
           <input type="hidden" name="_method" value="DELETE">
           <div class="modal-body">
             <p>
-              Quyidagi hujjatni o‘chirmoqchimisiz?
+              Вы уверены, что хотите удалить этот документ?
               <br>
               <strong id="deleteName"></strong>
             </p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Bekor qilish</button>
-            <button type="submit" class="btn btn-danger">O‘chirish</button>
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Отменить</button>
+            <button type="submit" class="btn btn-danger">Удалить</button>
           </div>
         </form>
 
@@ -188,8 +188,8 @@
         console.log(categoryId)
         
         // Edit mode
-        title.text("Hujjatni tahrirlash");
-        submitBtn.text("Saqlash");
+        title.text("Редактировать документ");
+        submitBtn.text("Сохранить изменение");
 
         form.attr('action', pathname + '/items/' + id);
         methodField.val('PUT');    // method-override will catch this
@@ -200,8 +200,8 @@
         console.log(pathname + '/items/' + id);
       } else {
         // Create mode
-        title.text("Yangi hujjat");
-        submitBtn.text("Qo'shish");
+        title.text("Добавить новый документ");
+        submitBtn.text("Добавить документ");
 
         form.attr('action', pathname + '/items');
         methodField.val('');
@@ -221,8 +221,8 @@
       $('#methodField').val('');
       $('#itemId').val('');
       $('#description').val('');
-      $('#modalTitle').text('Yangi menu');
-      $('#submitBtn').text("Qo'shish");
+      $('#modalTitle').text('Добавить новый документ');
+      $('#submitBtn').text("Добавить документ");
       $('#itemForm').attr('action', pathname);
     });
   </script>
