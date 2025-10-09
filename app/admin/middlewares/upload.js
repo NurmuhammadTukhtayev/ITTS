@@ -10,17 +10,19 @@ let upload = (req, res, next) => {
             
             let imageName = req.files.image.md5;
             let image = req.files.image;
-            let mimi = image.mimetype.split("/");
+            let fileNameParts = req.files.image.name.split(".");
+            console.log(fileNameParts)
+            let mimi = fileNameParts[fileNameParts.length - 1];
 
             if (image.size > 10000000) {
                 console.log("File is big");
                 req.image = image
             }
             // mv()  to save
-            image.mv(path.join(__dirname, `../../../public/uploads/img/${imageName}.${mimi[1]}`), async(err) => {
+            image.mv(path.join(__dirname, `../../../public/uploads/img/${imageName}.${mimi}`), async(err) => {
             })
 
-            req.image = image
+            req.image = imageName + '.' + mimi
             // return next()
         }
         

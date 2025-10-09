@@ -66,7 +66,8 @@ const materials_by_category = async (req, res, next)=>{
     try{
         const category = req.params.id;
         let materials = await query("SELECT * FROM `vw_material_items` WHERE `category_id` = ?", [parseInt(category)]);
-                
+
+        // add validation to category to exists
         res.render('./admin/materials', {materials})
     }catch(err){
         next(err)
@@ -76,10 +77,19 @@ const materials_by_category = async (req, res, next)=>{
 // add new items
 const material_post = async (req, res, next) => {
     try{
-        const body = req.body;
-        console.log(body);
+        const {id, category_id, title, description} = req.body;
+        
+        if (req.lfile == '/') return res.redirect(`/@admin/materials/${category_id}?error=There is an error during the file upload`);
+        
+        const {image, doc} = req;
 
-        res.redirect('/@admin/materials/1')
+        const result = await query('INSERT INTO learning_materials(title, image_url, description, category_id, file_path) VALUES (?,?,?,?,?)',
+                [title, image, description, category_id, doc]
+        );
+
+        if (result.affectedRows) return res.redirect('/@admin/materials/1');
+
+        res.redirect('/@admin/materials/${category_id}?error=There is an error during the database process.')
     }catch{
 
     }

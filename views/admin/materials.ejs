@@ -38,6 +38,7 @@
                   <th>Fayl holati</th>
                   <th>Yaratilgan sana</th>
                   <th>O'zgartirilgan sana</th>
+                  <th>Tahrirlash</th>
                 </tr>
                 <% for (let i = 0; i < materials.length; i++) { %>
                 <tr>
@@ -48,6 +49,28 @@
                   <td><span class="label label-success"><%= materials[i].file_path %></span></td>
                   <td><%= materials[i].created_at %></td>
                   <td><%= materials[i].updated_at %></td>
+                  <td>
+                      <button
+                        class="btn btn-warning btn-edit"
+                        data-toggle="modal"
+                        data-target="#modal-default"
+                        data-id="<%= materials[i].id %>"
+                        data-name="<%= materials[i].title %>"
+                        data-description="<%= materials[i].description %>"
+                        data-category_id="<%= materials[i].category_id %>"
+                        data-file_path="<%= materials[i].file_path %>"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button
+                        class="btn btn-danger btn-delete"
+                        data-toggle="modal"
+                        data-target="#modal-delete"
+                        data-id="<%= materials[i].id %>"
+                      >
+                        <i class="fa fa-remove"></i>
+                      </button>
+                  </td>
                 </tr>
                 <% } %>
                 
@@ -75,30 +98,30 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="modalTitle">Yangi material</h4>
+          <h4 class="modal-title" id="modalTitle">Yangi hujjat</h4>
         </div>
 
         <form role="form" id="itemForm" action="" method="POST" enctype="multipart/form-data">
           <!-- for PUT when updating -->
-          <input type="" name="_method" id="methodField" value="">
-          <input type="" name="id" id="itemId" value="">
-          <input type="" name="category_id" id="categoryId" value="">
+          <input type="hidden" name="_method" id="methodField" value="">
+          <input type="hidden" name="id" id="itemId" value="">
+          <input type="hidden" name="category_id" id="categoryId" value="">
 
           <div class="modal-body">
             <div class="box-body">
               <div class="form-group">
                 
-                <label for="title">Fayl nomi</label>
-                <input type="text" class="form-control" id="title" name="category" placeholder="Fayl nomi...">
+                <label for="title">Fayl Sarlavhasi</label>
+                <input type="text" required class="form-control" id="title" name="title" placeholder="Fayl Sarlavhasi...">
                 
-                <label for="title">Material haqida qisqacha</label>
-                <input type="text" class="form-control" id="title" name="description" placeholder="Info...">
+                <label for="description">Material haqida qisqacha</label>
+                <input type="text" required class="form-control" id="description" name="description" placeholder="Info...">
               
-                <label for="image">Rasm</label>
-                <input type="file" name="image" id="image">
+                <!-- <label for="image">Rasm</label>
+                <input type="file" required name="image" id="image"> -->
 
                 <label for="material_file">Hujjat</label>
-                <input type="file" name="doc" id="material_file">
+                <input type="file" required name="doc" id="material_file">
 
               </div>
             </div>
@@ -127,7 +150,7 @@
           <input type="hidden" name="_method" value="DELETE">
           <div class="modal-body">
             <p>
-              Quyidagi menuni o‘chirmoqchimisiz?
+              Quyidagi hujjatni o‘chirmoqchimisiz?
               <br>
               <strong id="deleteName"></strong>
             </p>
@@ -151,26 +174,32 @@
       const submitBtn = $('#submitBtn');
       const methodField = $('#methodField');
       const idInput = $('#itemId');
-      const nameInput = $('#item');
-      const categoryInput = $('#categoryId');
+      const nameInput = $('#title');
+      const descriptionInput = $('#description');
+      const categoryIdInput = $('#category_id');
       const pathname = window.location.pathname;
       const category_id = pathname.split('/materials/')[1];
 
       if (isEditBtn) {
         const id = $(this).data('id');
         const name = $(this).data('name');
-
+        const description = $(this).data('description');
+        const category_id = $(this).data('category_id');
+        console.log(id, name, description);
+        
         // Edit mode
-        title.text("Menuni tahrirlash");
+        title.text("Hujjatni tahrirlash");
         submitBtn.text("Saqlash");
 
         form.attr('action', pathname + '/items/' + id);
         methodField.val('PUT');    // method-override will catch this
         idInput.val(id);
         nameInput.val(name);
+        descriptionInput.val(description);
+        categoryIdInput.val(category_id);
       } else {
         // Create mode
-        title.text("Yangi menu");
+        title.text("Yangi hujjat");
         submitBtn.text("Qo'shish");
 
         form.attr('action', pathname + '/items');
@@ -181,7 +210,6 @@
       }
 
       // const form = document.getElementById('itemForm');
-      console.log(document.getElementById("itemForm").action);
 
     });
     
