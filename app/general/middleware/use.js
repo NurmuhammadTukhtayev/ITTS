@@ -17,7 +17,11 @@ module.exports = [
 
     // bodyParser.json(),
     bodyParser.urlencoded({extended:true}),
-    express.json(),
+    // express.json(),
+
+    fileUpload({
+        limits: { fileSize: 10 * 1024 * 1024 },
+    }),
 
     methodOverride(function(req, res){
         if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -29,10 +33,6 @@ module.exports = [
     }),
 
     cookieParser(secret),
-
-    fileUpload({
-        limits: { fileSize: 10 * 1024 * 1024 },
-    }),
 
     session({
         secret: secret,

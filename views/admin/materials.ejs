@@ -42,11 +42,11 @@
                 </tr>
                 <% for (let i = 0; i < materials.length; i++) { %>
                 <tr>
-                  <td><%= materials[i].id %></td>
+                  <td><%= i + 1 %></td>
                   <td><%= materials[i].title %></td>
                   <td><%= materials[i].description %></td>
                   <td><%= materials[i].category_id %></td>
-                  <td><span class="label label-success"><%= materials[i].file_path %></span></td>
+                  <td><span class="label <% if(materials[i].file_path) {%> label-success <% } else {%> label-danger <%}%>"><%= materials[i].file_path || 'File Not Found' %></span></td>
                   <td><%= materials[i].created_at %></td>
                   <td><%= materials[i].updated_at %></td>
                   <td>
@@ -57,7 +57,7 @@
                         data-id="<%= materials[i].id %>"
                         data-name="<%= materials[i].title %>"
                         data-description="<%= materials[i].description %>"
-                        data-category_id="<%= materials[i].category_id %>"
+                        data-categoryId="<%= materials[i].category_id %>"
                         data-file_path="<%= materials[i].file_path %>"
                       >
                         <i class="fa fa-edit"></i>
@@ -121,7 +121,7 @@
                 <input type="file" required name="image" id="image"> -->
 
                 <label for="material_file">Hujjat</label>
-                <input type="file" required name="doc" id="material_file">
+                <input type="file" name="doc" id="material_file">
 
               </div>
             </div>
@@ -176,16 +176,16 @@
       const idInput = $('#itemId');
       const nameInput = $('#title');
       const descriptionInput = $('#description');
-      const categoryIdInput = $('#category_id');
+      const categoryIdInput = $('#categoryId');
       const pathname = window.location.pathname;
-      const category_id = pathname.split('/materials/')[1];
+      const categoryId = pathname.split('/materials/')[1];
 
       if (isEditBtn) {
         const id = $(this).data('id');
         const name = $(this).data('name');
         const description = $(this).data('description');
-        const category_id = $(this).data('category_id');
-        console.log(id, name, description);
+        // const categoryId = $(this).data('categoryId');
+        console.log(categoryId)
         
         // Edit mode
         title.text("Hujjatni tahrirlash");
@@ -196,7 +196,8 @@
         idInput.val(id);
         nameInput.val(name);
         descriptionInput.val(description);
-        categoryIdInput.val(category_id);
+        categoryIdInput.val(categoryId);
+        console.log(pathname + '/items/' + id);
       } else {
         // Create mode
         title.text("Yangi hujjat");
@@ -206,7 +207,8 @@
         methodField.val('');
         idInput.val('');
         nameInput.val('');
-        categoryInput.val(category_id);
+        descriptionInput.val('');
+        categoryIdInput.val(categoryId);
       }
 
       // const form = document.getElementById('itemForm');
@@ -218,6 +220,7 @@
       $('#itemForm')[0].reset();
       $('#methodField').val('');
       $('#itemId').val('');
+      $('#description').val('');
       $('#modalTitle').text('Yangi menu');
       $('#submitBtn').text("Qo'shish");
       $('#itemForm').attr('action', pathname);

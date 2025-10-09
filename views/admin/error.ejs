@@ -1,0 +1,62 @@
+<%- include('./includes/head.ejs') %>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <%- include('./includes/header.ejs') %>
+
+  <%- include('./includes/sidebar.ejs') %>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        404 Sahifa topilmadi
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Asosiy sahifa</a></li>
+        <li class="active">Sahifa topilmadi</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="error-page">
+        <h2 class="headline text-yellow"> 404</h2>
+
+        <div class="error-content">
+          <h3><i class="fa fa-warning text-yellow"></i> Упс! Страница не найдена.</h3>
+
+          <p>
+            Мы не смогли найти страницу, которую вы искали. Тем временем, вы можете вернуться на  <a href="/@admin">главную</a>  страницу
+          </p>
+
+        </div>
+        <!-- /.error-content -->
+      </div>
+      <!-- /.error-page -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+    <%- include('./includes/footer.ejs') %>
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+
+  <%- include('./includes/footer.ejs') %>
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<%- include('./includes/end.ejs') %>
+</body>
+</html>

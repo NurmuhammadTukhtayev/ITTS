@@ -21,4 +21,10 @@ app.get('/:id', controllers.materials_by_category);
 // add new item
 app.post('/:id/items', [upload, controllers.material_post])
 
+// update item
+app.put('/:id/items/:item_id/', [upload, controllers.material_put]);
+
+// delete item
+app.delete('/:id/items/:item_id', controllers.material_delete);
+
 module.exports = app;

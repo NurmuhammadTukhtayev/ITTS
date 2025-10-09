@@ -11,7 +11,6 @@ let upload = (req, res, next) => {
             let imageName = req.files.image.md5;
             let image = req.files.image;
             let fileNameParts = req.files.image.name.split(".");
-            console.log(fileNameParts)
             let mimi = fileNameParts[fileNameParts.length - 1];
 
             if (image.size > 10000000) {
@@ -33,8 +32,11 @@ let upload = (req, res, next) => {
                 fs.mkdirSync(path.join(__dirname, `../../../public/uploads/${filePath}/`),{ recursive: true });
             }
 
+            let fileNameParts = req.files.doc.name.split(".");
+            let mimi = fileNameParts[fileNameParts.length - 1];
+
             let doc = req.files.doc
-            let docName = req.files.doc.md5
+            let docName = req.files.doc.md5 + '.' + mimi
 
             if(doc.size > 10000000 || doc.size > 10000000){
                 console.log("File is big");
@@ -50,7 +52,7 @@ let upload = (req, res, next) => {
                 }
             })
 
-            req.doc = docName + '.' + 'pdf'
+            req.doc = docName
         }
         return next()
     } catch (err) {

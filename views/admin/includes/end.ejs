@@ -32,6 +32,47 @@
 <!-- AdminLTE App -->
 <script src="/admin/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="/admin/dist/js/pages/dashboard.js"></script>
+<!-- <script src="/admin/dist/js/pages/dashboard.js"></script> -->
 <!-- AdminLTE for demo purposes -->
 <script src="/admin/dist/js/demo.js"></script>
+
+<!-- add these only if toastr is not already loaded -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const params = new URLSearchParams(window.location.search);
+  const rawMessage = params.get('message');
+  if (!rawMessage) return;
+
+  // determine type: error flag or explicit type
+  const isError = params.get('error') === 'true' || params.get('error') === '1';
+  const type = isError ? 'error' : (params.get('type') || 'success');
+
+  // simple html escape to avoid XSS
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (m) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+    });
+  }
+
+  toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    positionClass: 'toast-bottom-right',
+    timeOut: '5000',
+    extendedTimeOut: '1000'
+  };
+
+  const message = decodeURIComponent(rawMessage.replace(/\+/g, ' '));
+  toastr[type](escapeHtml(message));
+
+  // remove query params to avoid re-show on refresh
+  const url = new URL(window.location);
+  url.searchParams.delete('message');
+  url.searchParams.delete('error');
+  url.searchParams.delete('type');
+  window.history.replaceState({}, document.title, url.pathname + url.search);
+});
+</script>
