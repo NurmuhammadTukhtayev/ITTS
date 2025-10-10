@@ -78,7 +78,7 @@ const material_post = async (req, res, next) => {
     try{
         const {id, category_id, title, description} = req.body;     
         
-        if (req.lfile == '/') return res.redirect(`/@admin/materials/${category_id}?error=There is an error during the file upload`);
+        if (req.lfile == '/') return res.redirect(`/@admin/materials/${category_id}?error=true&message=При загрузке файлов произошла ошибка.`);
         
         const {image, doc} = req;
 

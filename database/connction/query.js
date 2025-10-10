@@ -6,6 +6,7 @@ let query = async(sql, data) => {
         return d[0];
     } catch (err) {
         console.log("Error DataBase: ./app/database/connection/connect.js:9 rows ... \n" + err);
+        console.log(sql, data)
         return { err: 1, errData: err };
     }
 }

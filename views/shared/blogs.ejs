@@ -33,7 +33,7 @@
               <div class="th-blog blog-single has-post-thumbnail">
                 <div class="blog-img">
                   <a href="blog/<%= blogs[i].id %>">
-                    <img src="/assets/img/blog/<%= blogs[i].image_url %>" alt="Blog Image">
+                    <img src="/uploads/img/<%= blogs[i].image_url %>" alt="Blog Image">
                   </a>
                 </div>
                 <div class="blog-content">
@@ -50,8 +50,10 @@
                   <h2 class="blog-title">
                     <a href="blog/<%= blogs[i].id %>"><%= blogs[i].title %></a>
                   </h2>
-                  <p class="blog-text"><%= blogs[i].content %>...</p>
-                  <a href="blog/<%= blogs[i].id %>" class="line-btn">Ko'proq</a>
+                  <p class="blog-text">
+                    <%= blogs[i].content.replace(/<[^>]*>/g, '') %>...
+                  </p>
+                  <a href="blog/<%= blogs[i].id %>" class="line-btn">Больше</a>
                 </div>
               </div>
             <% } %>

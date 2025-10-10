@@ -33,31 +33,31 @@
         <form id="itemForm" action="<%= item.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Content Details</h3>
+              <h3 class="card-title">Подробности контента</h3>
             </div>
             <div class="card-body">
 
               <!-- Title -->
               <div class="form-group">
-                <label for="title">Title</label>
+                <label for="title">Заголовок</label>
                 <input type="text" class="form-control" id="title" name="title" value="<%= item.title %>" required>
               </div>
 
               <!-- File Type -->
               <div class="form-group">
-                <label for="file_type">File Type</label>
+                <label for="file_type">Тип файла</label>
                 <input type="text" readonly class="form-control" id="file_type" name="file_type" value="<%= item.file_type %>">
               </div>
 
               <!-- Video URL -->
               <div class="form-group" id="videoField" style="<%= item.file_type === 'video' ? '' : 'display:none;' %>">
-                <label for="video_url">YouTube Video URL</label>
+                <label for="video_url">URL видео YouTube</label>
                 <input type="text" class="form-control" id="video_url" name="video_url" value="<%= item.video_url %>">
               </div>
 
               <!-- Document Upload -->
               <div class="form-group" id="docField" style="<%= item.file_type === 'document' ? '' : 'display:none;' %>">
-                <label for="file_path">Upload Document</label>
+                <label for="file_path">Загрузить документ</label>
                 <input type="file" class="form-control" id="file_path" name="doc">
                 <% if(item.file_path) { %>
                   <small>Current file: <%= item.file_path %></small>
@@ -68,15 +68,22 @@
                <div class="form-group" id="docField">
                   <label for="image">Изображение</label>
                   <input type="file" name="image" id="image">
-                  <% if(item.image_url) { %>
-                    <small>Current file: <%= item.image_url %></small>
-                  <% } %>                
+                  <% if (item && item.image_url) { %>
+                    <div class="mt-2">
+                      <small>Текущий файл:</small>
+                      <div>
+                        <a href="/uploads/img/<%= item.image_url %>" target="_blank">
+                          <img src="/uploads/img/<%= item.image_url %>" alt="image" style="max-height:120px; margin-top:6px;">
+                        </a>
+                      </div>
+                    </div>
+                  <% } %>            
                 </div>
               
 
               <!-- Content Preview -->
               <div class="form-group mt-4">
-                <label>Content Preview</label>
+                <label>Предварительный просмотр контента</label>
                 <% if (item.file_type === 'video' && item.video_url) { %>
                   <div class="embed-responsive embed-responsive-16by9" style=" margin:auto;">
                     <% if (item.video_url && item.video_url.includes('v=')) { %>
@@ -95,21 +102,21 @@
                           style="width:700px; height:400px; display:block; margin:auto;" 
                           frameborder="0"></iframe>
                 <% } else { %>
-                  <p>No content available</p>
+                  <p>Контент недоступен</p>
                 <% } %>
 
               </div>
               <!-- Meta Information -->
                 <div class="container">
-                  <p><strong>Created at:</strong> <%= item.created_at %></p>
-                  <p><strong>Last Updated:</strong> <%= item.updated_at %></p>
+                  <p><strong>Создано:</strong> <%= item.created_at %></p>
+                  <p><strong>Последнее изменение:</strong> <%= item.updated_at %></p>
                 </div>
 
             </div>
 
             <div class="box-footer">
                 <div class="card-footer pull-right">
-                  <a class="btn btn-info" href="/@admin/media">Back</a>
+                  <a class="btn btn-info" href="/@admin/media">Назад</a>
                   <button 
                     type="button"
                     class="btn btn-danger btn-delete"
@@ -117,9 +124,9 @@
                     data-target="#modal-delete"
                     data-id="<%= item.id %>"
                   >
-                    Delete
+                    Удалить
                   </button>
-                  <button type="submit" class="btn btn-success">Save Changes</button>
+                  <button type="submit" class="btn btn-success">Сохранить изменения</button>
                 </div>
               </div>
             </div>

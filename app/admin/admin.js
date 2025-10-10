@@ -2,14 +2,25 @@ const express = require('express')
 const auth = require('./middlewares/auth')
 const app = express.Router()
 
+// sign in
 app.use('/', require('./routes/sign'));
 
-app.use('/home', [auth, require('./routes/home')]);
+// authentication
+app.use(auth);
 
-app.use('/materials', [auth, require('./routes/materials')]);
+// home page | Profile
+app.use('/home', require('./routes/home'));
 
-app.use('/media', [auth, require('./routes/media')]);
+// manage learning materilas
+app.use('/materials', require('./routes/materials'));
 
+// manage media 
+app.use('/media', require('./routes/media'));
+
+// blog management
+app.use('/blogs', require('./routes/blogs'));
+
+// 404
 app.use(require('./controllers/admin/get/pnf'))
 
 module.exports = app;

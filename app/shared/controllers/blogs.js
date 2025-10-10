@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
     const offset = (page - 1) * pageSize;
 
     let totalBlogsResult = (await query("SELECT COUNT(*) AS count FROM smart_path.blog_posts;"))[0].count;
-    let blogs = await query("SELECT id, title, substring(content, 1, 300) as content, author, image_url, DATE_FORMAT(published_at, '%M %e, %Y') AS published_on FROM smart_path.blog_posts ORDER BY published_at DESC, id DESC LIMIT ? OFFSET ?;", 
+    let blogs = await query("SELECT id, title, substring(content, 1, 300) as content, author, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.blog_posts ORDER BY created_at DESC, id DESC LIMIT ? OFFSET ?;", 
         [pageSize, offset]
     );
 

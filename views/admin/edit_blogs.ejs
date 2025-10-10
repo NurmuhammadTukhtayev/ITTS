@@ -1,0 +1,193 @@
+<%- include('./includes/head.ejs') %>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <%- include('./includes/header.ejs') %>
+  <%- include('./includes/sidebar.ejs') %>
+  
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>
+        <% if (item && item.id) { %>
+          Редактировать блог
+        <% } else { %>
+          Создать блог
+        <% } %>
+        <small>Панель управления</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/@admin/home"><i class="fa fa-dashboard"></i> Главная страница</a></li>
+        <li><a href="/@admin/blogs">Блоги</a></li>
+      </ol>
+    </section>
+
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+
+            <section class="content">
+              <div class="container-fluid">
+                <% 
+                  // Determine action & method. Prefer controller-provided values.
+                  const action = typeof formAction !== 'undefined'
+                    ? formAction
+                    : (item && item.id ? '/@admin/blogs/' + 'edit/' + item.id : '/@admin/blogs/create');
+
+                  const method = typeof formMethod !== 'undefined' ? formMethod : (item && item.id ? 'PUT' : 'POST');
+                  // Note: keep POST and use _method override for PUT/DELETE if needed.
+                %>
+
+                <!-- <p><%= action %> <%= method %></p> -->
+                <form id="itemForm" action="<%= action %>" method="POST" enctype="multipart/form-data">
+                  <input type="hidden" name="_method" value="<%= method %>">
+
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">Подробности контента</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                      <!-- Title -->
+                      <div class="form-group">
+                        <label for="title">Заголовок</label>
+                        <input type="text" class="form-control" id="title" name="title" 
+                               value="<%= item && item.title ? item.title : '' %>" required>
+                      </div>
+
+                      <!-- Author / author -->
+                      <div class="form-group">
+                        <label for="author">Автор</label>
+                        <input type="text" required class="form-control" id="author" name="author" 
+                               value="<%= item && item.author ? item.author : '' %>">
+                      </div>
+
+                      <!-- Image input always visible -->
+                      <div class="form-group" id="docField">
+                        <label for="image">Изображение</label>
+                        <input type="file" name="image" id="image">
+                        <% if (item && item.image_url) { %>
+                          <div class="mt-2">
+                            <small>Текущий файл:</small>
+                            <div>
+                              <a href="/uploads/img/<%= item.image_url %>" target="_blank">
+                                <img src="/uploads/img/<%= item.image_url %>" alt="image" style="max-height:120px; margin-top:6px;">
+                              </a>
+                            </div>
+                          </div>
+                        <% } %>
+                      </div>
+
+                      <!-- Rich text content (CKEditor) -->
+                      <div class="box-body pad">
+                        <textarea id="editor1" required name="content" rows="10" cols="80"><%= item && item.content ? item.content : '' %></textarea>
+                      </div>
+
+                      <!-- Meta Information (only for existing items) -->
+                      <% if (item && item.id) { %>
+                        <div class="container" style="margin-top:12px;">
+                          <p><strong>Создано:</strong> <%= item.created_at %></p>
+                          <p><strong>Последнее изменение:</strong> <%= item.updated_at %></p>
+                        </div>
+                      <% } %>
+
+                    </div> <!-- .card-body -->
+
+                    <div class="box-footer">
+                      <div class="card-footer pull-right">
+                        <a class="btn btn-info" href="/@admin/blogs">Назад</a>
+
+                        <% if (item && item.id) { %>
+                          <button 
+                            type="button"
+                            class="btn btn-danger btn-delete"
+                            data-toggle="modal"
+                            data-target="#modal-delete"
+                            data-id="<%= item.id %>"
+                            data-name="<%= item.title %>"
+                          >
+                            Удалить
+                          </button>
+                        <% } %>
+
+                        <button type="submit" class="btn btn-success">
+                          <% if (item && item.id) { %>Сохранить изменения<% } else { %>Создать<% } %>
+                        </button>
+                      </div>
+                    </div>
+
+                  </div> <!-- .card -->
+                </form>
+              </div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <%- include('./includes/footer.ejs') %>
+
+  <div class="control-sidebar-bg"></div>
+</div>
+
+<!-- Delete modal (present but will be used only on edit) -->
+<div class="modal fade" id="modal-delete">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-red">
+        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        <h4 class="modal-title">Подтвердите удаление</h4>
+      </div>
+
+      <form id="deleteForm" action="" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <div class="modal-body">
+          <p>Вы уверены, что хотите удалить этот блог?<br><strong id="deleteName"></strong></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Отменить</button>
+          <button type="submit" class="btn btn-danger">Удалить</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Delete button binding (works only if there is a delete button rendered)
+  $(document).on('click', '.btn-delete', function () {
+    const id = $(this).data('id');
+    const name = $(this).data('name') || '';
+    // compute delete url. Prefer controller to pass deleteAction variable.
+    const deleteAction = (typeof deleteActionFromController !== 'undefined')
+      ? deleteActionFromController
+      : window.location.pathname.replace(/\/edit\/?$/, '/delete') // try to guess
+      ;
+
+    // If you need more robust behaviour, set `deleteActionFromController` in server.
+    $('#deleteName').text(name);
+    $('#deleteForm').attr('action', deleteAction);
+  });
+
+  $('#modal-delete').on('hidden.bs.modal', function () {
+    $('#deleteForm').attr('action', '');
+    $('#deleteName').text('');
+  });
+</script>
+
+<!-- CK Editor -->
+<script src="/admin/bower_components/ckeditor/ckeditor.js"></script>
+<script>
+  $(function () {
+    CKEDITOR.replace('editor1');
+  });
+</script>
+
+<%- include('./includes/end.ejs') %>
+</body>
+</html>

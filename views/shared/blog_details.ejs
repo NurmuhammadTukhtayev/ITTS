@@ -22,20 +22,19 @@
             <div class="row">
                 <div class="col-xxl-8 col-lg-7">
                     <div class="th-blog blog-single">
-                        <div class="blog-img"><img src="/assets/img/blog/<%= blog.image_url %>" alt="Blog Image"></div>
+                        <div class="blog-img"><img src="/uploads/img/<%= blog.image_url %>" alt="Blog Image"></div>
                         <div class="blog-content">
-                            <div class="blog-meta"><a class="author" href="blog.html"><img
+                            <div class="blog-meta"><a class="author" href="#"><img
                                         src="/assets/img/blog/author-1-1.png" alt="avater"> By <%= blog.author %></a> <a
-                                    href="blog.html"><i class="fa-light fa-calendar-days"></i><%= blog.published_on %></a>
+                                    href="#"><i class="fa-light fa-calendar-days"></i><%= blog.published_on %></a>
                             </div>
-                            <h2 class="blog-title"><%= blog.title %></h2>
-                            <%= blog.content %>
+                            <%- blog.content %>
                         </div>
                         <div class="share-links clearfix">
                             <div class="row justify-content-between">
                                 <!-- <div class="col-sm-auto"><span class="share-links-title">Tags:</span>
-                                    <div class="tagcloud"><a href="blog.html">Education</a> <a
-                                            href="blog.html">Online</a></div>
+                                    <div class="tagcloud"><a href="#">Education</a> <a
+                                            href="#">Online</a></div>
                                 </div> -->
                             </div>
                         </div>
@@ -49,7 +48,7 @@
                             <% for (let i = 0; i < blogs.length; i++) { %>
                                 <div class="recent-post">
                                     <div class="media-img"><a href="/blog/<%= blogs[i].id %>"><img
-                                                src="/assets/img/blog/<%= blogs[i].image_url %>" alt="Blog Image"></a></div>
+                                                src="/uploads/img/<%= blogs[i].image_url %>" alt="Blog Image"></a></div>
                                     <div class="media-body">
                                         <h4 class="post-title"><a class="text-inherit"
                                                 href="/blog/<%= blogs[i].id %>"><%= blogs[i].title %>.</a>
