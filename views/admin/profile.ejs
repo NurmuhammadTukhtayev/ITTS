@@ -1,0 +1,189 @@
+<%- include('./includes/head.ejs') %>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <%- include('./includes/header.ejs') %>
+
+  <%- include('./includes/sidebar.ejs') %>
+
+  <% 
+    // safe local alias + defaults
+    const pm = profile_meta || {};
+    const isNew = !profile_meta || !profile_meta.id;
+    const imageSrc = pm.image_url ? ('/uploads/img/' + pm.image_url) : '/assets/img/default-avatar.png';
+  %>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="row">
+        <div class="col-md-3">
+
+          <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" src="<%= imageSrc %>" alt="User profile picture">
+
+              <h3 class="profile-username text-center"><%= pm.first_name || '' %> <%= pm.last_name || '' %></h3>
+
+              <p class="text-muted text-center"><%= pm.job || '' %></p>
+
+              <ul class="list-group list-group-unbordered">
+                <li class="list-group-item">
+                  <b>Номер телефона</b> <a class="pull-right"><%= pm.phone || '-' %></a>
+                </li>
+                <li class="list-group-item">
+                  <b>Электронная почта</b> <a class="pull-right"><%= pm.email || '-' %></a>
+                </li>
+                <li class="list-group-item">
+                  <b>Телеграмм</b> <a class="pull-right"><%= pm.telegram || '-' %></a>
+                </li>
+              </ul>
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <!-- About Me Box -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Обо мне</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+
+              <p class="text-muted">
+                <%= pm.about_me || 'Профиль ещё не заполнен.' %>
+              </p>
+
+              <hr>
+
+              <strong class="text-muted">Более <%= pm.experience_years || 0 %> лет опыта работы </strong>
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#settings" data-toggle="tab">Данные профиля</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="active tab-pane" id="settings">
+                <!-- formAction and verb chosen dynamically -->
+                <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
+                  <% if (!isNew) { %>
+                    <input type="hidden" name="id" value="<%= pm.id %>">
+                  <% } %>
+
+                  <div class="form-group">
+                    <label for="first_name" class="col-sm-2 control-label">Имя</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" required name="first_name" value="<%= pm.first_name || '' %>" class="form-control" id="first_name" placeholder="Имя">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="last_name" class="col-sm-2 control-label">Фамилия</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" required name="last_name" value="<%= pm.last_name || '' %>" class="form-control" id="last_name" placeholder="Фамилия">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="job" class="col-sm-2 control-label">Должность</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" name="job" required value="<%= pm.job || '' %>" class="form-control" id="job" placeholder="Должность">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="about_me" required class="col-sm-2 control-label">Обо мне</label>
+
+                    <div class="col-sm-10">
+                      <textarea name="about_me" class="form-control" id="about_me" placeholder="Обо мне"><%= pm.about_me || '' %></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="experience_years" required class="col-sm-2 control-label">Годы опыта работы</label>
+
+                    <div class="col-sm-10">
+                      <input type="number" name="experience_years" value="<%= pm.experience_years || '' %>" class="form-control" id="experience_years" placeholder="Годы опыта работы">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone" class="col-sm-2 control-label">Номер телефона</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" name="phone" value="<%= pm.phone || '' %>" class="form-control" id="phone" placeholder="Номер телефона">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label">Электронный адрес</label>
+
+                    <div class="col-sm-10">
+                      <input type="email" name="email" value="<%= pm.email || '' %>" class="form-control" id="email" placeholder="Email">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="telegram" class="col-sm-2 control-label">Телеграмм</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" name="telegram" value="<%= pm.telegram || '' %>" class="form-control" id="telegram" placeholder="Телеграмм">
+                    </div>
+                  </div>
+
+                  <div class="form-group" >
+                    <label for="image" class="col-sm-2 control-label">Изображение</label>
+                    
+                    <div class="col-sm-10">
+                     <input type="file" class="form-control" name="image" id="image">
+                     <p class="help-block">Оставьте пустым, если не хотите менять изображение.</p>
+                    </div>
+                  </div>
+                    
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-danger pull-right"><%= isNew ? 'Создать профиль' : 'Сохранить изменения' %></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <%- include('./includes/footer.ejs') %>
+
+  <!-- /.control-sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+
+<%- include('./includes/end.ejs') %>
+</body>
+</html>

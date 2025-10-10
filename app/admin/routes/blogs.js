@@ -4,11 +4,11 @@ const controllers = require('../controllers/blogs');
 const upload = require('../middlewares/upload');
 
 // debugging middleware
-app.use('/', (req, res, next) => {
-    console.log('Blogs route accessed');
-    console.log(req.method, req.url);
-    next();
-});
+// app.use('/', (req, res, next) => {
+//     console.log('Blogs route accessed');
+//     console.log(req.method, req.url);
+//     next();
+// });
 
 // get list of blogs
 app.get('/', controllers.get_blogs);

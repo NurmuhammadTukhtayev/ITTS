@@ -12,8 +12,24 @@ DROP TABLE IF EXISTS learning_materials;
 DROP TABLE IF EXISTS learning_material_categories;
 DROP TABLE IF EXISTS media;
 DROP TABLE IF EXISTS blog_posts;
+DROP TABLE IF EXISTS profile_meta;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE IF NOT EXISTS profile_meta (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    job VARCHAR(50) NOT NULL,
+    about_me TEXT NOT NULL,
+    experience_years INT NOT NULL,
+    phone VARCHAR(20) NULL,
+    email VARCHAR(50) NULL,
+    telegram VARCHAR(50) NULL,
+    image_url VARCHAR(1024) NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- create lookup / parent tables first
 CREATE TABLE IF NOT EXISTS learning_material_categories (

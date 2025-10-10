@@ -8,10 +8,10 @@
     <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg.jpg">
         <div class="container">
             <div class="breadcumb-content">
-                <h1 class="breadcumb-title">Contact</h1>
+                <h1 class="breadcumb-title">Контакты</h1>
                 <ul class="breadcumb-menu">
-                    <li><a href="/">Bosh sahifa</a></li>
-                    <li>Contact</li>
+                    <li><a href="/">Главная страница</a></li>
+                    <li>Контакты</li>
                 </ul>
             </div>
         </div>
@@ -19,55 +19,77 @@
     <section class="space">
         <div class="container">
             <div class="about-card">
-                <div class="about-card_img"><img class="w-100" src="assets/img/team/team_details.jpg" alt="team image">
+                <div class="about-card_img"><img class="w-100" src="/uploads/img/<%= profile_meta.image_url %>" alt="team image">
                 </div>
                 <div class="about-card_box">
                     <div class="about-card_top">
                         <div class="media-body">
-                            <h2 class="about-card_title">Rayan Athels</h2>
-                            <p class="about-card_desig">UI/UX Designer</p>
+                            <h2 class="about-card_title"><%= profile_meta.first_name %> <%= profile_meta.last_name %></h2>
+                            <p class="about-card_desig"><%= profile_meta.job %></p>
                         </div>
-                        <div class="header-social"><a target="_blank" href="https://facebook.com/"><i
-                                    class="fab fa-facebook-f"></i></a> <a target="_blank" href="https://twitter.com/"><i
-                                    class="fab fa-twitter"></i></a> <a target="_blank" href="https://instagram.com/"><i
-                                    class="fab fa-instagram"></i></a> <a target="_blank" href="https://linkedin.com/"><i
-                                    class="fab fa-linkedin-in"></i></a></div>
+                        <!-- <div class="header-social">
+                            <a target="_blank" href="https://facebook.com/">
+                                <i
+                                    class="fab fa-facebook-f">
+                                </i>
+                            </a> 
+                            <a target="_blank" href="https://twitter.com/">
+                                <i
+                                    class="fab fa-twitter">
+                                </i>
+                            </a>
+                            <a target="_blank" href="https://instagram.com/">
+                                <i
+                                    class="fab fa-instagram">
+                                </i>
+                            </a> 
+                            <a target="_blank" href="https://linkedin.com/">
+                                <i
+                                    class="fab fa-linkedin-in">
+                                </i>
+                            </a>
+                        </div> -->
                     </div>
-                    <p class="about-card_text">Continually utilize 24/365 bandwidth before real-time interfaces.
-                        Credibly grow team core competencies with pandemic commerce. Objectively initiate pandemic users
-                        with deliver bricks clicks meta services for bricks-and-clicks innovation streamline front end
-                        aradigms expedite granular human capital rather than intuitive testing.</p>
+                    <p class="about-card_text"><%= profile_meta.about_me %>.</p>
                     <div class="team-info-wrap">
                         <div class="contact-feature">
                             <div class="icon-btn"><i class="fa-solid fa-user"></i></div>
                             <div class="media-body">
-                                <p class="contact-feature_label">Experience</p><span class="contact-feature_link">More
-                                    Than 10 Yearsn</span>
+                                <p class="contact-feature_label">Опыт работы</p><span class="contact-feature_link">Более <%= profile_meta.experience_years %> лет</span>
                             </div>
                         </div>
                         <div class="contact-feature">
                             <div class="icon-btn"><i class="fa-solid fa-phone"></i></div>
                             <div class="media-body">
-                                <p class="contact-feature_label">Phone</p><a href="tel:+19088006987"
-                                    class="contact-feature_link">+(190)-8800-6987</a>
+                                <p class="contact-feature_label">Телефонный номер</p><a href="tel:+998 <%= profile_meta.phone %>"
+                                    class="contact-feature_link">+998 <%= profile_meta.phone %></a>
                             </div>
                         </div>
                         <div class="contact-feature">
                             <div class="icon-btn"><i class="fa-solid fa-envelope"></i></div>
                             <div class="media-body">
-                                <p class="contact-feature_label">Email</p><a href="mailto:info@webteck.com"
-                                    class="contact-feature_link">info@webteck.com</a>
+                                <p class="contact-feature_label">Электронная почта</p><a href="mailto:<%= profile_meta.email %>"
+                                    class="contact-feature_link"><%= profile_meta.email %></a>
                             </div>
                         </div>
                         <div class="contact-feature">
                             <div class="icon-btn"><i class="fa-solid fa-calendar-days"></i></div>
                             <div class="media-body">
-                                <p class="contact-feature_label">Fax</p><span
-                                    class="contact-feature_link">+265478962</span>
+                                <p class="contact-feature_label">Телеграм</p>
+                                <span class="contact-feature_link">
+                                    <a class="contact-feature_link" href="https://t.me/<%= profile_meta.telegram %>">
+                                        <%= profile_meta.first_name %> <%= profile_meta.last_name %>
+                                    </a>
+                                </span>
                             </div>
                         </div>
-                    </div><a href="about.html" class="th-btn">GET IN TOUCH<i
-                            class="fa-regular fa-arrow-right ms-2"></i></a>
+                    </div>
+                    
+                    <!-- <a href="about.html" class="th-btn">GET IN TOUCH
+                        <i class="fa-regular fa-arrow-right ms-2">
+
+                        </i>
+                    </a> -->
                 </div>
             </div>
         </div>
