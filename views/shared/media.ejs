@@ -30,7 +30,7 @@
           <div class="col-lg-4 col-md-6">
             <div class="project-card">
               <div class="project-img">
-                <img src="/assets/img/project/<%= media[i].image_url %>" alt="project image">
+                <img src="/uploads/img/<%= media[i].image_url %>" alt="project image">
               </div>
               <div class="project-content-wrap">
                 <div class="project-content">
@@ -38,7 +38,7 @@
                   <h3 class="box-title">
                     <a target="_blank" href="<%= media[i].video_url %>"><%= media[i].title %></a>
                   </h3>
-                  <a href="/assets/img/project/<%= media[i].image_url %>" class="icon-btn popup-image">
+                  <a href="/uploads/img/<%= media[i].image_url %>" class="icon-btn popup-image">
                     <i class="far fa-plus"></i>
                   </a>
                 </div>
@@ -52,13 +52,13 @@
           <div class="col-lg-4 col-md-6">
             <div class="project-card">
               <div class="project-img">
-                <img src="/assets/img/project/<%= media[i].image_url %>" alt="project image">
+                <img src="/uploads/img/<%= media[i].image_url %>" alt="project image">
               </div>
               <div class="project-content-wrap">
                 <div class="project-content">
                   <div class="box-particle" id="project-p1"></div>
-                  <h3 class="box-title"><a href="#"><%= media[i].title %></a></h3>
-                  <a href="/assets/img/project/<%= media[i].image_url %>" class="icon-btn popup-image">
+                  <h3 class="box-title"><a target="_blank" href="/uploads/docs/<%= media[i].file_path %>"><%= media[i].title %></a></h3>
+                  <a href="/uploads/img/<%= media[i].image_url %>" class="icon-btn popup-image">
                     <i class="far fa-plus"></i>
                   </a>
                 </div>

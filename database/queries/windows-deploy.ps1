@@ -20,13 +20,13 @@ function Run-SqlFile {
 
 # --- 1. Run DDL file(s) ---
 Get-ChildItem -Path $baseDir -Recurse -Filter "*ddl*.sql" | Sort-Object FullName | ForEach-Object {
-    Write-Host "Running: $($_.FullName)"
+    
     Run-SqlFile $_.FullName
 }
 
 # --- 2. Run DML file(s) ---
 Get-ChildItem -Path $baseDir -Recurse -Filter "*dml*.sql" | Sort-Object FullName | ForEach-Object {
-    Write-Host "Running: $($_.FullName)"
+    
     Run-SqlFile $_.FullName
 }
 
@@ -34,6 +34,6 @@ Get-ChildItem -Path $baseDir -Recurse -Filter "*dml*.sql" | Sort-Object FullName
 Get-ChildItem -Path $baseDir -Recurse -Filter "*.sql" | Where-Object {
     $_.Name -notmatch "ddl" -and $_.Name -notmatch "dml"
 } | Sort-Object FullName | ForEach-Object {
-    Write-Host "Running: $($_.FullName)"
+    
     Run-SqlFile $_.FullName
 }

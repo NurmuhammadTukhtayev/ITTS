@@ -8,4 +8,8 @@ app.use('/home', [auth, require('./routes/home')]);
 
 app.use('/materials', [auth, require('./routes/materials')]);
 
+app.use('/media', [auth, require('./routes/media')]);
+
+app.use(require('./controllers/admin/get/pnf'))
+
 module.exports = app;

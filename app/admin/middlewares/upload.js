@@ -11,17 +11,26 @@ let upload = (req, res, next) => {
             let imageName = req.files.image.md5;
             let image = req.files.image;
             let fileNameParts = req.files.image.name.split(".");
-            let mimi = fileNameParts[fileNameParts.length - 1];
+            let ext = fileNameParts[fileNameParts.length - 1].toLowerCase();
+
+            // Allow only image extensions
+            const allowedImageExts = ["jpg", "jpeg", "png", "gif", "webp"];
+            if (!allowedImageExts.includes(ext)) {
+                console.log("Invalid image format");
+                req.lfile = '/';
+                return next();
+            }
 
             if (image.size > 10000000) {
                 console.log("File is big");
-                req.image = image
+                req.lfile = '/';
+                return next();
             }
             // mv()  to save
-            image.mv(path.join(__dirname, `../../../public/uploads/img/${imageName}.${mimi}`), async(err) => {
+            image.mv(path.join(__dirname, `../../../public/uploads/img/${imageName}.${ext}`), async(err) => {
             })
 
-            req.image = imageName + '.' + mimi
+            req.image = imageName + '.' + ext
             // return next()
         }
         
@@ -33,10 +42,17 @@ let upload = (req, res, next) => {
             }
 
             let fileNameParts = req.files.doc.name.split(".");
-            let mimi = fileNameParts[fileNameParts.length - 1];
+            let ext = fileNameParts[fileNameParts.length - 1].toLowerCase();
+
+            // Allow only PDF
+            if (ext !== "pdf") {
+                console.log("Only PDF files are allowed");
+                req.lfile = "/";
+                return next();
+            }
 
             let doc = req.files.doc
-            let docName = req.files.doc.md5 + '.' + mimi
+            let docName = req.files.doc.md5 + '.' + ext
 
             if(doc.size > 10000000 || doc.size > 10000000){
                 console.log("File is big");
@@ -46,7 +62,7 @@ let upload = (req, res, next) => {
 
             doc.mv(path.join(__dirname, `../../../public/uploads/${filePath}/${docName}`), async (err)=>{
                 if(err) {
-                    req.doc = '/'
+                    req.lfile = '/'
                     console.log('line 43\n\n',err)
                     return next()
                 }
