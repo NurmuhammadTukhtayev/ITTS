@@ -1,12 +1,17 @@
-const {query} = require('../../../database/connction/query');
+const { query } = require('../../../database/connction/query');
 
-module.exports = async (req, res) => {
-    const category = req.params.category;
-    let learning_material_categories = await query("SELECT * FROM smart_path.learning_material_categories;");
-    let media = await query("call usp_handle_media_page(?);", [category]);
-    const currentYear = new Date().getFullYear(); 
+module.exports = async (req, res, next) => {
+    try {
+        const category = req.params.category;
+        let media = await query("call usp_handle_media_page(?);", [category]);
 
-    // console.log(media)
-    
-    res.render('./shared/media', { category, copyrightYear: currentYear, learning_material_categories, media:media[0] });
+        res.render('./shared/media', { 
+            copyrightYear: res.locals.copyrightYear, 
+            learning_material_categories: res.locals.learning_material_categories,
+            category, 
+            media: media[0]
+        });
+    } catch (e) {
+        next(e);
+    }
 };

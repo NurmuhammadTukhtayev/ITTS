@@ -1,18 +1,27 @@
-const {query} = require('../../../database/connction/query');
+const { query } = require('../../../database/connction/query');
 
 module.exports = async (req, res) => {
-    const category = req.params.category;
-    let learning_material_categories = await query("SELECT * FROM smart_path.learning_material_categories;");
-    const currentYear = new Date().getFullYear(); 
+    try {
+        const category = req.params.category;
+        let learning_material_categories = await query("SELECT * FROM smart_path.learning_material_categories;");
+        const currentYear = new Date().getFullYear();
 
-    // check if category exists
-    const categoryExists = await query("SELECT * FROM smart_path.learning_material_categories WHERE id = ?;", [category]);
-    if (categoryExists.length === 0) {
-        return res.status(404).render('./shared/error', {learning_material_categories, copyrightYear: currentYear});
+        // check if category exists
+        const categoryExists = await query("SELECT * FROM smart_path.learning_material_categories WHERE id = ?;", [category]);
+        if (categoryExists.length === 0) {
+            return res.status(404).render('./shared/error', { learning_material_categories, copyrightYear: currentYear });
+        }
+
+        // get all categories and materials in the category
+        let materials = await query("SELECT m.* FROM smart_path.learning_materials m left join learning_material_categories mc on mc.id = m.category_id WHERE category_id = ?;", [category]);
+
+        res.render('./shared/materials', { 
+            copyrightYear: res.locals.copyrightYear, 
+            learning_material_categories: res.locals.learning_material_categories,
+            category: categoryExists[0].category_name, 
+            materials 
+        });
+    } catch (e) {
+        next(e);
     }
-
-    // get all categories and materials in the category
-    let materials = await query("SELECT m.* FROM smart_path.learning_materials m left join learning_material_categories mc on mc.id = m.category_id WHERE category_id = ?;", [category]);
-    
-    res.render('./shared/materials', { category:categoryExists[0].category_name, copyrightYear: currentYear, learning_material_categories, materials });
 }

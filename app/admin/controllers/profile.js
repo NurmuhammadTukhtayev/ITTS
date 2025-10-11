@@ -1,5 +1,19 @@
 const {query} = require("../../../database/connction/query");
 
+// get profile info 
+const get_profile = async (req, res, next)=>{
+    try{
+        const profile_info = await query('select * from profile_meta');
+        
+        res.render('./admin/profile', {
+            profile_meta:profile_info[0]
+        })
+    }catch(err){
+        next(err)
+    }
+}
+
+// post change profile
 const change_profile = async (req, res, next) => {
     try{
         const {id, first_name, last_name, job, about_me,
@@ -18,11 +32,10 @@ const change_profile = async (req, res, next) => {
         res.redirect('/@admin/');
     }
     catch(e){
-        console.log(e);
-        res.redirect(`/@admin/home?error=true&message=Ошибка при обновлении`);
+        next(e);
     }
 }
 
 module.exports = {
-    change_profile
+    change_profile, get_profile
 };

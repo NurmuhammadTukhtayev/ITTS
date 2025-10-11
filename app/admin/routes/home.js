@@ -11,9 +11,9 @@ const controller = require('../controllers/profile');
 // });
 
 // get profile info
-app.get('/', require('../controllers/admin/get/home'));
+app.get('/', controller.get_profile);
 
 // change profile info
 app.post('/', [upload, controller.change_profile]);
 
-module.exports = app
+module.exports = app;

@@ -1,20 +1,11 @@
 const express = require('express');
 const app = express.Router();
-const {query} = require('../../../database/connction/query');
+const controller = require('../controllers/blogs');
 
-app.get('/', require('../controllers/blogs'));
+// get blogs
+app.get('/', controller.get_blogs);
 
-app.get('/:blog_id', async (req, res) => {
-    const blog_id = req.params.blog_id;
-    const currentYear = new Date().getFullYear();
-    let learning_material_categories = await query("SELECT * FROM smart_path.learning_material_categories;");
-    
-    let blog = (await query("SELECT id, title, content, author, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.blog_posts WHERE id = ?;", [blog_id]))[0]
-    let blogs = await query("SELECT id, title, substring(content, 1, 300) as content, author, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.blog_posts order by created_at desc limit 5;");
-
-    if (!blog) return res.render('./shared/error', {copyrightYear: currentYear, learning_material_categories })
-
-    res.render('./shared/blog_details', { copyrightYear: currentYear, learning_material_categories, blog, blogs });
-});
+// get blog
+app.get('/:blog_id', controller.get_blog);
 
 module.exports = app;

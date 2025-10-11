@@ -8,8 +8,7 @@ const get_blogs = async (req, res, next) => {
         
         res.render('./admin/blogs', {materials: blogs});
     }catch(e){
-        console.log(e);
-        res.redirect('/@admin/blogs/');
+        next(e);
     }
 }
 
@@ -17,8 +16,7 @@ const get_create_blogs = async (req, res, next) => {
     try{
         res.render('./admin/edit_blogs', {item:{}});
     }catch(e){
-        console.log(e);
-        res.redirect('/@admin/blogs/create?error=true&message=' + e);
+        next(e);
     }
 }
 
@@ -32,8 +30,7 @@ const create_blog = async (req, res, next) => {
 
         res.redirect('/@admin/blogs')
     }catch(e){
-        console.log(e);
-        res.redirect('/@admin/blogs/create?error=true&message=' + e);
+        next(e);
     }
 }
 
@@ -48,8 +45,7 @@ const get_edit_blog = async (req, res, next) => {
         // console.log(blog[0])
         res.render('./admin/edit_blogs', {item:blog[0], useMethodOverride:''});
     }catch(e){
-        console.log(e);
-        res.redirect(`/@admin/blogs/edit/${req.params.id}?error=true&message=${e}`);
+        next(e);
     }
 }
 
@@ -64,8 +60,7 @@ const edit_blog = async (req, res, next) => {
 
         res.redirect(`/@admin/blogs/edit/${req.params.id}`)
     }catch(e){
-        console.log(e);
-        res.redirect(`/@admin/blogs/edit/${req.params.id}?error=true&message=${e}`);
+        next(e);
     }
 }
 
@@ -78,8 +73,7 @@ const delete_blog = async (req, res, next) => {
 
         res.redirect('/@admin/blogs?error=true&message=Ошибка при удалении, проверьте данные и попробуйте снова.')
     }catch(e){
-        console.log(e);
-        res.redirect(`/@admin/blogs/edit/${req.params.id}?error=true&message=${e}`);
+        next(e);
     }
 }
 

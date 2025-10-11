@@ -1,16 +1,14 @@
-const {query} = require('../../../database/connction/query');
+const { query } = require('../../../database/connction/query');
 
-module.exports = async (req, res) => {
-    let learning_material_categories = await query("SELECT * FROM smart_path.learning_material_categories;");
-
-    const currentYear = new Date().getFullYear(); 
+const get_blogs = async (req, res, next) => {
+  try {
     const pageSize = 6;                                // items per page
     const page = Math.max(parseInt(req.query.page || '1', 10), 1);
     const offset = (page - 1) * pageSize;
 
     let totalBlogsResult = (await query("SELECT COUNT(*) AS count FROM smart_path.blog_posts;"))[0].count;
-    let blogs = await query("SELECT id, title, substring(content, 1, 300) as content, author, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.blog_posts ORDER BY created_at DESC, id DESC LIMIT ? OFFSET ?;", 
-        [pageSize, offset]
+    let blogs = await query("SELECT id, title, substring(content, 1, 300) as content, author, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.blog_posts ORDER BY created_at DESC, id DESC LIMIT ? OFFSET ?;",
+      [pageSize, offset]
     );
 
     const totalPages = Math.max(Math.ceil(totalBlogsResult / pageSize), 1);
@@ -27,16 +25,50 @@ module.exports = async (req, res) => {
       }
     }
 
-    res.render('./shared/blogs', { copyrightYear: currentYear, learning_material_categories, blogs, pagination: {
-        totalBlogsResult,
-        totalPages,
-        currentPage,
-        pageSize,
-        hasPrev: currentPage > 1,
-        hasNext: currentPage < totalPages,
-        prevPage: Math.max(1, currentPage - 1),
-        nextPage: Math.min(totalPages, currentPage + 1),
-        pages
-      }
- });
+    res.render('./shared/blogs', {
+        copyrightYear: res.locals.copyrightYear, 
+        learning_material_categories: res.locals.learning_material_categories,
+        blogs, 
+        pagination: {
+          totalBlogsResult,
+          totalPages,
+          currentPage,
+          pageSize,
+          hasPrev: currentPage > 1,
+          hasNext: currentPage < totalPages,
+          prevPage: Math.max(1, currentPage - 1),
+          nextPage: Math.min(totalPages, currentPage + 1),
+          pages
+        }
+    });
+  } catch (e) {
+    next(e);
+  }
 };
+
+const get_blog = async (req, res) => {
+  try {
+    const blog_id = req.params.blog_id;
+
+    let blog = (await query("SELECT id, title, content, author, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.blog_posts WHERE id = ?;", [blog_id]))[0]
+    let blogs = await query("SELECT id, title, substring(content, 1, 300) as content, author, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.blog_posts order by created_at desc limit 5;");
+
+    if (!blog) return res.render('./shared/error', { 
+      copyrightYear: res.locals.copyrightYear, 
+      learning_material_categories: res.locals.learning_material_categories,
+    })
+
+    res.render('./shared/blog_details', { 
+      copyrightYear: res.locals.copyrightYear, 
+      learning_material_categories: res.locals.learning_material_categories,
+      blog, 
+      blogs 
+    });
+  } catch (e) {
+    next(e);
+  }
+}
+
+module.exports = {
+  get_blogs, get_blog
+}

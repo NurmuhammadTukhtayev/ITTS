@@ -1,5 +1,6 @@
-const express = require('express')
-const auth = require('./middlewares/auth')
+const express = require('express');
+const auth = require('./middlewares/auth');
+const {page_not_found} = require('./controllers/generic');
 const app = express.Router()
 
 // sign in
@@ -21,6 +22,6 @@ app.use('/media', require('./routes/media'));
 app.use('/blogs', require('./routes/blogs'));
 
 // 404
-app.use(require('./controllers/admin/get/pnf'))
+app.use(page_not_found);
 
 module.exports = app;

@@ -16,17 +16,19 @@
                             <ul>
                                 <li class=""><a href="/">Главная</a>
                                 </li>
-                                <li class="menu-item-has-children"><a href="#">Учебные материалы</a>
-                                    <ul class="sub-menu">
-                                        <% learning_material_categories.forEach(function(item){ %>
-                                            <li>
-                                                <a href="/materials/<%= item.id %>">
-                                                    <%= item.category_name %>
-                                                </a>
-                                            </li>
-                                            <% }); %>
-                                    </ul>
-                                </li>
+                                <% if (learning_material_categories.length > 0) { %>
+                                    <li class="menu-item-has-children"><a href="#">Учебные материалы</a>
+                                        <ul class="sub-menu">
+                                            <% learning_material_categories.forEach(function(item){ %>
+                                                <li>
+                                                    <a href="/materials/<%= item.id %>">
+                                                        <%= item.category_name %>
+                                                    </a>
+                                                </li>
+                                                <% }); %>
+                                        </ul>
+                                    </li>
+                                <% } %>
                                 <li class="menu-item-has-children"><a href="#">Медиа</a>
                                     <ul class="sub-menu">
                                         <li><a href="/media/videos">Мультимедиа</a></li>

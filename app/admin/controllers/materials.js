@@ -89,8 +89,8 @@ const material_post = async (req, res, next) => {
         if (result.affectedRows) return res.redirect(`/@admin/materials/${category_id}`);
 
         res.redirect('/@admin/materials/${category_id}?error=true&message=Возникла ошибка при добавлении нового документа. Пожалуйста, дважды проверьте поля')
-    }catch{
-
+    }catch(e){
+        next(e);
     }
 }
 

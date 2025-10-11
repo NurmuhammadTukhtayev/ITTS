@@ -1,6 +1,6 @@
 const {query} = require("../../../database/connction/query");
 
-const get_media = async (req, res) => {
+const get_media = async (req, res, next) => {
     try {
         const media = await query("SELECT * FROM vw_media");
         
@@ -8,12 +8,11 @@ const get_media = async (req, res) => {
             materials: media,
         });
     } catch (e) {
-        console.log(e);
-        res.render('admin/media', { user: req.session.user, media: [] });
+        next(e);
     }
 }
 
-const post_media = async (req, res) => {
+const post_media = async (req, res, next) => {
     try {
         const { title, file_type, video_url } = req.body;
 
@@ -40,12 +39,11 @@ const post_media = async (req, res) => {
         res.redirect('/@admin/media');
     }
     catch (e) {
-        console.log(e);
-        res.redirect('/@admin/media');
+        next(e);
     }
 }
 
-const get_edit_media = async (req, res) => {
+const get_edit_media = async (req, res, next) => {
     try {
         const { id } = req.params;
 
@@ -59,12 +57,11 @@ const get_edit_media = async (req, res) => {
             item: media[0],
         });
     } catch (e) {
-        console.log(e);
-        res.redirect('/@admin/media?error=true&message=Ошибка при загрузке страницы редактирования');
+        next(e);
     }
 }
 
-const update_media = async (req, res) => {
+const update_media = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { title, file_type, video_url } = req.body;
@@ -84,12 +81,11 @@ const update_media = async (req, res) => {
 
         res.redirect('/@admin/media');
     } catch (e) {
-        console.log(e);
-        res.redirect(`/@admin/media/edit/${id}?error=true&message=Ошибка при обновлении медиа`);
+        next(e);
     }
 }
 
-const delete_media = async (req, res) => {
+const delete_media = async (req, res, next) => {
     try {
         const { id } = req.params;
 
@@ -102,8 +98,7 @@ const delete_media = async (req, res) => {
 
         res.redirect('/@admin/media');
     } catch (e) {
-        console.log(e);
-        res.status(500).json({ success: false, message: 'Ошибка при удалении медиа' });
+        next(e);
     }
 }
 
