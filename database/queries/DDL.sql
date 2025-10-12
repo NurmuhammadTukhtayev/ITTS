@@ -13,8 +13,21 @@ DROP TABLE IF EXISTS learning_material_categories;
 DROP TABLE IF EXISTS media;
 DROP TABLE IF EXISTS blog_posts;
 DROP TABLE IF EXISTS profile_meta;
+DROP TABLE IF EXISTS test_question_map;
+DROP TABLE IF EXISTS tests;
+DROP TABLE IF EXISTS uploaded_docs;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE IF NOT EXISTS uploaded_docs (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    test_id INT NOT NULL,
+    document_name TEXT NOT NULL,
+    file_path VARCHAR(50) DEFAULT 'uploads/tests',
+    is_merged BIT NOT NULL DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS profile_meta (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -51,8 +64,21 @@ CREATE TABLE IF NOT EXISTS testers (
     test_completed TINYINT(1) DEFAULT 0,
     score INT DEFAULT 0,
     time_taken INT,
-    registered_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    registered_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS tests (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    test_name VARCHAR(50) NOT NULL,
+    author_name VARCHAR(100),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE tests
+    ADD CONSTRAINT uc_unique_test_name UNIQUE (test_name);
 
 CREATE TABLE IF NOT EXISTS questions (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -62,7 +88,22 @@ CREATE TABLE IF NOT EXISTS questions (
     option_c VARCHAR(255) NOT NULL,
     option_d VARCHAR(255) NOT NULL,
     correct_option ENUM('A','B','C','D') NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS test_question_map (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    test_id INT UNSIGNED NOT NULL,
+    question_id INT UNSIGNED NOT NULL,
+    position INT UNSIGNED NOT NULL DEFAULT 1, -- ordering of questions within a test
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_test_question (test_id, question_id),
+    INDEX idx_tqm_test_id (test_id),
+    INDEX idx_tqm_question_id (question_id),
+    CONSTRAINT fk_tqm_test FOREIGN KEY (test_id) REFERENCES tests(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_tqm_question FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- create child tables and add FK constraints with explicit names

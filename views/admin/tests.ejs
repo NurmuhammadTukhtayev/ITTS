@@ -1,0 +1,307 @@
+<%- include('./includes/head.ejs') %>
+
+<body class="hold-transition skin-blue sidebar-mini">
+  <%- include('./includes/loader.ejs') %>
+
+<div class="wrapper">
+
+  <%- include('./includes/header.ejs') %>
+
+  <%- include('./includes/sidebar.ejs') %>
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Тесты
+        <small>Панель управления</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/@admin/home"><i class="fa fa-dashboard"></i> Главная страница</a></li>
+        <li><a href="/@admin/media">Тесты</a></li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tr>
+                  <th>№</th>
+                  <th>Название теста</th>
+                  <th>Имя автора</th>
+                  <th>Дата создания</th>
+                  <th>Дата изменения</th>
+                  <th>Редактировать</th>
+                </tr>
+                <% for (let i = 0; i < materials.length; i++) { %>
+                <tr>
+                  <td><%= i + 1 %></td>
+                  <td><%= materials[i].test_name %></td>
+                  <td><%= materials[i].author_name %></td>
+                  <td><%= materials[i].created_at %></td>
+                  <td><%= materials[i].updated_at %></td>
+                  <td>
+                      <a href="/@admin/test/<%= materials[i].id %>"
+                        class="btn btn-info"
+                      >
+                        <i class="fa fa-eye"></i>
+                     </a>
+                     <button
+                        class="btn btn-warning btn-edit"
+                        data-toggle="modal"
+                        data-target="#modal-default"
+                        data-id="<%= materials[i].id %>"
+                        data-test_name="<%= materials[i].test_name %>"
+                        data-author_name="<%= materials[i].author_name %>"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button
+                        class="btn btn-danger btn-delete"
+                        data-toggle="modal"
+                        data-target="#modal-delete"
+                        data-id="<%= materials[i].id %>"
+                      >
+                        <i class="fa fa-remove"></i>
+                      </button>
+                  </td>
+                </tr>
+                <% } %>
+                
+              </table>
+              <div class="box-footer">
+                  <div class="pull-right">
+                    <button 
+                        class="btn btn-warning"
+                        data-toggle="modal"
+                        data-target="#modal-upload"
+                    >Загрузить готовый тест
+                    </button>                
+                    <button 
+                        data-toggle="modal"
+                        data-target="#modal-default" 
+                        class="btn btn-info">Добавить новый тест
+                    </button>
+                  </div>
+              </div>
+              
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <!--  Add/update modal -->
+  <div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modalTitle">Создать новый тест</h4>
+        </div>
+
+        <form role="form" id="itemForm" action="" method="POST">
+            <!-- for PUT when updating -->
+            <input type="hidden" name="_method" id="methodField" value="">
+            <input type="hidden" name="id" id="itemId" value="">
+
+            <div class="modal-body">
+                <div class="box-body">
+                <div class="form-group">
+
+                    <label for="test_name">Название теста</label>
+                    <input type="text" required class="form-control" id="test_name" name="test_name" placeholder="Название теста...">
+
+                    <label for="author_name">Имя автора</label>
+                    <input type="text" required class="form-control" id="author_name" name="author_name" placeholder="Имя автора...">
+                </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn">Создать тест</button>
+            </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete modal -->
+  <div class="modal fade" id="modal-delete">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-red">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title">Подтвердите удаление</h4>
+        </div>
+
+        <form id="deleteForm" action="" method="POST">
+          <input type="hidden" name="_method" value="DELETE">
+          <div class="modal-body">
+            <p>
+              Вы уверены, что хотите удалить этот тест и все связанные с ним задачи?
+              <br>
+              <strong id="deleteName"></strong>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Отменить</button>
+            <button type="submit" class="btn btn-danger">Удалить</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+    <!-- Upload test -->
+   <div class="modal fade" id="modal-upload">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="UpdateModalTitle">Загрузить новый тест</h4>
+        </div>
+
+        <form role="form" id="test_updload_form" action="/@admin/test/upload" method="POST" enctype="multipart/form-data">
+            <!-- for PUT when updating -->
+            <div class="modal-body">
+                <div class="box-body">
+                <div class="form-group">
+
+                  <label for="test_name_f">Название теста</label>
+                  <input type="text" required class="form-control" id="test_name_f" name="test_name" placeholder="Название теста...">
+
+                  <label for="author_name_f">Имя автора</label>
+                  <input type="text" required class="form-control" id="author_name_f" name="author_name" placeholder="Имя автора...">
+
+                  <label for="material_file">Документ <small class="">Загрузите только Word файлы</small></label>
+                  <input type="file" required name="docx" id="material_file">
+
+                </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary" id="UploadSubmitBtn">Сохранить изменения</button>
+            </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+   <script>
+    // New button
+    $('[data-target="#modal-default"][data-toggle="modal"]').on('click', function (e) {
+      const isEditBtn = $(this).hasClass('btn-edit');
+      const form = $('#itemForm');
+      const title = $('#modalTitle');
+      const submitBtn = $('#submitBtn');
+      const methodField = $('#methodField');
+      const idInput = $('#itemId');
+      const testNameInput = $('#test_name');
+      const authorNameInput = $('#author_name');
+      const pathname = window.location.pathname;
+
+      if (isEditBtn) {
+        const id = $(this).data('id');
+        const test_name = $(this).data('test_name');
+        const author_name = $(this).data('author_name');
+        
+        // Edit mode
+        title.text("Редактировать тест");
+        submitBtn.text("Сохранить изменение");
+
+        form.attr('action', pathname + '/' +  id);
+        methodField.val('PUT');    // method-override will catch this
+        idInput.val(id);
+        testNameInput.val(test_name);
+        authorNameInput.val(author_name);
+        console.log(pathname + '/' +  id);
+      } else {
+        // Create mode
+        title.text("Добавить новый документ");
+        submitBtn.text("Добавить документ");
+
+        form.attr('action', pathname );
+        methodField.val('');
+        idInput.val('');
+        testNameInput.val('');
+        authorNameInput.val('');
+      }
+
+      // const form = document.getElementById('itemForm');
+
+    });
+    
+    // Clear on modal hide
+    $('#modal-default').on('hidden.bs.modal', function () {
+      $('#itemForm')[0].reset();
+      $('#methodField').val('');
+      $('#itemId').val('');
+      $('#description').val('');
+      $('#modalTitle').text('Добавить новый документ');
+      $('#submitBtn').text("Добавить документ");
+      $('#itemForm').attr('action', pathname);
+    });
+  </script>
+
+
+<!-- manage delete action -->
+  <script>
+    $('.btn-delete').on('click', function () {
+      const id = $(this).data('id');
+      const name = $(this).data('name');
+      const pathname = window.location.pathname;
+
+      // Set confirm text
+      $('#deleteName').text(name);
+
+      // Point the form to the resource
+      $('#deleteForm').attr('action', pathname + '/delete/' + id);
+    });
+
+    // Optional safety: clear action when modal hides
+    $('#modal-delete').on('hidden.bs.modal', function () {
+      $('#deleteForm').attr('action', '');
+      $('#deleteName').text('');
+    });
+  </script> 
+
+  <%- include('./includes/footer.ejs') %>
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<%- include('./includes/end.ejs') %>
+</body>
+</html>

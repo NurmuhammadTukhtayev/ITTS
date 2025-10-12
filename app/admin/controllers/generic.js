@@ -1,6 +1,9 @@
 const page_not_found = async (req, res, next) => {
     try{
-        res.render('./admin/error');
+        res.render('./admin/error', {
+            image_url: res.locals.image_url,
+            copyrightYear: res.locals.copyrightYear
+        });
     }catch(e){
         next(e);
     }

@@ -1,0 +1,285 @@
+<%- include('./includes/head.ejs') %>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <%- include('./includes/header.ejs') %>
+
+  <%- include('./includes/sidebar.ejs') %>
+  
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Тесты
+        <small>Панель управления</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/@admin/home"><i class="fa fa-dashboard"></i> Главная страница</a></li>
+        <li><a href="/@admin/media">Тесты</a></li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-bordered table-hover">
+                <tr>
+                  <th>№</th>
+                  <th>Вопрос</th>
+                  <th>Вариант A</th>
+                  <th>Вариант B</th>
+                  <th>Вариант C</th>
+                  <th>Вариант D</th>
+                  <th>Правильный вариант</th>
+                  <th>Дата создания</th>
+                  <th>Дата изменения</th>
+                  <th>Редактировать</th>
+                </tr>
+                <% for (let i = 0; i < materials.length; i++) { %>
+                <tr>
+                  <td><%= i + 1 %></td>
+                  <td><%= materials[i].question_text %></td>
+                  <td><%= materials[i].option_a %></td>
+                  <td><%= materials[i].option_b %></td>
+                  <td><%= materials[i].option_c %></td>
+                  <td><%= materials[i].option_d %></td>
+                  <td><%= materials[i].correct_option %></td>
+                  <td><%= materials[i].created_at %></td>
+                  <td><%= materials[i].updated_at %></td>
+                  <td>
+                     <button
+                        class="btn btn-warning btn-edit"
+                        data-toggle="modal"
+                        data-target="#modal-default"
+                        data-id="<%= materials[i].id %>"
+                        data-question_text="<%= materials[i].question_text %>"
+                        data-option_a="<%= materials[i].option_a %>"
+                        data-option_b="<%= materials[i].option_b %>"
+                        data-option_c="<%= materials[i].option_c %>"
+                        data-option_d="<%= materials[i].option_d %>"
+                        data-correct_option="<%= materials[i].correct_option %>"
+                      >
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button
+                        class="btn btn-danger btn-delete"
+                        data-toggle="modal"
+                        data-target="#modal-delete"
+                        data-id="<%= materials[i].id %>"
+                      >
+                        <i class="fa fa-remove"></i>
+                      </button>
+                  </td>
+                </tr>
+                <% } %>
+                
+              </table>
+              <div class="box-footer">
+                  <div class="pull-right">             
+                    <button data-toggle="modal" data-target="#modal-default" class="btn btn-info" >Добавить новый тест</button>
+                  </div>
+              </div>
+              
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <!--  Add/update modal -->
+  <div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modalTitle">Создать новый тест</h4>
+        </div>
+
+        <form role="form" id="itemForm" action="" method="POST">
+            <!-- for PUT when updating -->
+            <input type="hidden" name="_method" id="methodField" value="">
+            <input type="hidden" name="id" id="itemId" value="">
+
+            <div class="modal-body">
+                <div class="box-body">
+                <div class="form-group">
+
+                    <label for="question_text">Вопрос</label>
+                    <textarea name="question_text" required id="question_text" class="form-control" placeholder="Вопрос..."></textarea>
+                    
+                    <label for="option_a">Вариант A</label>
+                    <input type="text" required class="form-control" id="option_a" name="option_a" placeholder="Вариант A...">
+
+                    <label for="option_b">Вариант B</label>
+                    <input type="text" required class="form-control" id="option_b" name="option_b" placeholder="Вариант B...">
+
+                    <label for="option_c">Вариант C</label>
+                    <input type="text" required class="form-control" id="option_c" name="option_c" placeholder="Вариант C...">
+
+                    <label for="option_d">Вариант D</label>
+                    <input type="text" required class="form-control" id="option_d" name="option_d" placeholder="Вариант D...">
+
+                    <label for="correct_option">Правильный вариант</label>
+                    <input type="text" required class="form-control" id="correct_option" name="correct_option" placeholder="Правильный вариант...">
+                </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn">Создать тест</button>
+            </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete modal -->
+  <div class="modal fade" id="modal-delete">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-red">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title">Подтвердите удаление</h4>
+        </div>
+
+        <form id="deleteForm" action="" method="POST">
+          <input type="hidden" name="_method" value="DELETE">
+          <div class="modal-body">
+            <p>
+              Вы уверены, что хотите удалить этот вопрос и все варианты?
+              <br>
+              <strong id="deleteName"></strong>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Отменить</button>
+            <button type="submit" class="btn btn-danger">Удалить</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+    <script>
+      // New button
+      $('[data-target="#modal-default"][data-toggle="modal"]').on('click', function (e) {
+        console.log('here')
+        const isEditBtn = $(this).hasClass('btn-edit');
+        const form = $('#itemForm');
+        const title = $('#modalTitle');
+        const submitBtn = $('#submitBtn');
+        const methodField = $('#methodField');
+        const idInput = $('#itemId');
+        const questionInput = $('#question_text');
+        const optionAInput = $('#option_a');
+        const optionBInput = $('#option_b');
+        const optionCInput = $('#option_c');
+        const optionDInput = $('#option_d');
+        const correctOptionInput = $('#correct_option');
+        const pathname = window.location.pathname;
+
+        if (isEditBtn) {
+          const id = $(this).data('id');
+          const question_text = $(this).data('question_text');
+          const option_a = $(this).data('option_a');
+          const option_b = $(this).data('option_b');
+          const option_c = $(this).data('option_c');
+          const option_d = $(this).data('option_d');
+          const correct_option = $(this).data('correct_option');
+
+          // Edit mode
+          title.text("Изменить вопрос и варианты");
+          submitBtn.text("Сохранить изменения");
+
+          form.attr('action', pathname + '/edit/' + id);
+          methodField.val('PUT');    // method-override will catch this
+          idInput.val(id);
+          questionInput.val(question_text);
+          optionAInput.val(option_a);
+          optionBInput.val(option_b);
+          optionCInput.val(option_c);
+          optionDInput.val(option_d);
+          correctOptionInput.val(correct_option);
+        } else {
+          // Create mode
+          title.text("Создать новый тест");
+          submitBtn.text("Добавить");
+
+          form.attr('action', pathname);
+          methodField.val('');
+          idInput.val('');
+          questionInput.val('');
+          optionAInput.val('');
+          optionBInput.val('');
+          optionCInput.val('');
+          optionDInput.val('');
+          correctOptionInput.val('');
+        }
+      });
+
+      // Clear on modal hide
+      $('#modal-default').on('hidden.bs.modal', function () {
+        $('#itemForm')[0].reset();
+        $('#methodField').val('');
+        $('#id').val('');
+        $('#modalTitle').text('Создать новый меню');
+        $('#submitBtn').text("Добавить");
+        $('#itemForm').attr('action', pathname);
+      });
+    </script>
+
+  <script>
+    $('.btn-delete').on('click', function () {
+      const id = $(this).data('id');
+      const name = $(this).data('name');
+      const pathname = window.location.pathname;
+
+      // Set confirm text
+      $('#deleteName').text(name);
+
+      // Point the form to the resource
+      $('#deleteForm').attr('action', pathname + '/delete/' + id);
+    });
+
+    // Optional safety: clear action when modal hides
+    $('#modal-delete').on('hidden.bs.modal', function () {
+      $('#deleteForm').attr('action', '');
+      $('#deleteName').text('');
+    });
+  </script> 
+
+  <%- include('./includes/footer.ejs') %>
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<%- include('./includes/end.ejs') %>
+</body>
+</html>

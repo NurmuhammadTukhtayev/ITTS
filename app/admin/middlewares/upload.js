@@ -70,6 +70,42 @@ let upload = (req, res, next) => {
 
             req.doc = docName
         }
+        if(req.files && req.files.docx){
+            let filePath = 'tests'
+
+            if (!fs.existsSync(path.join(__dirname, `../../../public/uploads/${filePath}/`))){
+                fs.mkdirSync(path.join(__dirname, `../../../public/uploads/${filePath}/`),{ recursive: true });
+            }
+
+            let fileNameParts = req.files.docx.name.split(".");
+            let ext = fileNameParts[fileNameParts.length - 1].toLowerCase();
+
+            // Allow only docx
+            if (ext !== "docx") {
+                console.log("Only docx files are allowed");
+                req.lfile = "/";
+                return next();
+            }
+
+            let doc = req.files.docx
+            let docName = req.files.docx.md5 + '.' + ext
+
+            if(doc.size > 10000000 || doc.size > 10000000){
+                console.log("File is big");
+                req.lfile = "/"
+                return next()
+            }
+
+            doc.mv(path.join(__dirname, `../../../public/uploads/${filePath}/${docName}`), async (err)=>{
+                if(err) {
+                    req.lfile = '/'
+                    console.log('line 102\n\n',err)
+                    return next()
+                }
+            })
+
+            req.docx = docName
+        }
         return next()
     } catch (err) {
         // console.log("Upload error in line 24");

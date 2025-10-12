@@ -1,0 +1,81 @@
+<%- include('./includes/head.ejs') %>
+
+<body>
+    
+    <%- include('./includes/loader.ejs') %>
+    <%- include('./includes/navbar.ejs') %>
+
+    <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg.jpg">
+        <div class="container">
+            <div class="breadcumb-content">
+                <h1 class="breadcumb-title" style="text-transform: capitalize;"><% if (category == 'videos') { %> видеоролики <%} else {%> презентации <% } %></h1>
+                <ul class="breadcumb-menu">
+                    <li><a href="/">Главная страница</a></li>
+                    <li>Медиа</li>
+                    <li style="text-transform: capitalize;"><% if (category == 'videos') { %> видеоролики <%} else {%> презентации <% } %></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section class="space">
+  <div class="container">
+    <div class="row gy-4">
+
+      <% if (media.length === 0) { %>
+        <div class="col-12 text-center">
+          <p style="font-size: 1.2rem; color: #666;">Пока нет доступных материалов.</p>
+        </div>
+      <% } else if (category === 'videos') { %>
+        <% for (let i = 0; i < media.length; i++) { %>
+          <div class="col-lg-4 col-md-6">
+            <div class="project-card">
+              <div class="project-img">
+                <img src="/uploads/img/<%= media[i].image_url %>" alt="project image">
+              </div>
+              <div class="project-content-wrap">
+                <div class="project-content">
+                  <div class="box-particle" id="project-p1"></div>
+                  <h3 class="box-title">
+                    <a target="_blank" href="<%= media[i].video_url %>"><%= media[i].title %></a>
+                  </h3>
+                  <a href="/uploads/img/<%= media[i].image_url %>" class="icon-btn popup-image">
+                    <i class="far fa-plus"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } %>
+
+      <% } else if (category === 'presentations') { %>
+        <% for (let i = 0; i < media.length; i++) { %>
+          <div class="col-lg-4 col-md-6">
+            <div class="project-card">
+              <div class="project-img">
+                <img src="/uploads/img/<%= media[i].image_url %>" alt="project image">
+              </div>
+              <div class="project-content-wrap">
+                <div class="project-content">
+                  <div class="box-particle" id="project-p1"></div>
+                  <h3 class="box-title"><a target="_blank" href="/uploads/docs/<%= media[i].file_path %>"><%= media[i].title %></a></h3>
+                  <a href="/uploads/img/<%= media[i].image_url %>" class="icon-btn popup-image">
+                    <i class="far fa-plus"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } %>
+      <% } %>
+
+    </div>
+  </div>
+</section>
+
+    
+    <%- include('./includes/footer.ejs') %>
+    
+    <%- include('./includes/end.ejs') %>
+</body>
+
+</html>

@@ -76,3 +76,23 @@ document.addEventListener('DOMContentLoaded', function () {
   window.history.replaceState({}, document.title, url.pathname + url.search);
 });
 </script>
+
+<!-- loader script -->
+ <script>
+  // Show loader when any form is submitted
+  $('form').on('submit', function() {
+    $('#loading-overlay').fadeIn(200);
+  });
+
+  // Hide loader when modals close (optional)
+  $('.modal').on('hidden.bs.modal', function() {
+    $('#loading-overlay').fadeOut(200);
+  });
+
+  // Optional: also show loader for AJAX requests
+  $(document).ajaxStart(function() {
+    $('#loading-overlay').fadeIn(200);
+  }).ajaxStop(function() {
+    $('#loading-overlay').fadeOut(200);
+  });
+</script>
