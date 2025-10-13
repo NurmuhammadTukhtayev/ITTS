@@ -35,7 +35,7 @@ python -m venv .venv
 
 pip install -r requirements.txt
 ```
-(If you’re on macOS/Linux, use ```source .venv/bin/activate instead.)```
+(If you’re on macOS/Linux, use ```source .venv/bin/activate instead.``` )
 
 4. Copy the example file and update your credentials:
 
