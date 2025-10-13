@@ -21,59 +21,67 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-8">
-          <div class="title-area mb-35 text-xl-start text-center">
-            <span class="sub-title">
-              <div class="icon-masking me-2">
-                <span class="mask-icon" data-mask-src="assets/img/theme-img/title_shape_2.svg"></span>
-                <img src="assets/img/theme-img/title_shape_2.svg" alt="shape">
-              </div>
-              Начать тест
-            </span>
-            <h2 class="sec-title">Введите свои данные</h2>
-            <p class="sec-text">
-              Пожалуйста, заполните форму ниже, чтобы начать выбранный тест.
-            </p>
-          </div>
-
-          <form id="startTestForm" class="contact-form" action="" method="post">
-            <div class="row">
-              <div class="form-group col-md-6">
-                <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Имя" required>
-                <i class="fal fa-user"></i>
-              </div>
-              <div class="form-group col-md-6">
-                <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Фамилия" required>
-                <i class="fal fa-user"></i>
-              </div>
-              <div class="form-group col-md-6">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Электронная почта" required>
-                <i class="fal fa-envelope"></i>
-              </div>
-              <div class="form-group col-md-6">
-                <input type="tel" class="form-control" name="phone" id="phone" placeholder="+998 (__) ___-__-__" required>
-                <i class="fal fa-phone"></i>
-              </div>
-              <div class="form-group col-12">
-                <select name="test_id" id="test_id" class="form-select" required>
-                  <option value="" disabled selected hidden>Выберите тему теста</option>
-                  <% tests.forEach(test => { %>
-                    <option value="<%= test.id %>"><%= test.test_name %></option>
-                  <% }) %>
-                </select>
-                <i class="fal fa-chevron-down"></i>
-              </div>
-
-              <div class="form-btn text-xl-start text-center col-12">
-                <button type="submit" id="startTestBtn" class="th-btn">
-                  Начать тест <i class="fa-regular fa-arrow-right ms-2"></i>
-                </button>
-              </div>
+          <% if (tests && tests.length > 0) { %>
+            <div class="title-area mb-35 text-xl-start text-center">
+              <span class="sub-title">
+                <div class="icon-masking me-2">
+                  <span class="mask-icon" data-mask-src="assets/img/theme-img/title_shape_2.svg"></span>
+                  <img src="assets/img/theme-img/title_shape_2.svg" alt="shape">
+                </div>
+                Начать тест
+              </span>
+              <h2 class="sec-title">Введите свои данные</h2>
+              <p class="sec-text">
+                Пожалуйста, заполните форму ниже, чтобы начать выбранный тест.
+              </p>
             </div>
-          </form>
+
+            <form id="startTestForm" class="contact-form" action="" method="post">
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Имя" required>
+                  <i class="fal fa-user"></i>
+                </div>
+                <div class="form-group col-md-6">
+                  <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Фамилия" required>
+                  <i class="fal fa-user"></i>
+                </div>
+                <div class="form-group col-md-6">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Электронная почта" required>
+                  <i class="fal fa-envelope"></i>
+                </div>
+                <div class="form-group col-md-6">
+                  <input type="tel" class="form-control" name="phone" id="phone" placeholder="+998 (__) ___-__-__" required>
+                  <i class="fal fa-phone"></i>
+                </div>
+                <div class="form-group col-12">
+                  <select name="test_id" id="test_id" class="form-select" required>
+                    <option value="" disabled selected hidden>Выберите тему теста</option>
+                    <% tests.forEach(test => { %>
+                      <option value="<%= test.id %>"><%= test.test_name %></option>
+                    <% }) %>
+                  </select>
+                  <i class="fal fa-chevron-down"></i>
+                </div>
+
+                <div class="form-btn text-xl-start text-center col-12">
+                  <button type="submit" id="startTestBtn" class="th-btn">
+                    Начать тест <i class="fa-regular fa-arrow-right ms-2"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          <% } else { %>
+            <div class="title-area mb-35 text-center">
+              <h2 class="sec-title">Нет доступных тестов</h2>
+              <p class="sec-text">На данный момент нет тестов, готовых для прохождения. Пожалуйста, попробуйте позже.</p>
+            </div>
+          <% } %>
         </div>
       </div>
     </div>
   </div>
+
 
   <!-- Optional modal for missing input or confirmation -->
   <div class="modal fade" id="missingDataModal" tabindex="-1" aria-hidden="true">

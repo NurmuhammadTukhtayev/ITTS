@@ -2,7 +2,6 @@ const path = require('path');
 const { query } = require('../../../database/connction/query');
 
 let cache = {};
-const CACHE_TTL_MS = 60 * 500;
 
 function isPageRequest(req) {
   if (!['GET', 'HEAD'].includes(req.method)) return false;
@@ -22,23 +21,28 @@ function isPageRequest(req) {
 
 module.exports = async (req, res, next) => {
   try {
-    if (!isPageRequest(req)) return next(); // ✅ skip static assets
+    if (!isPageRequest(req)) return next();
 
     res.locals.copyrightYear = new Date().getFullYear();
 
-    const now = Date.now();
+    if (req.path.includes('@admin')) {
+      const [{ last_updated }] = await query(`SELECT MAX(updated_at) AS last_updated FROM profile_meta`);
+      if (!cache.image_url || cache.last_image_update !== last_updated) {
+        const rows = await query(`SELECT image_url, MAX(updated_at) AS last_updated FROM profile_meta group by image_url`);
+        if (rows.length > 0) {
+          cache.image_url = rows[0].image_url;
+          cache.last_image_update = last_updated;
+        }
+      }
+    } else {
+      const [{ last_updated }] = await query(`SELECT MAX(updated_at) AS last_updated FROM smart_path.learning_material_categories`);
+      if (!cache.learning_material_categories || cache.last_categories_update !== last_updated) {
+        const rows = await query(`SELECT * FROM smart_path.learning_material_categories`);
+        cache.learning_material_categories = rows;
+        cache.last_categories_update = last_updated;
+      }
+    }
 
-    if (req.path.includes('@admin') && (!cache.image_url || (now - cache.updatedAt) > CACHE_TTL_MS)) {
-    //   console.log('admin');
-      const profile_data = await query('select image_url from profile_meta');
-      if(profile_data.length > 0) cache.image_url = profile_data[0].image_url;
-      cache.updatedAt = now;
-    } else if (!cache.learning_material_categories || (now - cache.updatedAt) > CACHE_TTL_MS) {
-    //   console.log('public');
-      const rows = await query('SELECT * FROM smart_path.learning_material_categories;');
-      cache.learning_material_categories = rows;
-      cache.updatedAt = now;
-    }    
     res.locals.learning_material_categories = cache.learning_material_categories;
     res.locals.image_url = cache.image_url || "";
 

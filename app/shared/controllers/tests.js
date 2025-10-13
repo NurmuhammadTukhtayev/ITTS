@@ -10,6 +10,8 @@ const shuffleArray = (array) => {
 const start_test = async (req, res, next) => {
     try{
         const tests = await query('select id, test_name from tests order by created_at;');
+
+        // if (tests.length < 1) return res.render('./shared/error')
         
         res.render('./shared/test_form', {
             tests

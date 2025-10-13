@@ -19,7 +19,7 @@
     <section class="space">
         <div class="container">
             <div class="about-card">
-                <div class="about-card_img"><img class="w-100" src="/uploads/img/<%= profile_meta.image_url %>" alt="team image">
+                <div class="about-card_img"><img class="w-100" src="<% if (profile_meta.image_url) { %> /uploads/img/<%= profile_meta.image_url %> <% } else { %> ./assets/img/team/team_1_2.jpg <% } %>" alt="team image">
                 </div>
                 <div class="about-card_box">
                     <div class="about-card_top">
@@ -27,30 +27,8 @@
                             <h2 class="about-card_title"><%= profile_meta.first_name %> <%= profile_meta.last_name %></h2>
                             <p class="about-card_desig"><%= profile_meta.job %></p>
                         </div>
-                        <!-- <div class="header-social">
-                            <a target="_blank" href="https://facebook.com/">
-                                <i
-                                    class="fab fa-facebook-f">
-                                </i>
-                            </a> 
-                            <a target="_blank" href="https://twitter.com/">
-                                <i
-                                    class="fab fa-twitter">
-                                </i>
-                            </a>
-                            <a target="_blank" href="https://instagram.com/">
-                                <i
-                                    class="fab fa-instagram">
-                                </i>
-                            </a> 
-                            <a target="_blank" href="https://linkedin.com/">
-                                <i
-                                    class="fab fa-linkedin-in">
-                                </i>
-                            </a>
-                        </div> -->
                     </div>
-                    <p class="about-card_text"><%= profile_meta.about_me %>.</p>
+                    <p class="about-card_text"><%= profile_meta.about_me %></p>
                     <div class="team-info-wrap">
                         <div class="contact-feature">
                             <div class="icon-btn"><i class="fa-solid fa-user"></i></div>
@@ -78,18 +56,12 @@
                                 <p class="contact-feature_label">Телеграм</p>
                                 <span class="contact-feature_link">
                                     <a class="contact-feature_link" href="https://t.me/<%= profile_meta.telegram %>">
-                                        <%= profile_meta.first_name %> <%= profile_meta.last_name %>
+                                        <% if (profile_meta.telegram) { %> <%= profile_meta.first_name %> <%= profile_meta.last_name %> <% } %> 
                                     </a>
                                 </span>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- <a href="about.html" class="th-btn">GET IN TOUCH
-                        <i class="fa-regular fa-arrow-right ms-2">
-
-                        </i>
-                    </a> -->
                 </div>
             </div>
         </div>
