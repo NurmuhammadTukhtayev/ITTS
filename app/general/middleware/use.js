@@ -15,7 +15,9 @@ const secret = process.env.SECRET_KEY;
 module.exports = [
     express.static('public'),
 
-    // bodyParser.json(),
+    // for api
+    bodyParser.json(),
+
     bodyParser.urlencoded({extended:true}),
     // express.json(),
 

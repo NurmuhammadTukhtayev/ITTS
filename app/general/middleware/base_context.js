@@ -2,7 +2,7 @@ const path = require('path');
 const { query } = require('../../../database/connction/query');
 
 let cache = {};
-const CACHE_TTL_MS = 60 * 1000;
+const CACHE_TTL_MS = 60 * 500;
 
 function isPageRequest(req) {
   if (!['GET', 'HEAD'].includes(req.method)) return false;

@@ -17,4 +17,7 @@ app.use('/blog', require('./routes/blogs'));
 // contact
 app.use('/contact', require('./routes/contact'));
 
+// test 
+app.use('/test', require('./routes/tests'));
+
 module.exports = app;

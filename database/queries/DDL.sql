@@ -16,6 +16,7 @@ DROP TABLE IF EXISTS profile_meta;
 DROP TABLE IF EXISTS test_question_map;
 DROP TABLE IF EXISTS tests;
 DROP TABLE IF EXISTS uploaded_docs;
+DROP TABLE IF EXISTS test_session;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -61,9 +62,6 @@ CREATE TABLE IF NOT EXISTS testers (
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     phone VARCHAR(20),
-    test_completed TINYINT(1) DEFAULT 0,
-    score INT DEFAULT 0,
-    time_taken INT,
     registered_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -146,18 +144,27 @@ CREATE TABLE IF NOT EXISTS blog_posts (
 CREATE TABLE IF NOT EXISTS test_results (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     tester_id INT UNSIGNED NOT NULL,
-    question_id INT UNSIGNED NULL,
+    test_completed TINYINT(1) DEFAULT 0,
+    score INT DEFAULT 0,
+    time_taken INT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_test_results_tester FOREIGN KEY (tester_id)
+        REFERENCES testers(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS test_session(
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    test_result_id INT UNSIGNED NOT NULL,
+    question_id INT,
     selected_option ENUM('A','B','C','D'),
     is_correct TINYINT(1),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_test_results_tester FOREIGN KEY (tester_id)
-        REFERENCES testers(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_test_results_question FOREIGN KEY (question_id)
-        REFERENCES questions(id) ON DELETE SET NULL ON UPDATE CASCADE
+    CONSTRAINT fk_test_track_tester FOREIGN KEY (test_result_id)
+        REFERENCES test_results(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- create indexes on FKs for performance
 CREATE INDEX idx_learning_materials_category ON learning_materials(category_id);
 CREATE INDEX idx_test_results_tester ON test_results(tester_id);
-CREATE INDEX idx_test_results_question ON test_results(question_id);

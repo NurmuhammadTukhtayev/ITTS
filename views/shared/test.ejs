@@ -1,81 +1,179 @@
 <%- include('./includes/head.ejs') %>
 
 <body>
-    
-    <%- include('./includes/loader.ejs') %>
-    <%- include('./includes/navbar.ejs') %>
 
-    <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg.jpg">
-        <div class="container">
-            <div class="breadcumb-content">
-                <h1 class="breadcumb-title" style="text-transform: capitalize;"><% if (category == 'videos') { %> видеоролики <%} else {%> презентации <% } %></h1>
-                <ul class="breadcumb-menu">
-                    <li><a href="/">Главная страница</a></li>
-                    <li>Медиа</li>
-                    <li style="text-transform: capitalize;"><% if (category == 'videos') { %> видеоролики <%} else {%> презентации <% } %></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <section class="space">
-  <div class="container">
-    <div class="row gy-4">
+  <%- include('./includes/loader.ejs') %>
+  <%- include('./includes/navbar.ejs') %>
 
-      <% if (media.length === 0) { %>
-        <div class="col-12 text-center">
-          <p style="font-size: 1.2rem; color: #666;">Пока нет доступных материалов.</p>
-        </div>
-      <% } else if (category === 'videos') { %>
-        <% for (let i = 0; i < media.length; i++) { %>
-          <div class="col-lg-4 col-md-6">
-            <div class="project-card">
-              <div class="project-img">
-                <img src="/uploads/img/<%= media[i].image_url %>" alt="project image">
-              </div>
-              <div class="project-content-wrap">
-                <div class="project-content">
-                  <div class="box-particle" id="project-p1"></div>
-                  <h3 class="box-title">
-                    <a target="_blank" href="<%= media[i].video_url %>"><%= media[i].title %></a>
-                  </h3>
-                  <a href="/uploads/img/<%= media[i].image_url %>" class="icon-btn popup-image">
-                    <i class="far fa-plus"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% } %>
-
-      <% } else if (category === 'presentations') { %>
-        <% for (let i = 0; i < media.length; i++) { %>
-          <div class="col-lg-4 col-md-6">
-            <div class="project-card">
-              <div class="project-img">
-                <img src="/uploads/img/<%= media[i].image_url %>" alt="project image">
-              </div>
-              <div class="project-content-wrap">
-                <div class="project-content">
-                  <div class="box-particle" id="project-p1"></div>
-                  <h3 class="box-title"><a target="_blank" href="/uploads/docs/<%= media[i].file_path %>"><%= media[i].title %></a></h3>
-                  <a href="/uploads/img/<%= media[i].image_url %>" class="icon-btn popup-image">
-                    <i class="far fa-plus"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% } %>
-      <% } %>
-
+  <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg.jpg">
+    <div class="container">
+      <div class="breadcumb-content">
+        <h1 class="breadcumb-title" style="text-transform: capitalize;"><%= test.title %></h1>
+        <ul class="breadcumb-menu">
+          <li><a href="/">Главная страница</a></li>
+          <li>Тесты</li>
+          <li><%= test.title %></li>
+        </ul>
+      </div>
     </div>
   </div>
-</section>
 
-    
-    <%- include('./includes/footer.ejs') %>
-    
-    <%- include('./includes/end.ejs') %>
+  <section class="space">
+    <div class="container">
+      <input hidden id="totalQuestions" value="<%= test.questions.length %>">
+      <input hidden id="testId" value="<%= test.id %>">
+      <% if (!test.questions || test.questions.length === 0) { %>
+        <div class="col-12 text-center">
+          <p style="font-size: 1.2rem; color: #666;">Пока нет доступных вопросов для этого теста.</p>
+        </div>
+      <% } else { %>
+        <form id="testForm">
+          <% test.questions.forEach(function(question, index) { %>
+          <div class="question-block" style="margin-bottom: 30px;">
+            <h4><%= index + 1 %>. <%= question.text %></h4>
+            <input hidden name="q<%= index %>" value="<%= question.question_id %>">
+            <% question.options.forEach(function(option) { %>
+              <div class="form-check" style="margin-left: 20px;">
+                <input class="form-check-input" 
+                      type="radio" 
+                      name="question_<%= index %>" 
+                      id="q<%= index %>_<%= option.id %>" 
+                      value="<%= option.id %>">
+                <label class="form-check-label" for="q<%= index %>_<%= option.id %>">
+                  (<%= option.id %>) <%= option.text %>
+                </label>
+              </div>
+            <% }); %>
+          </div>
+        <% }); %>
+
+
+          <div class="text-center" style="margin-top: 40px;">
+            <button type="button" class="btn btn-primary" id="submitTestBtn">Завершить тест</button>
+          </div>
+        </form>
+
+        <div id="resultSection" style="display: none; margin-top: 40px; text-align: center;">
+          <h3 id="resultText"></h3>
+          <button class="btn btn-secondary" id="backToMainBtn" style="margin-top: 20px;">Вернуться на главную</button>
+        </div>
+      <% } %>
+    </div>
+  </section>
+
+  <!-- Confirm Submit Modal -->
+<div class="modal fade" id="confirmSubmitModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Незаполненные вопросы</h5>
+      </div>
+      <div class="modal-body">
+        <p>Вы не ответили на все вопросы. Вы уверены, что хотите завершить тест?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Продолжить</button>
+        <button type="button" id="confirmSubmitBtn" class="btn btn-primary">Да, завершить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Result Modal -->
+<div class="modal fade" id="resultModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Результат теста</h5>
+      </div>
+      <div class="modal-body" id="resultModalBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="resultOkBtn">Ок</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <%- include('./includes/footer.ejs') %>
+  <%- include('./includes/end.ejs') %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tester_id = urlParams.get('tester_id');
+    const track_id = urlParams.get('track_id');
+    const form = document.getElementById("testForm");
+    const submitBtn = document.getElementById("submitTestBtn");
+    const confirmModal = new bootstrap.Modal(document.getElementById("confirmSubmitModal"), {
+      backdrop: 'static',
+      keyboard: false
+    });
+    const resultModal = new bootstrap.Modal(document.getElementById("resultModal"), {
+      backdrop: 'static',
+      keyboard: false
+    });
+    const confirmSubmitBtn = document.getElementById("confirmSubmitBtn");
+    const resultModalBody = document.getElementById("resultModalBody");
+    const resultOkBtn = document.getElementById("resultOkBtn");
+
+    submitBtn?.addEventListener("click", async () => {
+      const answers = [];
+      const totalQuestions = document.getElementById("totalQuestions").value;
+      const testId = document.getElementById("testId").value;
+      
+      let hasEmpty = false;
+
+      for (let i = 0; i < totalQuestions; i++) {
+        const selected = form.querySelector(`input[name="question_${i}"]:checked`);
+        const question_id = form.querySelector(`input[name="q${i}"]`)?.value;
+        if (!selected) hasEmpty = true;
+        answers.push({
+          question_id: question_id,
+          choosen_option: selected ? selected.value : null
+        });
+      }
+
+      // If there are unanswered questions → ask confirmation
+      if (hasEmpty) {
+        confirmModal.show();
+
+        confirmSubmitBtn.onclick = async () => {
+          confirmModal.hide();
+          await submitTest(testId, answers);
+        };
+        return;
+      }
+
+      await submitTest(testId, answers);
+    });
+
+    async function submitTest(testId, answers) {
+      try {
+        const res = await fetch("/test/submit-test", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ test_id: testId, answers: answers, tester_id, track_id }),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          resultModalBody.innerHTML = `<p>Ваш результат: <strong>${data.score}</strong> из <strong>${data.total}</strong></p>`;
+          resultModal.show();
+          resultOkBtn.onclick = () => window.location.href = "/";
+        } else {
+          resultModalBody.innerHTML = `<p class="text-danger">Произошла ошибка при отправке теста. Попробуйте снова.</p>`;
+          resultModal.show();
+        }
+      } catch (err) {
+        console.error("Error submitting test:", err);
+        resultModalBody.innerHTML = `<p class="text-danger">Ошибка соединения. Попробуйте позже.</p>`;
+        resultModal.show();
+      }
+    }
+  });
+</script>
+
 </body>
-
 </html>
