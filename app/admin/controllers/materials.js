@@ -31,7 +31,7 @@ const material_menu_put = async (req, res, next)=>{
     try{
         const {id, category} = req.body;    
 
-        const result = await query("UPDATE `learning_material_categories` SET `category_name` = ?, updated_at = CURDATE() WHERE `id` = ?", [category, id]);
+        const result = await query("UPDATE `learning_material_categories` SET `category_name` = ? WHERE `id` = ?", [category, id]);
 
         if (result.affectedRows) return res.redirect('/@admin/materials');
 
