@@ -20,4 +20,7 @@ app.use('/contact', require('./routes/contact'));
 // test 
 app.use('/test', require('./routes/tests'));
 
+// about course
+app.use('/about', require('./routes/about'));
+
 module.exports = app;

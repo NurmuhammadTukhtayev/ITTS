@@ -11,21 +11,25 @@
                                     <img style="height:45px; width:auto;" src="/assets/img/ITTS2.png" alt="ITTS">
                                 </a>
                             </div>
-                            <p class="about-text">Наша цель - помочь нашим компаниям поддерживать лучшие классные позиции в своих отраслях, и наши командные работы часто требуют отмены.
+                            <p class="about-text">
+                                Информационные технологии в технических системах — это про то, как мыслить логично и
+                                видеть взаимосвязи. Здесь ты учишься превращать реальные инженерные задачи в алгоритмы и
+                                цифровые решения. Программирование, анализ данных и моделирование становятся
+                                инструментами твоего мышления. 
                             </p>
                             <div class="th-social">
-                                <a href="https://www.facebook.com/"> 
+                                <a href="https://www.facebook.com/">
                                     <i class="fab fa-facebook-f"></i>
                                 </a>
                                 <a href="https://www.twitter.com/">
                                     <i class="fab fa-twitter"></i>
-                                </a> 
+                                </a>
                                 <a href="https://www.linkedin.com/">
                                     <i class="fab fa-linkedin-in"></i>
-                                </a> 
+                                </a>
                                 <a href="https://www.whatsapp.com/">
-                                    <i class="fab fa-whatsapp"></i> 
-                                </a> 
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -37,8 +41,9 @@
                             <ul class="menu">
                                 <li><a href="/">Главная</a></li>
                                 <li><a href="/blog">Блог</a></li>
-                                <li><a href="/test">Тест</a></li>
+                                <li><a href="/test">Задания</a></li>
                                 <li><a href="/contact">Свяжитесь с нами</a></li>
+                                <li class=""><a href="/about">О курсе</a></li>
                             </ul>
                         </div>
                     </div>
@@ -48,8 +53,17 @@
                         <h3 class="widget_title style2">Ресурсы</h3>
                         <div class="menu-all-pages-container">
                             <ul class="menu">
-                                <li><a href="/media/videos">Видеоинструкции</a></li>
-                                <li><a href="/media/presentations">Презентации</a></li>
+                                <li><a href="/media/videos">Видеоуроки</a></li>
+                                <li><a href="/media/presentations">Инструкции</a></li>
+                                <% if (learning_material_categories.length > 0) { %>
+                                    <% learning_material_categories.forEach(function(item){ %>
+                                        <li>
+                                            <a href="/materials/<%= item.id %>">
+                                                <%= item.category_name %>
+                                            </a>
+                                        </li>
+                                    <% }); %>
+                                <% } %>
                             </ul>
                         </div>
                     </div>

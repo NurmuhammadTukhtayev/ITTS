@@ -14,7 +14,13 @@
                     <div class="col-auto">
                         <nav class="main-menu style2 d-none d-lg-inline-block">
                             <ul>
-                                <li class=""><a href="/">Главная</a>
+                                <li class=""><a href="/">Главная</a></li>
+                                <li class=""><a href="/about">О курсе</a></li>
+                                <li class="menu-item-has-children"><a href="#">Интерактивные инструменты </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="/media/videos">Видеоуроки</a></li>
+                                        <li><a href="/media/presentations">Инструкции</a></li>
+                                    </ul>
                                 </li>
                                 <% if (learning_material_categories.length > 0) { %>
                                     <li class="menu-item-has-children"><a href="#">Учебные материалы</a>
@@ -29,15 +35,9 @@
                                         </ul>
                                     </li>
                                 <% } %>
-                                <li class="menu-item-has-children"><a href="#">Медиа</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="/media/videos">Мультимедиа</a></li>
-                                        <li><a href="/media/presentations">Презентации</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="/test">Задания</a></li>                                
                                 <li class=""><a href="/blog">Блог</a></li>
-                                <li><a href="/test">Тест</a></li>
-                                <li><a href="/contact">Контакт</a></li>
+                                <li><a href="/contact">Обратная связь</a></li>
                             </ul>
                         </nav><button type="button" class="th-menu-toggle d-block d-lg-none"><i
                                 class="far fa-bars"></i></button>
