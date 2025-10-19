@@ -1,6 +1,6 @@
 <%- include('./includes/head.ejs') %>
 
-<body>
+<body class="theme3">
     
     <%- include('./includes/loader.ejs') %>
     <%- include('./includes/navbar.ejs') %>
@@ -8,11 +8,11 @@
     <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg.jpg">
         <div class="container">
             <div class="breadcumb-content">
-                <h1 class="breadcumb-title" style="text-transform: capitalize;"><% if (category == 'videos') { %> видеоролики <%} else {%> презентации <% } %></h1>
+                <h1 class="breadcumb-title" style="text-transform: capitalize;"><% if (category == 'videos') { %> Видеоуроки <%} else {%> Инструкции <% } %></h1>
                 <ul class="breadcumb-menu">
                     <li><a href="/">Главная страница</a></li>
-                    <li>Медиа</li>
-                    <li style="text-transform: capitalize;"><% if (category == 'videos') { %> видеоролики <%} else {%> презентации <% } %></li>
+                    <li>Интерактивные инструменты</li>
+                    <li style="text-transform: capitalize;"><% if (category == 'videos') { %> Видеоуроки <%} else {%> Инструкции <% } %></li>
                 </ul>
             </div>
         </div>

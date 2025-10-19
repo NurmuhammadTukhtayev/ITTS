@@ -3,13 +3,11 @@ const { query } = require('../../../database/connction/query');
 module.exports = async (req, res) => {
     try {
         const category = req.params.category;
-        let learning_material_categories = await query("SELECT * FROM smart_path.learning_material_categories;");
-        const currentYear = new Date().getFullYear();
 
         // check if category exists
         const categoryExists = await query("SELECT * FROM smart_path.learning_material_categories WHERE id = ?;", [category]);
         if (categoryExists.length === 0) {
-            return res.status(404).render('./shared/error', { learning_material_categories, copyrightYear: currentYear });
+            return res.status(404).render('./shared/error', { learning_material_categories: res.locals.learning_material_categories, copyrightYear: res.locals.copyrightYear });
         }
 
         // get all categories and materials in the category

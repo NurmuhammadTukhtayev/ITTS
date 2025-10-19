@@ -11,7 +11,7 @@ app.use(require('./general/middleware/base_context'));
 app.use('/', require('./shared/shared'));
 
 // admin
-app.use('/@admin', require('./admin/admin'))
+app.use('/@admin', require('./admin/admin'));
 
 // page not found
 app.use(require('./shared/controllers/pnf'));

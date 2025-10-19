@@ -24,6 +24,9 @@ app.use('/blogs', require('./routes/blogs'));
 // test management
 app.use('/test', require('./routes/tests'));
 
+// documents
+app.use('/documents', require('./routes/documents'));
+
 // 404
 app.use(page_not_found);
 

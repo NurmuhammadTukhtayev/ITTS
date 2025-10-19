@@ -1,6 +1,6 @@
 <%- include('./includes/head.ejs') %>
 
-<body>
+<body class="theme3">
     <%- include('./includes/loader.ejs') %>
 
     <%- include('./includes/navbar.ejs') %>
@@ -8,10 +8,10 @@
     <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg.jpg">
         <div class="container">
             <div class="breadcumb-content">
-                <h1 class="breadcumb-title">Блог</h1>
+                <h1 class="breadcumb-title">Новости</h1>
                 <ul class="breadcumb-menu">
                     <li><a href="/">Главная страница</a></li>
-                    <li>Блог</li>
+                    <li>Новости</li>
                 </ul>
             </div>
         </div>
@@ -25,7 +25,7 @@
           <% if (blogs.length === 0) { %>
             <div class="text-center" style="margin: 60px 0;">
               <p style="font-size: 1.2rem; color: #666;">
-                Пока нет опубликованных блогов.
+                Пока нет опубликованных новости.
               </p>
             </div>
           <% } else { %>
