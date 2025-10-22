@@ -1,0 +1,64 @@
+<%- include('./includes/head.ejs') %>
+
+<body class="theme3">
+    <%- include('./includes/loader.ejs') %>
+
+    <%- include('./includes/navbar.ejs') %>
+
+    <div class="breadcumb-wrapper" data-bg-src="/assets/img/bg/breadcumb-bg.jpg">
+        <div class="container">
+            <div class="breadcumb-content">
+                <h1 class="breadcumb-title">Тестование</h1>
+                <ul class="breadcumb-menu">
+                    <li><a href="index.html">Главная страница</a></li>
+                    <li>Тестование</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section class="space">
+        <div class="container">
+            <div class="title-area text-center"><span class="sub-title">
+                    <div class="icon-masking me-2"><span class="mask-icon"
+                            data-mask-src="/assets/img/theme-img/title_shape_2.svg"></span> <img
+                            src="/assets/img/theme-img/title_shape_2.svg" alt="shape"></div>Доступные тесты для проверки ваших знаний
+                </span>
+                <!-- <h2 class="sec-title">Popular Pricing <span class="text-theme fw-normal">Package</span></h2> -->
+            </div>
+            <div class="row gy-4 justify-content-center">
+                <% for (let i = 0; i < tests.length; i++) { %>
+                    <div class="col-xl-4 col-md-6">
+                    <div class="price-card">
+                        <div class="price-card_top">
+                            <h3 class="price-card_title"><%= tests[i].test_name %> </h3>
+                            <!-- <p class="price-card_text"><%= tests[i].author_name %></p> -->
+                            
+                        </div>
+                        <div class="price-card_content">
+                            <div class="checklist">
+                                <ul>
+                                    <li><i class="fas fa-circle-check"></i> Создано <%= tests[i].author_name %></li>
+                                    <li><i class="fas fa-circle-check"></i> Создано в <%= tests[i].created_at %></li>
+                                    <li><i class="fas fa-circle-check"></i> Всего доступных вопросов: <%= tests[i].total_questions %></li>
+                                </ul>
+                            </div><a href="/test/start?test_id=<%= tests[i].id %>" class="th-btn">НАЧАТЬ СЕЙЧАС<i
+                                    class="fa-regular fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+        <div class="shape-mockup" data-top="0" data-right="0"><img src="/assets/img/shape/tech_shape_1.png" alt="shape">
+        </div>
+        <div class="shape-mockup" data-top="0%" data-left="0%"><img src="/assets/img/shape/square_1.png" alt="shape">
+        </div>
+    </section>
+    
+    <%- include('./includes/footer.ejs') %>
+    
+    <%- include('./includes/end.ejs') %>
+</body>
+<!-- Mirrored from html.themeholy.com/webteck/demo/blog-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 26 Sep 2025 22:06:30 GMT -->
+
+</html>

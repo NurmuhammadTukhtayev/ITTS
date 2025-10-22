@@ -15,7 +15,7 @@ app.use('/media', require('./routes/media'));
 app.use('/blog', require('./routes/blogs'));
 
 // contact
-app.use('/contact', require('./routes/contact'));
+// app.use('/contact', require('./routes/contact'));
 
 // test 
 app.use('/test', require('./routes/tests'));

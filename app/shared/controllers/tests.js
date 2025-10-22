@@ -9,12 +9,13 @@ const shuffleArray = (array) => {
 
 const start_test = async (req, res, next) => {
     try{
-        const tests = await query('select id, test_name from tests order by created_at;');
+        const { test_id } = req.query;
+        const test = await query('select id, test_name from tests where id = ?;', [test_id]);
 
-        // if (tests.length < 1) return res.render('./shared/error')
+        if (test.length < 1) return res.render('./shared/error')
         
         res.render('./shared/test_form', {
-            tests
+            test:test[0]
         })
     }catch(e){
         next(e);
@@ -127,7 +128,19 @@ const check_answer = async (req, res, next) => {
     }
 }
 
+const list_of_test = async (req, res, next) => {
+    try{
+        const tests = await query('select * from vw_tests');
+
+        res.render('./shared/test_list', {
+            tests
+        })
+    }catch(e){
+        next(e);
+    }
+}
+
 module.exports = {
     get_test_questions, check_answer, start_test,
-    start_test_post
+    start_test_post, list_of_test
 }

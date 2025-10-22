@@ -5,7 +5,7 @@
 
     <%- include('./includes/navbar.ejs') %>
     
-    <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg.jpg">
+    <div class="breadcumb-wrapper" data-bg-src="/assets/img/bg/breadcumb-bg.jpg">
         <div class="container">
             <div class="breadcumb-content">
                 <h1 class="breadcumb-title" style="text-transform: capitalize;">Начать тест</h1>
@@ -17,16 +17,15 @@
         </div>
     </div>
     
-    <div class="bg-smoke space" data-bg-src="assets/img/bg/contact_bg_1.png" id="start-test-sec">
+    <div class="bg-smoke space" data-bg-src="/assets/img/bg/contact_bg_1.png" id="start-test-sec">
     <div class="container">
       <div class="row">
         <div class="col-xl-8">
-          <% if (tests && tests.length > 0) { %>
             <div class="title-area mb-35 text-xl-start text-center">
               <span class="sub-title">
                 <div class="icon-masking me-2">
-                  <span class="mask-icon" data-mask-src="assets/img/theme-img/title_shape_2.svg"></span>
-                  <img src="assets/img/theme-img/title_shape_2.svg" alt="shape">
+                  <span class="mask-icon" data-mask-src="/assets/img/theme-img/title_shape_2.svg"></span>
+                  <img src="/assets/img/theme-img/title_shape_2.svg" alt="shape">
                 </div>
                 Начать тест
               </span>
@@ -54,16 +53,12 @@
                   <input type="tel" class="form-control" name="phone" id="phone" placeholder="+998 (__) ___-__-__" required>
                   <i class="fal fa-phone"></i>
                 </div>
-                <div class="form-group col-12">
-                  <select name="test_id" id="test_id" class="form-select" required>
-                    <option value="" disabled selected hidden>Выберите тему теста</option>
-                    <% tests.forEach(test => { %>
-                      <option value="<%= test.id %>"><%= test.test_name %></option>
-                    <% }) %>
-                  </select>
-                  <i class="fal fa-chevron-down"></i>
+                <div class="form-group col-md-6">
+                  <input type="text" class="form-control" disabled value="<%= test.test_name %>">
                 </div>
-
+                <div class="form-group col-md-6">
+                  <input type="text" class="form-control" hidden value="<%= test.id %>" name="test_id">
+                </div>
                 <div class="form-btn text-xl-start text-center col-12">
                   <button type="submit" id="startTestBtn" class="th-btn">
                     Начать тест <i class="fa-regular fa-arrow-right ms-2"></i>
@@ -71,12 +66,6 @@
                 </div>
               </div>
             </form>
-          <% } else { %>
-            <div class="title-area mb-35 text-center">
-              <h2 class="sec-title">Нет доступных тестов</h2>
-              <p class="sec-text">На данный момент нет тестов, готовых для прохождения. Пожалуйста, попробуйте позже.</p>
-            </div>
-          <% } %>
         </div>
       </div>
     </div>
