@@ -23,4 +23,7 @@ app.use('/test', require('./routes/tests'));
 // about course
 app.use('/about', require('./routes/about'));
 
+// assignment
+app.use('/assignment', require('./routes/assignment'))
+
 module.exports = app;
