@@ -24,6 +24,9 @@ app.use('/test', require('./routes/tests'));
 app.use('/about', require('./routes/about'));
 
 // assignment
-app.use('/assignment', require('./routes/assignment'))
+app.use('/assignment', require('./routes/assignment'));
+
+// evaluation
+app.use('/evaluation', require('./routes/evaluation'));
 
 module.exports = app;

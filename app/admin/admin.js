@@ -30,6 +30,9 @@ app.use('/documents', require('./routes/documents'));
 // assignments
 app.use('/assignment', require('./routes/assignment'));
 
+// evaluation
+app.use('/evaluation', require('./routes/evaluation'));
+
 // 404
 app.use(page_not_found);
 
