@@ -7,10 +7,10 @@ module.exports = async (req, res, next) => {
         profile_meta = profile_meta[0];
         
         // if there is no data 
-        if(!profile_meta) return res.render('./shared/error', {
-            copyrightYear: res.locals.copyrightYear, 
-            learning_material_categories: res.locals.learning_material_categories,
-        });
+        // if(!profile_meta) return res.render('./shared/error', {
+        //     copyrightYear: res.locals.copyrightYear, 
+        //     learning_material_categories: res.locals.learning_material_categories,
+        // });
 
         res.render('./shared/index', { 
             copyrightYear: res.locals.copyrightYear, 

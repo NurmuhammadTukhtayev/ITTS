@@ -23,6 +23,8 @@ module.exports = async (req, res, next) => {
   try {
     if (!isPageRequest(req)) return next();
 
+    res.locals.image_url = "";
+
     // get copyright year
     res.locals.copyrightYear = new Date().getFullYear();
 
