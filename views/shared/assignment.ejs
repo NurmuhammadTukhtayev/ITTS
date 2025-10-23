@@ -28,8 +28,8 @@
                             <% for (let i = 0; i < assignments.length; i++) { %> 
                             <div class="col-xl-3 col-lg-4 col-md-6 feature-card-wrap2">
                                 <div class="feature-card style2">
-                                    <div class="feature-card-icon"><img src="assets/img/icon/feature_card_8_1.svg" alt="icon"></div>
-                                    <h3 class="box-title"><a href="#"><%= assignments[i].title %></a></h3>
+                                    <div class="feature-card-icon"><img src="/assets/img/icon/feature_card_8_1.svg" alt="icon"></div>
+                                    <h3 class="box-title"><a href="/assignment/<%= assignments[i].file_path %>"><%= assignments[i].title %></a></h3>
                                     <p class="feature-card_text"><%= assignments[i].description %></p>
                                 </div>
                             </div>
