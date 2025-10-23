@@ -1,7 +1,7 @@
 <%- include('./includes/head.ejs') %>
 
     <body class="theme3">
-     <%- include('./includes/loader.ejs') %>
+        <%- include('./includes/loader.ejs') %>
 
             <%- include('./includes/navbar.ejs') %>
                 <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg.jpg">
@@ -16,56 +16,32 @@
                     </div>
                 </div>
 
-    <div class="overflow-hidden space-bottom" id="service-sec">
-        <div class="container th-container4">
-            <div class="row justify-content-center">
-                <div class="col-lg-7">
-                    <div class="title-area text-center"><span class="sub-title"></span>
+                <div class="overflow-hidden space-bottom" id="service-sec">
+                    <div class="container th-container4">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7">
+                                <div class="title-area text-center"><span class="sub-title"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gy-4 justify-content-center">
+                            <% for (let i = 0; i < assignments.length; i++) { %> 
+                            <div class="col-xl-3 col-lg-4 col-md-6 feature-card-wrap2">
+                                <div class="feature-card style2">
+                                    <div class="feature-card-icon"><img src="assets/img/icon/feature_card_8_1.svg" alt="icon"></div>
+                                    <h3 class="box-title"><a href="#"><%= assignments[i].title %></a></h3>
+                                    <p class="feature-card_text"><%= assignments[i].description %></p>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row gy-4 justify-content-center">
-                <div class="col-xl-3 col-lg-4 col-md-6 feature-card-wrap2">
-                    <div class="feature-card style2">
-                        <div class="feature-card-icon"><img src="assets/img/icon/feature_card_8_1.svg" alt="icon"></div>
-                        <h3 class="box-title"><a href="service-details%2chtml.html">Note Powerful and Security</a></h3>
-                        <p class="feature-card_text">Incorporate testimonials customer reviews, or social media feeds to
-                            build trust and credibility.</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 feature-card-wrap2">
-                    <div class="feature-card style2">
-                        <div class="feature-card-icon"><img src="assets/img/icon/feature_card_8_2.svg" alt="icon"></div>
-                        <h3 class="box-title"><a href="service-details%2chtml.html">Easy Sort, Classify and Search</a>
-                        </h3>
-                        <p class="feature-card_text">Testimonials incorporate customer reviews, or social media feeds to
-                            build trust and credibility.</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 feature-card-wrap2">
-                    <div class="feature-card style2">
-                        <div class="feature-card-icon"><img src="assets/img/icon/feature_card_8_3.svg" alt="icon"></div>
-                        <h3 class="box-title"><a href="service-details%2chtml.html">Collaboration and Share</a></h3>
-                        <p class="feature-card_text">Customer testimonials incorporate reviews, or social media feeds to
-                            build trust and credibility.</p>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 feature-card-wrap2">
-                    <div class="feature-card style2">
-                        <div class="feature-card-icon"><img src="assets/img/icon/feature_card_8_4.svg" alt="icon"></div>
-                        <h3 class="box-title"><a href="service-details%2chtml.html">Share your Data to anyone</a></h3>
-                        <p class="feature-card_text">Reviews incorporate testimonials customer, or social media feeds to
-                            build trust and credibility.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
    
-                    <%- include('./includes/footer.ejs') %>
+            <%- include('./includes/footer.ejs') %>
 
-                    <%- include('./includes/end.ejs') %>
+        <%- include('./includes/end.ejs') %>
 
     </body>
     <!-- Mirrored from html.themeholy.com/webteck/demo/home-ai.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 26 Sep 2025 22:01:16 GMT -->

@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS tests;
 DROP TABLE IF EXISTS uploaded_docs;
 DROP TABLE IF EXISTS test_session;
 DROP TABLE IF EXISTS documents;
+DROP TABLE IF EXISTS assignments;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -112,16 +113,29 @@ CREATE TABLE IF NOT EXISTS learning_materials (
     image_url VARCHAR(1024) NULL,
     description TEXT NOT NULL,
     category_id INT UNSIGNED NOT NULL,
+    test_id INT UNSIGNED NULL,
     file_path VARCHAR(1024) NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_learning_materials_category FOREIGN KEY (category_id)
         REFERENCES learning_material_categories(id)
         ON DELETE RESTRICT
-        ON UPDATE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_learning_materials_test FOREIGN KEY (test_id)
+        REFERENCES tests(id)
+            ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS documents (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    file_path VARCHAR(1024) NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS assignments (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,

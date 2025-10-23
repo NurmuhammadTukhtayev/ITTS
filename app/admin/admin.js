@@ -27,6 +27,9 @@ app.use('/test', require('./routes/tests'));
 // documents
 app.use('/documents', require('./routes/documents'));
 
+// assignments
+app.use('/assignment', require('./routes/assignment'));
+
 // 404
 app.use(page_not_found);
 

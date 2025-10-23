@@ -2,7 +2,7 @@ const { query } = require("../../../database/connction/query");
 
 const get_documents = async (req, res, next) => {
     try {
-        const documents = await query('SELECT * FROM `documents`;');
+        const documents = await query('SELECT * FROM `vw_documents`;');
 
         res.render('./admin/documents', {
             materials: documents
