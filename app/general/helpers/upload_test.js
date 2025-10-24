@@ -63,6 +63,9 @@ const load_word_to_mysql = (data, python_path, sql_conn_str) => {
           // Non-zero exit, treat as failure and include stderr for debugging
           return reject({ type: 'exit_error', code, stdout, stderr });
         }
+        
+        console.log(stdout, stderr);
+        
         // success
         resolve({ code, stdout, stderr });
       });
