@@ -11,10 +11,10 @@ const upload = require('../middlewares/upload');
 // });
 
 // get list of blogs
-app.get('/', controllers.get_blogs);
+app.get('/', controllers.get_evaluation_posts);
 
 // get create/edit blog page
-app.get('/create', controllers.get_create_blogs);
+app.get('/create', controllers.get_create_posts);
 
 // create a blog
 app.post('/create', [upload, controllers.create_blog]);

@@ -10,15 +10,15 @@
     <section class="content-header">
       <h1>
         <% if (item && item.id) { %>
-          Редактировать блог
+          Редактировать пост
         <% } else { %>
-          Создать блог
+          Создать пост
         <% } %>
         <small>Панель управления</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="/@admin/home"><i class="fa fa-dashboard"></i> Главная страница</a></li>
-        <li><a href="/@admin/blogs">Блоги</a></li>
+        <li><a href="/@admin/evaluation">Посты</a></li>
       </ol>
     </section>
 
@@ -33,7 +33,7 @@
                   // Determine action & method. Prefer controller-provided values.
                   const action = typeof formAction !== 'undefined'
                     ? formAction
-                    : (item && item.id ? '/@admin/blogs/' + 'edit/' + item.id : '/@admin/blogs/create');
+                    : (item && item.id ? '/@admin/evaluation/' + 'edit/' + item.id : '/@admin/evaluation/create');
 
                   const method = typeof formMethod !== 'undefined' ? formMethod : (item && item.id ? 'PUT' : 'POST');
                   // Note: keep POST and use _method override for PUT/DELETE if needed.
@@ -55,13 +55,6 @@
                         <label for="title">Заголовок</label>
                         <input type="text" class="form-control" id="title" name="title" 
                                value="<%= item && item.title ? item.title : '' %>" required>
-                      </div>
-
-                      <!-- Author / author -->
-                      <div class="form-group">
-                        <label for="author">Автор</label>
-                        <input type="text" required class="form-control" id="author" name="author" 
-                               value="<%= item && item.author ? item.author : '' %>">
                       </div>
 
                       <!-- Image input always visible -->
@@ -97,7 +90,7 @@
 
                     <div class="box-footer">
                       <div class="card-footer pull-right">
-                        <a class="btn btn-info" href="/@admin/blogs">Назад</a>
+                        <a class="btn btn-info" href="/@admin/evaluation">Назад</a>
 
                         <% if (item && item.id) { %>
                           <button 
@@ -146,7 +139,7 @@
       <form id="deleteForm" action="" method="POST">
         <input type="hidden" name="_method" value="DELETE">
         <div class="modal-body">
-          <p>Вы уверены, что хотите удалить этот блог?<br><strong id="deleteName"></strong></p>
+          <p>Вы уверены, что хотите удалить этот пост?<br><strong id="deleteName"></strong></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Отменить</button>

@@ -6,8 +6,8 @@ const get_posts = async (req, res, next) => {
     const page = Math.max(parseInt(req.query.page || '1', 10), 1);
     const offset = (page - 1) * pageSize;
 
-    let totalBlogsResult = (await query("SELECT COUNT(*) AS count FROM smart_path.blog_posts;"))[0].count;
-    let blogs = await query("SELECT id, title, substring(content, 1, 300) as content, author, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.blog_posts ORDER BY created_at DESC, id DESC LIMIT ? OFFSET ?;",
+    let totalBlogsResult = (await query("SELECT COUNT(*) AS count FROM smart_path.evaluation_posts;"))[0].count;
+    let blogs = await query("SELECT id, title, substring(content, 1, 300) as content, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.evaluation_posts ORDER BY created_at DESC, id DESC LIMIT ? OFFSET ?;",
       [pageSize, offset]
     );
 
@@ -50,8 +50,8 @@ const get_post = async (req, res) => {
   try {
     const blog_id = req.params.blog_id;
 
-    let blog = (await query("SELECT id, title, content, author, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.blog_posts WHERE id = ?;", [blog_id]))[0]
-    let blogs = await query("SELECT id, title, substring(content, 1, 300) as content, author, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.blog_posts order by created_at desc limit 5;");
+    let blog = (await query("SELECT id, title, content, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.evaluation_posts WHERE id = ?;", [blog_id]))[0]
+    let blogs = await query("SELECT id, title, substring(content, 1, 300) as content, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.evaluation_posts order by created_at desc limit 5;");
 
     if (!blog) return res.render('./shared/error', { 
       copyrightYear: res.locals.copyrightYear, 

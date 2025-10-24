@@ -32,7 +32,7 @@
             <% for (let i = 0; i < blogs.length; i++) { %>
               <div class="th-blog blog-single has-post-thumbnail">
                 <div class="blog-img">
-                  <a href="blog/<%= blogs[i].id %>">
+                  <a href="evaluation/<%= blogs[i].id %>">
                     <img src="/uploads/img/<%= blogs[i].image_url %>" alt="Blog Image">
                   </a>
                 </div>
@@ -48,12 +48,12 @@
                     </a>
                   </div>
                   <h2 class="blog-title">
-                    <a href="blog/<%= blogs[i].id %>"><%= blogs[i].title %></a>
+                    <a href="evaluation/<%= blogs[i].id %>"><%= blogs[i].title %></a>
                   </h2>
                   <p class="blog-text">
                     <%= blogs[i].content.replace(/<[^>]*>/g, '') %>...
                   </p>
-                  <a href="blog/<%= blogs[i].id %>" class="line-btn">Больше</a>
+                  <a href="evaluation/<%= blogs[i].id %>" class="line-btn">Больше</a>
                 </div>
               </div>
             <% } %>
@@ -61,7 +61,7 @@
             <div class="th-pagination text-center">
               <ul>
                 <% if (pagination.hasPrev) { %>
-                  <li><a href="/blog?page=<%= pagination.prevPage %>"><i class="far fa-arrow-left"></i></a></li>
+                  <li><a href="/evaluation?page=<%= pagination.prevPage %>"><i class="far fa-arrow-left"></i></a></li>
                 <% } else { %>
                   <li class="disabled"><span><i class="far fa-arrow-left"></i></span></li>
                 <% } %>
@@ -72,12 +72,12 @@
                   <% } else if (p === pagination.currentPage) { %>
                     <li class="active"><span><%= p %></span></li>
                   <% } else { %>
-                    <li><a href="/blog?page=<%= p %>"><%= p %></a></li>
+                    <li><a href="/evaluation?page=<%= p %>"><%= p %></a></li>
                   <% } %>
                 <% }); %>
 
                 <% if (pagination.hasNext) { %>
-                  <li><a href="/blog?page=<%= pagination.nextPage %>"><i class="far fa-arrow-right"></i></a></li>
+                  <li><a href="/evaluation?page=<%= pagination.nextPage %>"><i class="far fa-arrow-right"></i></a></li>
                 <% } else { %>
                   <li class="disabled"><span><i class="far fa-arrow-right"></i></span></li>
                 <% } %>

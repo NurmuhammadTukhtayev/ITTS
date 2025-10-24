@@ -17,7 +17,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="/@admin/home"><i class="fa fa-dashboard"></i> Главная страница</a></li>
-        <li><a href="/@admin/materials">Публикации</a></li>
+        <li><a href="/@admin/evaluation">Публикации</a></li>
       </ol>
     </section>
 
@@ -46,7 +46,7 @@
                   <td><%= materials[i].created_at %></td>
                   <td><%= materials[i].updated_at %></td>
                   <td>
-                      <a class="btn btn-warning btn-edit" href="/@admin/blogs/edit/<%= materials[i].id %>">
+                      <a class="btn btn-warning btn-edit" href="/@admin/evaluation/edit/<%= materials[i].id %>">
                         <i class="fa fa-edit"></i>
                       </a>
                       <button
@@ -64,7 +64,7 @@
               </table>
               <div class="box-footer">
                 <!-- <button class="btn btn-default">Orqaga</button> -->
-                <a href="/@admin/blogs/create" class="btn btn-info pull-right" >Создать новый блог</a>
+                <a href="/@admin/evaluation/create" class="btn btn-info pull-right" >Создать новый пост</a>
                 
               </div>
             </div>
@@ -91,7 +91,7 @@
           <input type="hidden" name="_method" value="DELETE">
           <div class="modal-body">
             <p>
-              Вы уверены, что хотите удалить этот блог?
+              Вы уверены, что хотите удалить этот пост?
               <br>
               <strong id="deleteName"></strong>
             </p>
