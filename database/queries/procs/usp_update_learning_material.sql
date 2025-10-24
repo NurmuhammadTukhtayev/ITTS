@@ -6,6 +6,7 @@ CREATE PROCEDURE usp_update_learning_material (
     IN p_title VARCHAR(255),
     IN p_image_url VARCHAR(1024),
     IN p_description TEXT,
+    IN p_test_id INT UNSIGNED,
     IN p_category_id INT UNSIGNED,
     IN p_file_path VARCHAR(1024)
 )
@@ -16,6 +17,7 @@ BEGIN
             image_url = p_image_url,
             description = p_description,
             category_id = p_category_id,
+            test_id = p_test_id,
             updated_at = CURRENT_TIMESTAMP
         WHERE id = p_id;
     ELSE
@@ -25,6 +27,7 @@ BEGIN
             description = p_description,
             category_id = p_category_id,
             file_path = p_file_path,
+            test_id = p_test_id,
             updated_at = CURRENT_TIMESTAMP
         WHERE id = p_id;
     END IF;

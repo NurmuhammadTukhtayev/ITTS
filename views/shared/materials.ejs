@@ -41,6 +41,13 @@
                   <a href="#"><%= materials[i].title %></a>
                 </h3>
                 <p class="service-card_text"><%= materials[i].description %></p>
+                <% if (materials[i].test_id) { %> 
+                <p class="service-card_text">
+                  Рекомендуется пройти <a class="service-card_text" href="/test/start?test_id=<%= materials[i].test_id %>">тест</a> 
+                </p>
+                <% } else { %>
+                    <p class="service-card_text">Не требуется тестирование</p>
+                <% } %>
                 <a href="download/<%= materials[i].file_path %>" class="th-btn">
                   Скачать сейчас<i class="fa-regular fa-arrow-right ms-2"></i>
                 </a>

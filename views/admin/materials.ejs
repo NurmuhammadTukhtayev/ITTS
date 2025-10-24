@@ -35,6 +35,7 @@
                   <th>Заголовок</th>
                   <th>Описание</th>
                   <th>Меню документа</th>
+                  <th>Прикреплённый тест</th>
                   <th>Загруженное имя файла</th>
                   <th>Дата создания</th>
                   <th>Дата изменения</th>
@@ -45,7 +46,8 @@
                   <td><%= i + 1 %></td>
                   <td><%= materials[i].title %></td>
                   <td><%= materials[i].description %></td>
-                  <td><%= materials[i].category_id %></td>
+                  <td><%= materials[i].category_name %></td>
+                  <td><%= materials[i].test_name %></td>
                   <td><span class="label <% if(materials[i].file_path) {%> label-success <% } else {%> label-danger <%}%>"><%= materials[i].file_path || 'Файл не прикреплён' %></span></td>
                   <td><%= materials[i].created_at %></td>
                   <td><%= materials[i].updated_at %></td>
@@ -59,6 +61,7 @@
                         data-description="<%= materials[i].description %>"
                         data-categoryId="<%= materials[i].category_id %>"
                         data-file_path="<%= materials[i].file_path %>"
+                        data-test_id="<%= materials[i].test_id %>"
                       >
                         <i class="fa fa-edit"></i>
                       </button>
@@ -117,8 +120,13 @@
                 <label for="description">Описание материала</label>
                 <input type="text" required class="form-control" id="description" name="description" placeholder="Подробности...">
               
-                <!-- <label for="image">Rasm</label>
-                <input type="file" required name="image" id="image"> -->
+                <label for="test_id">Связанный тест</label>
+                <select name="test_id" id="test_id" class="form-control">
+                  <option value="" selected>Без теста</option>
+                  <% for (let i = 0; i < available_tests.length; i++) { %> 
+                    <option value="<%= available_tests[i].id %>"><%= available_tests[i].test_name %></option>
+                  <% } %>
+                </select>
 
                 <label for="material_file">Документ</label>
                 <input type="file" name="doc" id="material_file">
@@ -177,15 +185,17 @@
       const nameInput = $('#title');
       const descriptionInput = $('#description');
       const categoryIdInput = $('#categoryId');
+      const testIdInput = $('#test_id');
       const pathname = window.location.pathname;
       const categoryId = pathname.split('/materials/')[1];
+      console.log(testIdInput)
 
       if (isEditBtn) {
         const id = $(this).data('id');
         const name = $(this).data('name');
         const description = $(this).data('description');
+        const test_id = $(this).data('test_id');
         // const categoryId = $(this).data('categoryId');
-        console.log(categoryId)
         
         // Edit mode
         title.text("Редактировать документ");
@@ -197,7 +207,7 @@
         nameInput.val(name);
         descriptionInput.val(description);
         categoryIdInput.val(categoryId);
-        console.log(pathname + '/items/' + id);
+        testIdInput.val(test_id);
       } else {
         // Create mode
         title.text("Добавить новый документ");

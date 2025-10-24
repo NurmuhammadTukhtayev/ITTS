@@ -5,11 +5,14 @@ SELECT
     l.id,
     c.id as category_id,
     l.title,
+    l.test_id,
     l.description,
     c.category_name,
+    t.test_name,
     l.file_path,
     DATE_FORMAT(l.created_at, '%M %e, %Y') AS created_at,
     DATE_FORMAT(l.updated_at, '%M %e, %Y') AS updated_at
 FROM
 learning_materials l 
-LEFT JOIN learning_material_categories c ON l.category_id = c.id;
+LEFT JOIN learning_material_categories c ON l.category_id = c.id
+LEFT JOIN tests t on l.test_id = t.id;
