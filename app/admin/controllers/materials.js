@@ -63,7 +63,7 @@ const materials_by_category = async (req, res, next) => {
         const category = req.params.id;
 
         const isCategoryExists = await query("SELECT * FROM `learning_material_categories` WHERE `id` = ?", [parseInt(category)]);
-        if (isCategoryExists.length == 0) return res.render('./admin/error')
+        if (isCategoryExists.length == 0 || isCategoryExists.err) return res.render('./admin/error');
 
         let [ materials, available_tests ] = await Promise.all([
             query("SELECT * FROM `vw_material_items` WHERE `category_id` = ?", [parseInt(category)]),
@@ -87,12 +87,12 @@ const material_post = async (req, res, next) => {
         const { image, doc } = req;
 
         const result = await query('INSERT INTO learning_materials(title, image_url, description, test_id, category_id, file_path) VALUES (?,?,?,?,?,?)',
-            [title, image, description, test_id, category_id, doc]
+            [title, image, description, test_id == 0 ? null : test_id, category_id, doc]
         );
 
         if (result.affectedRows) return res.redirect(`/@admin/materials/${category_id}`);
 
-        res.redirect('/@admin/materials/${category_id}?error=true&message=Возникла ошибка при добавлении нового документа. Пожалуйста, дважды проверьте поля')
+        res.redirect(`/@admin/materials/${category_id}?error=true&message=Возникла ошибка при добавлении нового документа. Пожалуйста, дважды проверьте поля`)
     } catch (e) {
         next(e);
     }
@@ -110,6 +110,7 @@ const material_put = async (req, res, next) => {
         );
 
         if (result.affectedRows) return res.redirect(`/@admin/materials/${category_id}`);
+
 
         res.redirect(`/@admin/materials/${category_id}?error=true&message=Во время обновления нового документа произошла ошибка. Пожалуйста, дважды проверьте поля`)
 

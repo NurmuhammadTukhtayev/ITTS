@@ -122,7 +122,7 @@
               
                 <label for="test_id">Связанный тест</label>
                 <select name="test_id" id="test_id" class="form-control">
-                  <option value="" selected>Без теста</option>
+                  <option value="0" selected>Без теста</option>
                   <% for (let i = 0; i < available_tests.length; i++) { %> 
                     <option value="<%= available_tests[i].id %>"><%= available_tests[i].test_name %></option>
                   <% } %>

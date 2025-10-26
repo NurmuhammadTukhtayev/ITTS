@@ -1,8 +1,6 @@
 const path = require('path');
 const { query } = require('../../../database/connction/query');
 
-let cache = {};
-
 function isPageRequest(req) {
   if (!['GET', 'HEAD'].includes(req.method)) return false;
   if (req.path === '/favicon.ico') return false;
@@ -16,6 +14,8 @@ function isPageRequest(req) {
   }
 
   if (req.xhr || req.headers['x-requested-with'] === 'XMLHttpRequest') return false;
+
+  if (req.method !== 'GET') return false;
   return true;
 }
 
