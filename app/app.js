@@ -1,5 +1,5 @@
 const express = require('express')
-const app = express.Router()
+const app = express()
 
 // using middlewares
 app.use(require('./general/middleware/use'));
