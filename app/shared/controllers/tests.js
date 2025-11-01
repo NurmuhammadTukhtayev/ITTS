@@ -47,8 +47,8 @@ const get_test_questions = async (req, res, next) => {
     // get test questions
     const [test_result, question_result ] = await Promise.all([
         query('select * from tests where id = ?', [id]),
-        query('select * from vw_get_question_list WHERE track_id = ? AND tester_id = ? ORDER BY RAND();',
-            [track_id, tester_id]
+        query('select * from vw_get_question_list WHERE track_id = ? AND tester_id = ? AND test_id = ? ORDER BY RAND();',
+            [track_id, tester_id, id]
         )
     ])
 
