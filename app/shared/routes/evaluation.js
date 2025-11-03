@@ -2,10 +2,16 @@ const express = require('express');
 const app = express.Router();
 const controller = require('../controllers/evaluation');
 
+// get tests evaluation
+app.get('/test', controller.get_tests);
+
+// get test evaluation by id
+app.get('/test/:test_id', controller.get_test_by_id);
+
 // get blogs
-app.get('/', controller.get_posts);
+app.get('/assignment', controller.get_posts);
 
 // get blog
-app.get('/:blog_id', controller.get_post);
+app.get('/assignment/:blog_id', controller.get_post);
 
 module.exports = app;

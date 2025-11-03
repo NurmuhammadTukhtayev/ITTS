@@ -11,7 +11,7 @@
                 <h1 class="breadcumb-title">Оценка и прогресс</h1>
                 <ul class="breadcumb-menu">
                     <li><a href="/">Главная страница</a></li>
-                    <li>Оценка и прогресс</li>
+                    <li><a href="/evaluation/assignment">Оценка и прогресс</a></li>
                 </ul>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <% for (let i = 0; i < blogs.length; i++) { %>
               <div class="th-blog blog-single has-post-thumbnail">
                 <div class="blog-img">
-                  <a href="evaluation/<%= blogs[i].id %>">
+                  <a href="/evaluation/assignment/<%= blogs[i].id %>">
                     <img src="/uploads/img/<%= blogs[i].image_url %>" alt="Blog Image">
                   </a>
                 </div>
@@ -48,12 +48,12 @@
                     </a>
                   </div>
                   <h2 class="blog-title">
-                    <a href="evaluation/<%= blogs[i].id %>"><%= blogs[i].title %></a>
+                    <a href="/evaluation/assignment/<%= blogs[i].id %>"><%= blogs[i].title %></a>
                   </h2>
                   <p class="blog-text">
                     <%= blogs[i].content.replace(/<[^>]*>/g, '') %>...
                   </p>
-                  <a href="evaluation/<%= blogs[i].id %>" class="line-btn">Больше</a>
+                  <a href="/evaluation/assignment/<%= blogs[i].id %>" class="line-btn">Больше</a>
                 </div>
               </div>
             <% } %>

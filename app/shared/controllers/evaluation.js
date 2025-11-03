@@ -26,8 +26,6 @@ const get_posts = async (req, res, next) => {
     }
 
     res.render('./shared/evaluation', {
-        copyrightYear: res.locals.copyrightYear, 
-        learning_material_categories: res.locals.learning_material_categories,
         blogs, 
         pagination: {
           totalBlogsResult,
@@ -53,14 +51,9 @@ const get_post = async (req, res) => {
     let blog = (await query("SELECT id, title, content, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.evaluation_posts WHERE id = ?;", [blog_id]))[0]
     let blogs = await query("SELECT id, title, substring(content, 1, 300) as content, image_url, DATE_FORMAT(created_at, '%M %e, %Y') AS published_on FROM smart_path.evaluation_posts order by created_at desc limit 5;");
 
-    if (!blog) return res.render('./shared/error', { 
-      copyrightYear: res.locals.copyrightYear, 
-      learning_material_categories: res.locals.learning_material_categories,
-    })
+    if (!blog) return res.render('./shared/error', {});
 
     res.render('./shared/evaluation_details', { 
-      copyrightYear: res.locals.copyrightYear, 
-      learning_material_categories: res.locals.learning_material_categories,
       blog, 
       blogs 
     });
@@ -69,6 +62,33 @@ const get_post = async (req, res) => {
   }
 }
 
+const get_tests = async (req, res, next) => {
+  try {
+    let tests = await query("SELECT id, test_name, author_name, attempts_allowed FROM smart_path.tests ORDER BY created_at DESC;");
+
+    res.render('./shared/evaluation_test', {
+      tests
+    });
+  } catch (e) {
+    next(e);
+  }
+}
+
+const get_test_by_id = async (req, res, next) => {
+  try {
+    const test_id = req.params.test_id;
+    let test_results = (await query("SELECT * FROM vw_test_results WHERE test_id = ? ORDER BY score_perc DESC, time_taken;", [test_id]));
+    
+    if (!test_results) return res.render('./shared/error', {});
+
+    res.render('./shared/evaluation_test_details', {
+      test_results
+    });
+  } catch (e) {
+    next(e);
+  }
+}
+
 module.exports = {
-  get_posts, get_post
+  get_posts, get_post, get_tests, get_test_by_id
 }

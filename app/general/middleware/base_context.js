@@ -28,13 +28,13 @@ module.exports = async (req, res, next) => {
     // get copyright year
     res.locals.copyrightYear = new Date().getFullYear();
 
-    let rows = await query(`SELECT image_url FROM profile_meta`);
-    if (rows.length > 0) res.locals.image_url = rows[0].image_url;
-
-    rows = await query(`SELECT * FROM smart_path.learning_material_categories`);
-
-    res.locals.learning_material_categories = rows;
-
+    if (req.path.includes('/@admin')) {
+      let rows = await query(`SELECT image_url FROM profile_meta`);
+      if (rows.length > 0) res.locals.image_url = rows[0].image_url;
+    } else {
+      rows = await query(`SELECT * FROM smart_path.learning_material_categories`);
+      res.locals.learning_material_categories = rows;
+    }
     return next();
   } catch (err) {
     next(err);

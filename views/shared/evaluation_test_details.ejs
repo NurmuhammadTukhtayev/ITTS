@@ -1,0 +1,95 @@
+<%- include('./includes/head.ejs') %>
+
+<body class="theme3">
+    <%- include('./includes/loader.ejs') %>
+
+    <%- include('./includes/navbar.ejs') %>
+
+    <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg.jpg">
+        <div class="container">
+            <div class="breadcumb-content">
+                <h1 class="breadcumb-title">Оценка для тестирования</h1>
+                <ul class="breadcumb-menu">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/evaluation/test">Оценка для тестирования </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="space">
+        <div class="container">
+            <div class="tinv-wishlist woocommerce tinv-wishlist-clear">
+                <div class="tinv-header">
+                    <!-- <h2 class="mb-30">Wishlist</h2> -->
+                </div>
+                <% if (test_results.length === 0) { %>
+                    <p>Пока что никто не решил этот тест.</p>
+                <% } else { %>
+                <table class="tinvwl-table-manage-list">
+                    <thead>
+                        <tr>
+                            <th class="product-name">
+                                <span class="tinvwl-full">№</span>
+                                <span class="tinvwl-mobile">№</span>
+                            </th>
+                            <th class="product-price">Имя</th>
+                            <th class="product-price">Фамилия</th>
+                            <th class="product-date">Электронная почта</th>
+                            <!-- <th class="product-stock">phone</th> -->
+                            <th class="product-stock">Тест завершен</th>
+                            <th class="product-stock">Решенный тест</th>
+                            <th class="product-stock">Результат теста</th>
+                            <th class="product-stock">Время выполнения</th>
+                            <th class="product-stock">Начато</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% test_results.forEach((result, index) => { %>
+                        <tr class="wishlist_item">
+                            <td class="product-name">
+                                <a href="shop-details.html"><%= index + 1 %></a>
+                            </td>
+                            <td class="product-price">
+                                <%= result.first_name %>
+                            </td>
+                            <td class="product-date">
+                                <%= result.last_name %>
+                            </td>
+                            <td class="product-stock">
+                                <%= result.email %>
+                            </td>
+                            <!-- <td class="product-stock">
+                                <%= result.phone %>
+                            </td> -->
+                            <td class="product-stock">
+                                <%= result.test_completed ? 'Yes' : 'No' %>
+                            </td>
+                            <td class="product-stock">
+                                <%= result.test_score %> / <%= result.test_count %>
+                            </td>
+                            <td class="product-stock">
+                                <%= result.score_perc %>
+                            </td>
+                            <td class="product-stock">
+                                <%= result.time_taken %>
+                            </td>
+                            <td class="product-stock">
+                                <%= result.started_at %>
+                            </td>
+                        </tr>
+                        <% }); %>
+                        
+                    </tbody>
+                </table>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <%- include('./includes/footer.ejs') %>
+
+    <%- include('./includes/end.ejs') %>
+
+</body>
+<!-- Mirrored from html.themeholy.com/webteck/demo/home-ai.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 26 Sep 2025 22:01:16 GMT -->
+
+</html>
