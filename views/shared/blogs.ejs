@@ -33,7 +33,7 @@
               <div class="th-blog blog-single has-post-thumbnail">
                 <div class="blog-img">
                   <a href="blog/<%= blogs[i].id %>">
-                    <img src="/uploads/img/<%= blogs[i].image_url %>" alt="Blog Image">
+                    <img src="<% if (blogs[i].image_url) { %> /uploads/img/<%= blogs[i].image_url %> <% } else { %> ./assets/img/blog/blog_1_3.jpg <% } %>" alt="Blog Image">
                   </a>
                 </div>
                 <div class="blog-content">

@@ -32,6 +32,8 @@ const start_test_post = async (req, res, next) => {
 
         if (result.err) return res.redirect('/test?error=true&message='+result.errData);
 
+        if(result.affectedRows < 1) return res.redirect('/test?error=true&message=Unable to start the test. Please try again later.');
+
         const {track_id, tester_id } = result[0][0];
         
         res.redirect(`/test/${test_id}?tester_id=${tester_id}&track_id=${track_id}`);

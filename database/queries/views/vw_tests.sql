@@ -5,6 +5,8 @@ SELECT
     t.id,
     t.test_name,
     t.author_name,
+    t.attempts_allowed,
+    t.created_at as created_at_raw,
     DATE_FORMAT(t.created_at, '%M %e, %Y') AS created_at,
     DATE_FORMAT(t.updated_at, '%M %e, %Y') AS updated_at,
     COUNT(tq.id) AS total_questions

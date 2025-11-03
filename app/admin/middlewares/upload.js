@@ -45,7 +45,7 @@ let upload = (req, res, next) => {
             let ext = fileNameParts[fileNameParts.length - 1].toLowerCase();
 
             // Allow only PDF
-            if (ext !== "pdf") {
+            if (ext !== "pdf" && ext !== "pptx" && ext !== "ppt") {
                 console.log("Only PDF files are allowed");
                 req.lfile = "/";
                 return next();

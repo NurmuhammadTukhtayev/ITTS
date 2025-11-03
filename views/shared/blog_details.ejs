@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-xxl-8 col-lg-7">
                     <div class="th-blog blog-single">
-                        <div class="blog-img"><img src="/uploads/img/<%= blog.image_url %>" alt="Blog Image"></div>
+                        <div class="blog-img"><img src="<% if (blog.image_url) { %> /uploads/img/<%= blog.image_url %> <% } else { %> /assets/img/blog/blog_1_3.jpg <% } %>" alt="Blog Image"></div>
                         <div class="blog-content">
                             <div class="blog-meta"><a class="author" href="#"><img
                                         src="/assets/img/blog/author-1-1.png" alt="avater"> By <%= blog.author %></a> <a
@@ -48,7 +48,7 @@
                             <% for (let i = 0; i < blogs.length; i++) { %>
                                 <div class="recent-post">
                                     <div class="media-img"><a href="/blog/<%= blogs[i].id %>"><img
-                                                src="/uploads/img/<%= blogs[i].image_url %>" alt="Blog Image"></a></div>
+                                                src="<% if (blog.image_url) { %> /uploads/img/<%= blog.image_url %> <% } else { %> /assets/img/blog/blog_1_3.jpg <% } %>" alt="Blog Image"></a></div>
                                     <div class="media-body">
                                         <h4 class="post-title"><a class="text-inherit"
                                                 href="/blog/<%= blogs[i].id %>"><%= blogs[i].title %>.</a>

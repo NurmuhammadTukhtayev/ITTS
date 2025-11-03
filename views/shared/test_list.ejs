@@ -38,6 +38,7 @@
                             <div class="checklist">
                                 <ul>
                                     <li><i class="fas fa-circle-check"></i> Создано <%= tests[i].author_name %></li>
+                                    <li><i class="fas fa-circle-check"></i> Разрешенные попытки <% if(tests[i].attempts_allowed == 0){ %> Неограниченно <% } else { %> <%= tests[i].attempts_allowed %> <% } %></li>
                                     <li><i class="fas fa-circle-check"></i> Создано в <%= tests[i].created_at %></li>
                                     <li><i class="fas fa-circle-check"></i> Всего доступных вопросов: <%= tests[i].total_questions %></li>
                                 </ul>

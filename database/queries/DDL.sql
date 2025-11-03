@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS tests (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     test_name VARCHAR(50) NOT NULL,
     author_name VARCHAR(100),
+    attempts_allowed INT UNSIGNED DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -190,13 +191,16 @@ CREATE TABLE IF NOT EXISTS test_results (
 CREATE TABLE IF NOT EXISTS test_session(
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     test_result_id INT UNSIGNED NOT NULL,
+    test_id INT UNSIGNED NOT NULL,
     question_id INT,
     selected_option ENUM('A','B','C','D'),
     is_correct TINYINT(1),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_test_track_tester FOREIGN KEY (test_result_id)
-        REFERENCES test_results(id) ON DELETE CASCADE ON UPDATE CASCADE
+        REFERENCES test_results(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_test_session_test FOREIGN KEY (test_id)
+        REFERENCES tests(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- create indexes on FKs for performance

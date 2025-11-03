@@ -8,7 +8,7 @@ dotenv.config();
 // get test list 
 const get_tests = async (req, res, next) => {
     try {
-        const test_list = await query('select * from vw_tests');
+        const test_list = await query('select * from vw_tests order by created_at_raw desc');
 
         res.render('./admin/tests', {
             materials: test_list
@@ -21,10 +21,10 @@ const get_tests = async (req, res, next) => {
 // add test manual
 const add_test = async (req, res, next) => {
     try {
-        const { test_name, author_name } = req.body;
-        
-        const result = await query('insert into tests(test_name, author_name) values(?, ?)',
-            [test_name, author_name]
+        const { test_name, author_name, attempts_allowed } = req.body;
+
+        const result = await query('insert into tests(test_name, author_name, attempts_allowed) values(?, ?, ?)',
+            [test_name, author_name, attempts_allowed]
         );
 
         if (result.err) return res.redirect(`/@admin/test?error=true&message=${result.errData}`);
@@ -70,10 +70,10 @@ const get_test = async (req, res, next) => {
 
 const modify_test = async (req, res, next) => {
     try{
-        const {id, test_name, author_name} = req.body;
-        
-        const result = await query('update tests set test_name = ?, author_name = ? where id = ?',
-            [test_name, author_name, id]
+        const {id, test_name, author_name, attempts_allowed} = req.body;
+
+        const result = await query('update tests set test_name = ?, author_name = ?, attempts_allowed = ? where id = ?',
+            [test_name, author_name, attempts_allowed, id]
         );
 
         if (result.err) return res.redirect(`/@admin/test?error=1&message=${result.errData}`);
@@ -132,11 +132,11 @@ const delete_question = async (req, res, next) => {
 
 const upload_test_file = async(req, res, next) => {
     try{
-        const {test_name, author_name} = req.body;
+        const {test_name, author_name, attempts_allowed} = req.body;
         const document_name = req.docx;
 
-        let result = await query('call usp_add_uploaded_docs(?,?,?);',
-            [test_name, author_name, document_name]
+        let result = await query('call usp_add_uploaded_docs(?,?,?,?);',
+            [test_name, author_name, document_name, attempts_allowed]
         );
         
         if(result.err) return res.redirect(`/@admin/test?error=1&message=${result.errData}`);
