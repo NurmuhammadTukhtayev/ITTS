@@ -31,6 +31,27 @@
              <section class="content">
       <div class="container-fluid">
         <form id="itemForm" action="<%= item.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+          <div class="box-header sticky-header">
+            <!-- <h3 class="box-title">Responsive Hover Table</h3> -->
+
+            <div class="box-tools">
+              <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                <div class="input-group-btn">
+                  <a class="btn btn-info" href="/@admin/media">Назад</a>
+                  <button 
+                    type="button"
+                    class="btn btn-danger btn-delete"
+                    data-toggle="modal"
+                    data-target="#modal-delete"
+                    data-id="<%= item.id %>"
+                  >
+                    Удалить
+                  </button>
+                  <button type="submit" class="btn btn-success">Сохранить изменения</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Подробности контента</h3>
@@ -116,17 +137,6 @@
 
             <div class="box-footer">
                 <div class="card-footer pull-right">
-                  <a class="btn btn-info" href="/@admin/media">Назад</a>
-                  <button 
-                    type="button"
-                    class="btn btn-danger btn-delete"
-                    data-toggle="modal"
-                    data-target="#modal-delete"
-                    data-id="<%= item.id %>"
-                  >
-                    Удалить
-                  </button>
-                  <button type="submit" class="btn btn-success">Сохранить изменения</button>
                 </div>
               </div>
             </div>

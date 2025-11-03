@@ -50,12 +50,25 @@
                   <i class="fal fa-envelope"></i>
                 </div>
                 <div class="form-group col-md-6">
-                  <input type="tel" class="form-control" name="phone" id="phone" placeholder="+998 (__) ___-__-__" required>
+                  <div class="phone-input">
+                    <span class="prefix">+998</span>
+                    <input 
+                      id="phone_ui"
+                      type="text"
+                      inputmode="numeric"
+                      autocomplete="tel"
+                      placeholder="(__) __-__-__"
+                      aria-describedby="phone_help"
+                      required
+                    >
+                  </div>
                   <i class="fal fa-phone"></i>
                 </div>
                 <div class="form-group col-md-6">
                   <input type="text" class="form-control" disabled value="<%= test.test_name %>">
+                  <i class="fal fa-comment"></i>
                 </div>
+                <input type="hidden" name="phone" id="phone_hidden" />
                 <div class="form-group col-md-6">
                   <input type="text" class="form-control" hidden value="<%= test.id %>" name="test_id">
                 </div>
@@ -88,6 +101,76 @@
     <%- include('./includes/footer.ejs') %>
     
     <%- include('./includes/end.ejs') %>
+
+    <script>
+      (function () {
+        const ui = document.getElementById('phone_ui');
+        const hidden = document.getElementById('phone_hidden');
+        const form = document.getElementById('phoneForm');
+        const error = document.getElementById('phone_error');
+
+        function formatDigits(d) {
+          if (!d) return '';
+          const a = d.slice(0, 2);
+          const b = d.slice(2, 5);
+          const c = d.slice(5, 7);
+          const e = d.slice(7, 9);
+          let out = '';
+          if (a) out += '(' + a + ')';
+          if (b) out += ' ' + b;
+          if (c) out += '-' + c;
+          if (e) out += '-' + e;
+          return out.trim();
+        }
+
+        function setDigits(d) {
+          // keep only digits, max 9 now
+          let digits = d.replace(/\D/g, '');
+          if (digits.length > 9 && digits.startsWith('998')) {
+            digits = digits.slice(digits.length - 9);
+          } else {
+            digits = digits.slice(0, 9);
+          }
+          ui.value = formatDigits(digits);
+          hidden.value = digits;
+          error.textContent = '';
+        }
+
+        ui.addEventListener('input', function () {
+          setDigits(ui.value);
+        });
+
+        ui.addEventListener('keydown', function (e) {
+          const allowed = [
+            'Backspace', 'Tab', 'ArrowLeft', 'ArrowRight',
+            'Delete', 'Home', 'End'
+          ];
+          if (allowed.includes(e.key)) return;
+          if (e.ctrlKey || e.metaKey) return;
+          if (/^[0-9]$/.test(e.key)) return;
+          e.preventDefault();
+        });
+
+        ui.addEventListener('paste', function (e) {
+          e.preventDefault();
+          const pasted = (e.clipboardData || window.clipboardData).getData('text') || '';
+          setDigits(pasted);
+        });
+
+        form.addEventListener('submit', function (e) {
+          const digits = (hidden.value || '').replace(/\D/g, '');
+          if (digits.length !== 9) {
+            e.preventDefault();
+            error.textContent = 'Please enter exactly 9 digits.';
+            ui.focus();
+            return false;
+          }
+          hidden.value = digits;
+          return true;
+        });
+      })();
+    </script>
+
 </body>
 
 </html>

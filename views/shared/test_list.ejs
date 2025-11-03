@@ -60,6 +60,23 @@
     
     <%- include('./includes/end.ejs') %>
 </body>
+
+<!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ошибка</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="errorModalBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Mirrored from html.themeholy.com/webteck/demo/blog-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 26 Sep 2025 22:06:30 GMT -->
 
 </html>

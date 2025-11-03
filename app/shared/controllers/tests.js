@@ -30,9 +30,9 @@ const start_test_post = async (req, res, next) => {
             [first_name, last_name, email, phone, test_id]
         );
 
-        if (result.err) return res.redirect('/test?error=true&message='+result.errData);
+        if (result.err) return res.redirect('/test?error=true&message=Пожалуйста, дважды проверьте введенные вами данные, используйте только уникальную учетную запись электронной почты, а далее ваши данные');
 
-        if(result.affectedRows < 1) return res.redirect('/test?error=true&message=Unable to start the test. Please try again later.');
+        if(result.affectedRows < 1) return res.redirect('/test?error=true&message=Не удалось запустить тест. Пожалуйста, попробуйте позже. У вас, возможно, нет доступных попыток.');
 
         const {track_id, tester_id } = result[0][0];
         

@@ -41,6 +41,34 @@
 
                 <!-- <p><%= action %> <%= method %></p> -->
                 <form id="itemForm" action="<%= action %>" method="POST" enctype="multipart/form-data">
+                  <div class="box-header sticky-header">
+                        <!-- <h3 class="box-title">Responsive Hover Table</h3> -->
+
+                        <div class="box-tools">
+                          <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                            <div class="input-group-btn">
+                              <a class="btn btn-info" href="/@admin/blogs">Назад</a>
+
+                              <% if (item && item.id) { %>
+                                <button 
+                                  type="button"
+                                  class="btn btn-danger btn-delete"
+                                  data-toggle="modal"
+                                  data-target="#modal-delete"
+                                  data-id="<%= item.id %>"
+                                  data-name="<%= item.title %>"
+                                >
+                                  Удалить
+                                </button>
+                              <% } %>
+
+                              <button type="submit" class="btn btn-success">
+                                <% if (item && item.id) { %>Сохранить изменения<% } else { %>Создать<% } %>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                   <input type="hidden" name="_method" value="<%= method %>">
 
                   <div class="card card-primary">
@@ -97,24 +125,6 @@
 
                     <div class="box-footer">
                       <div class="card-footer pull-right">
-                        <a class="btn btn-info" href="/@admin/blogs">Назад</a>
-
-                        <% if (item && item.id) { %>
-                          <button 
-                            type="button"
-                            class="btn btn-danger btn-delete"
-                            data-toggle="modal"
-                            data-target="#modal-delete"
-                            data-id="<%= item.id %>"
-                            data-name="<%= item.title %>"
-                          >
-                            Удалить
-                          </button>
-                        <% } %>
-
-                        <button type="submit" class="btn btn-success">
-                          <% if (item && item.id) { %>Сохранить изменения<% } else { %>Создать<% } %>
-                        </button>
                       </div>
                     </div>
 

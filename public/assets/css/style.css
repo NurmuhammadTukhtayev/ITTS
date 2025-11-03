@@ -1,5 +1,36 @@
 @use "sass:math";
 
+.phone-input {
+  display: inline-flex;
+  align-items: center;
+  margin:2px;
+  /* gap: 8px; */
+  background: var(--white-color);;
+  width: 100%;
+}
+
+.phone-input .prefix {
+  user-select: none;
+  font-size: 16px;
+  /* font-weight: 400; */
+  color: var(--body-color);
+  margin-left: 1rem;
+}
+
+.phone-input input[type="text"] {
+  border: none;
+  outline: none;
+  /* font-size: 14px; */
+  /* width: 170px; */
+  /* background: white; */
+}
+
+.error {
+  color: #b00020;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
 :root {
     --theme-color: #684DF4;
     --theme-color2: #684DF4;

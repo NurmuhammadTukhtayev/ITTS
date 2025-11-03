@@ -94,6 +94,21 @@
   </div>
 </div>
 
+<!-- Error Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ошибка</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="errorModalBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   <%- include('./includes/footer.ejs') %>
   <%- include('./includes/end.ejs') %>
@@ -157,11 +172,13 @@
         });
 
         const data = await res.json();
+        // let test_id = window.location.href.split('/').pop();
+        // test_id = test_id.split('?')[0]; // in case of query params
 
         if (data.success) {
           resultModalBody.innerHTML = `<p>Ваш результат: <strong>${data.score}</strong> из <strong>${data.total}</strong></p>`;
           resultModal.show();
-          resultOkBtn.onclick = () => window.location.href = "/";
+          resultOkBtn.onclick = () => window.location.href = "/evaluation/test/" + testId;
         } else {
           resultModalBody.innerHTML = `<p class="text-danger">Произошла ошибка при отправке теста. Попробуйте снова.</p>`;
           resultModal.show();
