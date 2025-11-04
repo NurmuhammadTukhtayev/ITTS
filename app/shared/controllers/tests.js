@@ -132,7 +132,7 @@ const check_answer = async (req, res, next) => {
 
 const list_of_test = async (req, res, next) => {
     try{
-        const tests = await query('select * from vw_tests');
+        const tests = await query('select * from vw_tests order by created_at_raw desc');
 
         res.render('./shared/test_list', {
             tests
