@@ -22,6 +22,8 @@ def load_csv_to_stg(file_path, file_name = 'rady_data', mysql_conn_str=""):
         # drop nulls
         df = df.dropna(subset=['test_id', 'question', 'option_a', 'option_b', 'option_c', 'option_d'])
 
+        df = df.drop_duplicates(subset=['question'])
+
         # create a connection to mysql
         engine = create_engine(mysql_conn_str)
 
