@@ -3,7 +3,7 @@ DROP VIEW IF EXISTS vw_get_question_list;
 CREATE VIEW vw_get_question_list AS
 SELECT 
     t.id AS test_id,
-	  q.id AS question_id,
+	q.id AS question_id,
     q.question_text,
     q.option_a,
     q.option_b,

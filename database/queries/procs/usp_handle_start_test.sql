@@ -68,8 +68,8 @@ BEGIN
 
 			-- add random test to the table for session
 			INSERT INTO test_session(test_result_id, test_id, question_id)
-			SELECT v_test_result_id, p_test_id, question_id
-			FROM vw_get_question_list
+			SELECT v_test_result_id, p_test_id, id as question_id
+			FROM vw_test_questions
 			WHERE test_id = p_test_id
 			ORDER BY RAND()
 			LIMIT 100;
