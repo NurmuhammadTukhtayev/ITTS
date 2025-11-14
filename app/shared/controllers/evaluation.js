@@ -37,7 +37,8 @@ const get_posts = async (req, res, next) => {
           prevPage: Math.max(1, currentPage - 1),
           nextPage: Math.min(totalPages, currentPage + 1),
           pages
-        }
+        },
+        title: "Оценка и прогресс"
     });
   } catch (e) {
     next(e);
@@ -55,7 +56,8 @@ const get_post = async (req, res) => {
 
     res.render('./shared/evaluation_details', { 
       blog, 
-      blogs 
+      blogs,
+      title: blog.title
     });
   } catch (e) {
     next(e);
@@ -67,7 +69,7 @@ const get_tests = async (req, res, next) => {
     let tests = await query("SELECT id, test_name, author_name, attempts_allowed FROM smart_path.tests ORDER BY created_at DESC;");
 
     res.render('./shared/evaluation_test', {
-      tests
+      tests, title: "Оценка для тестирования"
     });
   } catch (e) {
     next(e);
@@ -82,7 +84,7 @@ const get_test_by_id = async (req, res, next) => {
     if (!test_results) return res.render('./shared/error', {});
 
     res.render('./shared/evaluation_test_details', {
-      test_results
+      test_results, title: "Оценка для тестирования"
     });
   } catch (e) {
     next(e);

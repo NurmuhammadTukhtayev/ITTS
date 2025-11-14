@@ -11,7 +11,7 @@ const get_assignment = async (req, res, next) => {
         res.render('./shared/assignment', {
             copyrightYear: res.locals.copyrightYear,
             learning_material_categories: res.locals.learning_material_categories,
-            assignments
+            assignments, title: "Задания"
         });
 
     } catch (e) {

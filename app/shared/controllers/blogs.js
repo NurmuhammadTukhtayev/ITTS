@@ -39,7 +39,8 @@ const get_blogs = async (req, res, next) => {
           prevPage: Math.max(1, currentPage - 1),
           nextPage: Math.min(totalPages, currentPage + 1),
           pages
-        }
+        }, 
+        title: "Новости"
     });
   } catch (e) {
     next(e);
@@ -62,7 +63,8 @@ const get_blog = async (req, res) => {
       copyrightYear: res.locals.copyrightYear, 
       learning_material_categories: res.locals.learning_material_categories,
       blog, 
-      blogs 
+      blogs,
+      title: blog.title
     });
   } catch (e) {
     next(e);

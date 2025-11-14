@@ -27,6 +27,7 @@ module.exports = async (req, res, next) => {
 
     // get copyright year
     res.locals.copyrightYear = new Date().getFullYear();
+    res.locals.title = "Платформа ITTS"
 
     if (req.path.includes('/@admin')) {
       let rows = await query(`SELECT image_url FROM profile_meta`);

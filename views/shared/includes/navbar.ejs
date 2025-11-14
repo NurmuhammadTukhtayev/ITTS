@@ -1,3 +1,61 @@
+<div class="th-menu-wrapper">
+    <div class="th-menu-area text-center">
+        <button class="th-menu-toggle">
+            <i class="fal fa-times"></i>
+        </button>
+        <div class="mobile-logo">
+            <a class="icon-masking" href="/">
+                <span data-mask-src="/assets/img/ITTS2.png" class="mask-icon">
+                </span>
+                <img src="/assets/img/ITTS2.png" alt="Webteck">
+            </a>
+        </div>
+        <div class="th-mobile-menu">
+            <ul>
+                <li class=""><a href="/">Главная</a></li>
+                <li class=""><a href="/about">О курсе</a></li>
+                <li class="menu-item-has-children"><a href="#">Инструменты</a>
+                    <ul class="sub-menu">
+                        <li><a href="/media/videos">Видеоуроки</a></li>
+                        <li><a href="/media/presentations">Инструкции</a></li>
+                    </ul>
+                </li>
+                <% if (learning_material_categories.length> 0) { %>
+                    <li class="menu-item-has-children"><a href="#">Учебные материалы</a>
+                        <ul class="sub-menu">
+                            <% learning_material_categories.forEach(function(item){ %>
+                                <li>
+                                    <a href="/materials/<%= item.id %>">
+                                        <%= item.category_name %>
+                                    </a>
+                                </li>
+                                <% }); %>
+                        </ul>
+                    </li>
+                    <% } %>
+                        <li><a href="/assignment">Задания</a></li>
+                        <li><a href="/test">Тестование</a></li>
+                        <li class=""><a href="/blog">Новости</a></li>
+                        <li class="menu-item-has-children"><a href="#">Оценка и прогресс</a>
+                            <ul class="sub-menu">
+                                <li><a href="/evaluation/assignment">оценка за задание</a></li>
+                                <li><a href="/evaluation/test">оценка для тестирования</a></li>
+                                <!-- <li><a href="tg.me/">отзыв</a></li> -->
+                            </ul>
+                        </li>
+                        <li class="menu-item-has-children"><a href="#">Обратная связь</a>
+                            <ul class="sub-menu">
+                                <li><a href="https://t.me/Miss_lucky_girl" target="_blank">чат с преподавателем</a></li>
+                                <li><a href="https://t.me/+Hm2rz84X3KhhZmQy" target="_blank">чат с участниками групп</a>
+                                </li>
+                                <!-- <li><a href="tg.me/">отзыв</a></li> -->
+                            </ul>
+                        </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
 <header class="th-header header-layout24">
     <div class="sticky-wrapper">
         <div class="menu-area">
@@ -16,13 +74,13 @@
                             <ul>
                                 <li class=""><a href="/">Главная</a></li>
                                 <li class=""><a href="/about">О курсе</a></li>
-                                <li class="menu-item-has-children"><a href="#">Интерактивные инструменты </a>
+                                <li class="menu-item-has-children"><a href="#">Интерактивные инструменты</a>
                                     <ul class="sub-menu">
                                         <li><a href="/media/videos">Видеоуроки</a></li>
                                         <li><a href="/media/presentations">Инструкции</a></li>
                                     </ul>
                                 </li>
-                                <% if (learning_material_categories.length > 0) { %>
+                                <% if (learning_material_categories.length> 0) { %>
                                     <li class="menu-item-has-children"><a href="#">Учебные материалы</a>
                                         <ul class="sub-menu">
                                             <% learning_material_categories.forEach(function(item){ %>
@@ -34,24 +92,26 @@
                                                 <% }); %>
                                         </ul>
                                     </li>
-                                <% } %>
-                                <li><a href="/assignment">Задания</a></li>                                
-                                <li><a href="/test">Тестование</a></li>                                
-                                <li class=""><a href="/blog">Новости</a></li>
-                                <li class="menu-item-has-children"><a href="#">Оценка и прогресс</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="/evaluation/assignment">оценка за задание</a></li>
-                                        <li><a href="/evaluation/test">оценка для тестирования</a></li>
-                                        <!-- <li><a href="tg.me/">отзыв</a></li> -->
-                                    </ul>
-                                </li>
-                                <li class="menu-item-has-children"><a href="#">Обратная связь</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="https://t.me/Miss_lucky_girl" target="_blank">чат с преподавателем</a></li>
-                                        <li><a href="https://t.me/+Hm2rz84X3KhhZmQy" target="_blank">чат с участниками групп</a></li>
-                                        <!-- <li><a href="tg.me/">отзыв</a></li> -->
-                                    </ul>
-                                </li>
+                                    <% } %>
+                                        <li><a href="/assignment">Задания</a></li>
+                                        <li><a href="/test">Тестование</a></li>
+                                        <li class=""><a href="/blog">Новости</a></li>
+                                        <li class="menu-item-has-children"><a href="#">Оценка и прогресс</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="/evaluation/assignment">оценка за задание</a></li>
+                                                <li><a href="/evaluation/test">оценка для тестирования</a></li>
+                                                <!-- <li><a href="tg.me/">отзыв</a></li> -->
+                                            </ul>
+                                        </li>
+                                        <li class="menu-item-has-children"><a href="#">Обратная связь</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="https://t.me/Miss_lucky_girl" target="_blank">чат с
+                                                        преподавателем</a></li>
+                                                <li><a href="https://t.me/+Hm2rz84X3KhhZmQy" target="_blank">чат с
+                                                        участниками групп</a></li>
+                                                <!-- <li><a href="tg.me/">отзыв</a></li> -->
+                                            </ul>
+                                        </li>
                             </ul>
                         </nav><button type="button" class="th-menu-toggle d-block d-lg-none"><i
                                 class="far fa-bars"></i></button>

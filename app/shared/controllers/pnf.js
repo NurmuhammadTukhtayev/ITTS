@@ -1,12 +1,16 @@
-const {query} = require('../../../database/connction/query');
+const { query } = require('../../../database/connction/query');
 
 module.exports = async (req, res) => {
-    try{
+    try {
         let learning_material_categories = await query("SELECT * FROM smart_path.learning_material_categories;");
-        const currentYear = new Date().getFullYear(); 
+        const currentYear = new Date().getFullYear();
 
-        res.render('./shared/error', { copyrightYear: currentYear, learning_material_categories });
-    }catch(e){
+        res.render('./shared/error', {
+            title: "Ошибка",
+            learning_material_categories,
+            copyrightYear: currentYear,
+        });
+    } catch (e) {
         next(e);
     }
 }

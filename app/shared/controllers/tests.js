@@ -15,7 +15,7 @@ const start_test = async (req, res, next) => {
         if (test.length < 1) return res.render('./shared/error')
         
         res.render('./shared/test_form', {
-            test:test[0]
+            test:test[0], title: "Начать тест"
         })
     }catch(e){
         next(e);
@@ -86,7 +86,7 @@ const get_test_questions = async (req, res, next) => {
     res.render('./shared/test', {
         copyrightYear: res.locals.copyrightYear, 
         learning_material_categories: res.locals.learning_material_categories,
-        test
+        test, title: test.title
     });
 }
 
@@ -135,7 +135,7 @@ const list_of_test = async (req, res, next) => {
         const tests = await query('select * from vw_tests order by created_at_raw desc');
 
         res.render('./shared/test_list', {
-            tests
+            tests, title: "Тестование"
         })
     }catch(e){
         next(e);

@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
         res.render('./shared/index', { 
             copyrightYear: res.locals.copyrightYear, 
             learning_material_categories: res.locals.learning_material_categories,
-            blogs, profile_meta
+            blogs, profile_meta, title: "Платформа ITTS"
         });
     } catch (e) {
         next(e);

@@ -12,7 +12,7 @@ const get_about = async (req, res, next) => {
         res.render('./shared/about', {
             copyrightYear: res.locals.copyrightYear,
             learning_material_categories: res.locals.learning_material_categories,
-            documents, materials
+            documents, materials, title: "О курсе"
         });
 
     } catch (e) {

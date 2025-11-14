@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
             copyrightYear: res.locals.copyrightYear, 
             learning_material_categories: res.locals.learning_material_categories,
             category: categoryExists[0].category_name, 
-            materials 
+            materials, title: categoryExists[0].category_name
         });
     } catch (e) {
         next(e);

@@ -14,7 +14,7 @@ module.exports = (err, req, res, next) => {
     if (process.env.ENV === 'DEV') error_content = err.stack;
     
     res.render('./shared/error_500', {
-      error_content
+      error_content, title: "Ошибка"
     });
   }catch(e){
     next(e);
